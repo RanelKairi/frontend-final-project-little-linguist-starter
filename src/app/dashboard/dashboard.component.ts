@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
+// amood habait
 @Component({
   selector: 'app-dashboard',
   standalone: true,

@@ -1,0 +1,35 @@
+<div class="card-container">
+  <mat-card class="game-card" *ngIf="currentGame">
+    <mat-card-header>
+      <mat-card-title class="card-title">
+        {{ currentGame.gameName }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-description">
+      {{ currentGame.description }}
+    </mat-card-content>
+    <mat-card-content class="card-id">
+      id: {{ currentGame.id }}
+    </mat-card-content>
+    <mat-card-footer class="card-footer">
+      <mat-card-actions class="card-actions">
+        <!-- <button
+          mat-button
+          
+          class="play-button"
+          (click)="openDialog(currentGame.id,currentGame.gameName)"
+        >
+          Play {{ currentGame.gameName }} Game
+        </button> -->
+        <button
+          mat-button
+          
+          class="play-button"
+          (click)="openDialog(currentGame)"
+        >
+          Play {{ currentGame.gameName }} Game
+        </button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</div>

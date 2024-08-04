@@ -10,4 +10,8 @@ export class Category {
         public origin : Language,
         public target : Language) {
     }
+
+    CateName(): string {
+    return this.name;
+    }
 }

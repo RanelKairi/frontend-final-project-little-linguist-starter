@@ -1,0 +1,22 @@
+<div mat-dialog-title>Welcome To "{{ currentGame.gameName }}" Game!</div>
+<div>Category:</div>
+<mat-form-field>
+  <mat-select [(value)]="currentCate">
+    <mat-option *ngFor="let Cate of allCate" color="primary" [value]="Cate">
+      {{ Cate.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-dialog-content *ngIf="currentCate">
+   Last Update {{ currentCate.lastUpdateDate }}
+   <br>
+   <mat-label>Number Of Words</mat-label> {{ currentCate.words.length }}
+</mat-dialog-content>
+
+<div mat-dialog-actions *ngIf="currentCate">
+  <button mat-flat-button color="primary" [mat-dialog-close]="[currentCate]" [disabled]="!currentCate" [routerLink]="[currentGame.GameURL,currentCate.id]">
+    Play now
+  </button>
+</div>
+

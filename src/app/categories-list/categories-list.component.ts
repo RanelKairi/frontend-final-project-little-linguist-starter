@@ -14,28 +14,44 @@ import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-
   selector: 'app-categories-list',
   standalone: true,
   imports: [
-    CommonModule, MatTableModule, MatIconModule, MatButtonModule, RouterModule
+    CommonModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterModule,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
 })
 export class CategoriesListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'numOfWords', 'lastUpdateDate', 'actions'];
-  dataSource : Category[] = [];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'numOfWords',
+    'lastUpdateDate',
+    'actions',
+  ];
+  dataSource: Category[] = [];
 
-  constructor(private categoriesService : CategoriesService, private dialogService : MatDialog) {}
+  constructor(
+    private categoriesService: CategoriesService,
+    private dialogService: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.dataSource = this.categoriesService.list();
   }
 
-  deleteCategory(id : number, name: string) {
-    let dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {data: name});
+  deleteCategory(id: number, name: string) {
+    let dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {
+      data: name,
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.categoriesService.delete(id);
         this.dataSource = this.categoriesService.list();
-      }});
+      }
+    });
   }
 }
