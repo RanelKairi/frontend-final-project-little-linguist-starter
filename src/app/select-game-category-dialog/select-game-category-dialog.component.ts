@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {  ChangeDetectionStrategy,  Component,  Inject,  NgModule,  OnInit,} from '@angular/core';
 import { GameProfile } from '../../shared/model/GameProfile';
-import {  MAT_DIALOG_DATA,  MAT_DIALOG_DEFAULT_OPTIONS,  MatDialogClose,  MatDialogContent,  MatDialogModule,} from '@angular/material/dialog';
+import {  MAT_DIALOG_DATA, MatDialogClose,  MatDialogContent,  MatDialogModule,} from '@angular/material/dialog';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../../shared/model/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectGameCategoryDialogComponent implements OnInit {
-  currentCate?: Category;
+ currentCate?: Category;
   allCate: Category[] = [];
   GamePicked = [];
   constructor(
@@ -48,7 +48,9 @@ export class SelectGameCategoryDialogComponent implements OnInit {
     this.allCate = this.CategoryService.list();
   }
 
+  CateMove(){
 
+  }
 
   // getGameURL(_currentGame:GameProfile,_currentCate:Category): string {
   //   if (this.currentCate && this.currentGame) {
@@ -61,5 +63,19 @@ export class SelectGameCategoryDialogComponent implements OnInit {
   //   }
   //   return '';
   // }
+  currentGameCate(selectedCate:Category,selectedGame:GameProfile){
+    if(this.currentCate && this.currentGame){
+      selectedCate = this.currentCate;
+      selectedGame = this.currentGame;
+    
+    return this.GameDataService.Cate2Game(this.currentCate,
+      // this.currentGame
+    );
+
+    
+  }
+
+}
+
 
 }

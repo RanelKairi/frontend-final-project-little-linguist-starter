@@ -12,10 +12,13 @@
    Last Update {{ currentCate.lastUpdateDate }}
    <br>
    <mat-label>Number Of Words</mat-label> {{ currentCate.words.length }}
+   <br>
+   Category ID: {{currentCate.id}}
+
 </mat-dialog-content>
 
 <div mat-dialog-actions *ngIf="currentCate">
-  <button mat-flat-button color="primary" [mat-dialog-close]="[currentCate]" [disabled]="!currentCate" [routerLink]="[currentGame.GameURL,currentCate.id]">
+  <button (click)="CateMove()" mat-flat-button color="primary" [mat-dialog-close]="[currentCate]" [disabled]="!currentCate" [routerLink]="[currentGame.GameURL,currentCate.id]">
     Play now
   </button>
 </div>

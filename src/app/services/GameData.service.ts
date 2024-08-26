@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GameProfile } from '../../shared/model/GameProfile';
-import { CategoriesService } from './categories.service'; // מתלבט אם להכניס פה את כל הקטגוריות או שאיןא צורך כי הסרויס כבר קיים
+import { CategoriesService } from './categories.service';
+import { Category } from '../../shared/model/category';
 
 
 
@@ -8,6 +9,9 @@ import { CategoriesService } from './categories.service'; // מתלבט אם ל�
   providedIn: 'root',
 })
 export class GameDataService {
+  private readonly CATEGORIES_KEY = 'categories';
+
+
   private allgames: GameProfile[] = [
     new GameProfile(
       1,
@@ -28,12 +32,25 @@ export class GameDataService {
   list(): GameProfile[] {
     return this.allgames;
   }
+  // currentCate? : Category;
+  // currentGame? : GameProfile;
 
-  getGameURL(gameID : number , CateID : number): string {
-    const game = this.allgames.find(g => g.id === gameID);
-    if(game){
-      return `${game.GameURL}/${CateID}`;
-    }
-    return '';
+  Cate2Game(currentCate:Category,
+    // curGame:GameProfile 
+    // selectedCate?:Category, selectedGame?:GameProfile
+  ){
+    // const GamePicked_cate:Array[] = [];
+    
+  } 
+
+  getCate(CateID:number){
+    
   }
+  // getGameURL(gameID : number , CateID : number): string {
+  //   const game = this.allgames.find(g => g.id === gameID);
+  //   if(game){
+  //     return `${game.GameURL}/${CateID}`;
+  //   }
+  //   return '';
+  // }
 }

@@ -7,6 +7,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { GameProfile } from '../../../shared/model/GameProfile';
 import { DeleteCategoryDialogComponent } from "../../delete-category-dialog/delete-category-dialog.component";
 import { GameCardComponent } from "../../game-card/game-card.component";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mixed-letters',
@@ -17,18 +18,23 @@ import { GameCardComponent } from "../../game-card/game-card.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MixedLettersComponent implements OnInit{  
-  @Input()
-  
-  currentCate?:Category;
-  Cate = '';
-  allCates : Category[] = [];
-  constructor(
-    private CategoriesService : CategoriesService,
-  private GameDataService  : GameDataService,){}
+ categoryId = 0 ; 
+ selectedCategory?:Category;
+ selectedGame?:GameProfile
 
-  ngOnInit(): void {
-    this.allCates = this.CategoriesService.list();
-    this.Cate = this.GameDataService.getGameURL(1,2);
-  // this.currentCate = this.CategoriesService.get()
-  }
+ constructor(
+  private route : ActivatedRoute,
+  private CategoryService : CategoriesService
+ ){}
+
+ ngOnInit(): void {
+   this.route.paramMap.subscribe(params => {
+    this.categoryId = +params.get('id')!;
+    this.fetchCategoryDetails();
+   })
+ }
+ fetchCategoryDetails(): void{
+this.selectedCategory = this.CategoryService.get(this.categoryId)
+ }
+
 }

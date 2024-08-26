@@ -19,11 +19,11 @@ import { GameDataService } from '../../services/GameData.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PairOfWordsComponent implements OnInit{
-  @Input()
-  
-  currentCate?:Category;
+  @Input() currentCate?:Category;
   Cate = '';
+  currentGame? : GameProfile;
   allCates : Category[] = [];
+  allGames : GameProfile[] = []
   constructor(
     private CategoriesService : CategoriesService,
     private GameDataService : GameDataService,
@@ -31,7 +31,11 @@ export class PairOfWordsComponent implements OnInit{
 
   ngOnInit(): void {
     this.allCates = this.CategoriesService.list();
-  this.Cate = this.GameDataService.getGameURL(3,4);
+    this.allGames = this.GameDataService.list()
+    this.currentGame = this.allGames[1]
+
+    // this.currentGame = this.GameDataService.getGameURL(this.currentCate);
+    // this.Cate = this.GameDataService.getGameURL();
   
   }
 }

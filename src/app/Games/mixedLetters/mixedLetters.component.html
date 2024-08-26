@@ -1,2 +1,10 @@
 <div>Mixxed Letters</div>
-<div>{{Cate}}</div>
+<div>{{selectedCategory?.CateName}}</div>
+<div>{{selectedCategory?.id}}</div>
+<div *ngIf="selectedCategory">
+    <h2>{{ selectedCategory.name }}</h2>
+    <p>Last Update: {{ selectedCategory.lastUpdateDate }}</p>
+    <p>Number of Words: {{ selectedCategory.words.length }}</p>
+    <div>{{selectedCategory.id}}</div>
+  </div>
+  
