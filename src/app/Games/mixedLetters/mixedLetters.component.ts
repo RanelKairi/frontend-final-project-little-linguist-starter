@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ExitGameDialogComponent } from '../../game-dialogs/exit-game-dialog/exit-game-dialog.component';
 
 
 @Component({
@@ -21,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [CommonModule, DeleteCategoryDialogComponent, GameCardComponent,
     MatIconModule,MatCardModule,MatProgressBarModule,MatFormFieldModule,
-    MatButtonModule],
+    MatButtonModule,ExitGameDialogComponent],
   templateUrl: './mixedLetters.component.html',
   styleUrl: './mixedLetters.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +40,7 @@ export class MixedLettersComponent implements OnInit{
   private route : ActivatedRoute,
   private CategoryService : CategoriesService,
   private GameDataService : GameDataService,
+  public dialogService : MatDialog,
  ){}
 
  ngOnInit(): void {
@@ -52,6 +55,10 @@ export class MixedLettersComponent implements OnInit{
   this.selectedCategory = this.CategoryService.get(this.categoryId)
   this.selectedCategory2Str = JSON.stringify(this.selectedCategory?.words)
   this.selectedCategoryWords =JSON.parse(this.selectedCategory2Str)
+ }
+
+ exitDialog(){
+  this.dialogService.open(ExitGameDialogComponent)
  }
 
 }
