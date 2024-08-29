@@ -33,7 +33,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './choose-game.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChooseGameComponent {
+export class ChooseGameComponent implements OnInit {
   allGames: GameProfile[] = [];
   allCates: Category[] = [];
 

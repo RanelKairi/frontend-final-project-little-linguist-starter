@@ -1,5 +1,6 @@
 import { Language } from "./language";
 import { TranslatedWord } from "./translated-word";
+
 export class GameProfile {
 
   constructor(

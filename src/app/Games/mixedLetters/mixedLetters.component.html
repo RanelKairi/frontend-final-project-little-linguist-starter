@@ -1,10 +1,65 @@
-<div>Mixxed Letters</div>
-<div>{{selectedCategory?.CateName}}</div>
-<div>{{selectedCategory?.id}}</div>
 <div *ngIf="selectedCategory">
-    <h2>{{ selectedCategory.name }}</h2>
-    <p>Last Update: {{ selectedCategory.lastUpdateDate }}</p>
-    <p>Number of Words: {{ selectedCategory.words.length }}</p>
-    <div>{{selectedCategory.id}}</div>
-  </div>
-  
+  <mat-card class="body-frame">
+    <mat-card-header>
+      <div mat-card-avatar class="header-icon">
+        <button mat-icon-button class="exit-button">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+      <mat-card-title
+        ><h3>
+          {{ selectedGame?.gameName }} - {{ selectedCategory.name }}
+        </h3></mat-card-title
+      >
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="target-word">תפוח</div>
+
+      <div class="mixed-letters">P E L A P</div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Guess</mat-label>
+        <input matInput placeholder="Enter your guess" />
+      </mat-form-field>
+
+      <div class="button-group">
+        <button mat-flat-button color="primary">Reset</button>
+        <button mat-flat-button color="accent">Submit</button>
+      </div>
+
+      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+
+      <div class="scoring">
+        <span>4</span>
+        <span>10</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<h1>Some Check Ups Don't To Delete Fooooooooooool</h1>
+<br />
+<div>Mixxed Letters</div>
+<div>{{ selectedCategory?.CateName }}</div>
+<div>{{ selectedCategory?.id }}</div>
+<div *ngIf="selectedCategory">
+  <h2>{{ selectedCategory.name }}</h2>
+  <p>Last Update: {{ selectedCategory.lastUpdateDate }}</p>
+  <p>Number of Words: {{ selectedCategory.words.length }}</p>
+  <div>{{ selectedCategory.id }}</div>
+</div>
+
+<h1>BREAK</h1>
+<div *ngIf="selectedCategoryWords">
+  <h1>now for some checks before we move on</h1>
+  <h3>selectedCategory2Str<br /></h3>
+  {{ selectedCategory2Str }}
+</div>
+<h3>selectedCategoryWords</h3>
+<br />{{ selectedCategoryWords }}
+<h3>selectedCategoryWords[i]</h3>
+<br />{{ selectedCategoryWords }}
+<h3>selectedCategory</h3>
+<br />{{ selectedCategory?.words }}

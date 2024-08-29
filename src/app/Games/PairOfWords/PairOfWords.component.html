@@ -1,11 +1,33 @@
-<!-- <div>Supposed to be {{gameName}}</div> -->
- <div>GameName:{{currentGame?.gameName}}</div>
- <br>
- <div>GameID:{{currentGame?.id}}</div>
- <br>
- <div>Game Description:{{currentGame?.description}}</div>
- <br>
- <div>Game URL:{{currentGame?.GameURL}}</div>
-<div>{{Cate}}</div>
-<!-- <div>currentCate: {{currentCate}}</div> -->
-<!-- <div>currentGame: {{currentGame}}</div> -->
+<h1>this is for a case if wed like to use flex from material might delete later</h1>
+<div fxLayout="column" fxLayoutAlign="center stretch">
+    <mat-card class="body-frame">
+      <mat-card-header>
+        <div mat-card-avatar class="header-icon"></div>
+        <mat-card-title>Mixed Letters - Fruits</mat-card-title>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <div class="foreign-word">תפוח</div>
+        <div class="mixed-letters">P E L A P</div>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Guess</mat-label>
+          <input matInput placeholder="Enter your guess">
+        </mat-form-field>
+  
+        <div class="button-group" fxLayout="row" fxLayoutAlign="space-between center">
+          <button mat-flat-button color="primary">Reset</button>
+          <button mat-flat-button color="accent">Submit</button>
+        </div>
+  
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        
+        <div class="scoring" fxLayout="row" fxLayoutAlign="space-between center">
+          <span>4</span>
+          <span>10</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  

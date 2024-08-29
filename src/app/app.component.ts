@@ -7,7 +7,7 @@ import { ChooseGameComponent } from './choose-game/choose-game.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpComponent } from './help/help.component';
 import { TwoGamesComponent } from './two-games/two-games.component';
-import { SelectGameCategoryDialogComponent } from './select-game-category-dialog/select-game-category-dialog.component';
+
 
 @Component({
   selector: 'app-root',

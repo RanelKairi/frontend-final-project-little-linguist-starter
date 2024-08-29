@@ -1,6 +1,7 @@
 import { categories } from './../../shared/data/categories';
 import { Injectable } from '@angular/core';
 import { Category } from '../../shared/model/category';
+import { TranslatedWord } from '../../shared/model/translated-word';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class CategoriesService {
   private readonly NEXT_ID_KEY = 'nextId';
 
   private getCategories() : Map<number, Category>{
-    let categoriesString = localStorage.getItem(this.CATEGORIES_KEY);
+    const categoriesString = localStorage.getItem(this.CATEGORIES_KEY);
 
     if (!categoriesString) {
       return new Map<number, Category>();
@@ -20,7 +21,7 @@ export class CategoriesService {
   }
 
   private getNextId() : number {
-    let nextIdString = localStorage.getItem(this.NEXT_ID_KEY); 
+    const nextIdString = localStorage.getItem(this.NEXT_ID_KEY); 
 
     return nextIdString ? parseInt(nextIdString) : 0;
   }
@@ -42,13 +43,13 @@ export class CategoriesService {
   }
 
   delete(id : number) : void {
-    let categoriesMap = this.getCategories();
+    const categoriesMap = this.getCategories();
     categoriesMap.delete(id);
     this.setCategories(categoriesMap);
   }
 
   update(category : Category) : void {
-    let categoriesMap = this.getCategories();
+    const categoriesMap = this.getCategories();
 
     category.lastUpdateDate = new Date();
     categoriesMap.set(category.id, category);
@@ -60,10 +61,15 @@ export class CategoriesService {
     category.id = this.getNextId();
     category.lastUpdateDate = new Date();
 
-    let categoriesMap = this.getCategories();
+    const categoriesMap = this.getCategories();
     categoriesMap.set(category.id, category);
 
     this.setCategories(categoriesMap);
     this.setNextId(++category.id);
   }
+
+  
 }
+
+
+// fetchCateDetails(selectedCateWords : TranslatedWord):void {} רעיון למימוש פונקציות נהסרוויס אולי בהמשך

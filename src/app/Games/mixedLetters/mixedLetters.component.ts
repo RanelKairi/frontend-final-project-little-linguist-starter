@@ -1,18 +1,27 @@
 import { CommonModule } from '@angular/common';
-import {  ChangeDetectionStrategy,  Component,  Input,  OnInit,} from '@angular/core';
-import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
+import { ChangeDetectionStrategy, Component, OnInit,} from '@angular/core';
 import { Category } from '../../../shared/model/category';
 import { GameDataService } from '../../services/GameData.service';
 import { CategoriesService } from '../../services/categories.service';
 import { GameProfile } from '../../../shared/model/GameProfile';
-import { DeleteCategoryDialogComponent } from "../../delete-category-dialog/delete-category-dialog.component";
+import { DeleteCategoryDialogComponent }
+ from "../../delete-category-dialog/delete-category-dialog.component";
 import { GameCardComponent } from "../../game-card/game-card.component";
 import { ActivatedRoute } from '@angular/router';
+import { TranslatedWord } from '../../../shared/model/translated-word';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-mixed-letters',
   standalone: true,
-  imports: [CommonModule, DeleteCategoryDialogComponent, GameCardComponent],
+  imports: [CommonModule, DeleteCategoryDialogComponent, GameCardComponent,
+    MatIconModule,MatCardModule,MatProgressBarModule,MatFormFieldModule,
+    MatButtonModule],
   templateUrl: './mixedLetters.component.html',
   styleUrl: './mixedLetters.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,11 +29,15 @@ import { ActivatedRoute } from '@angular/router';
 export class MixedLettersComponent implements OnInit{  
  categoryId = 0 ; 
  selectedCategory?:Category;
- selectedGame?:GameProfile
+ selectedGame? : GameProfile;
+ allGames : GameProfile[] = [];
 
+ selectedCategory2Str =''
+ selectedCategoryWords? : TranslatedWord;
  constructor(
   private route : ActivatedRoute,
-  private CategoryService : CategoriesService
+  private CategoryService : CategoriesService,
+  private GameDataService : GameDataService,
  ){}
 
  ngOnInit(): void {
@@ -34,7 +47,11 @@ export class MixedLettersComponent implements OnInit{
    })
  }
  fetchCategoryDetails(): void{
-this.selectedCategory = this.CategoryService.get(this.categoryId)
+  this.allGames = this.GameDataService.list();
+  this.selectedGame = this.allGames[0];
+  this.selectedCategory = this.CategoryService.get(this.categoryId)
+  this.selectedCategory2Str = JSON.stringify(this.selectedCategory?.words)
+  this.selectedCategoryWords =JSON.parse(this.selectedCategory2Str)
  }
 
 }

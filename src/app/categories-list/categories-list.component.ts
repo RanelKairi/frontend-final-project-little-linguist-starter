@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { categories } from '../../shared/data/categories';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Category } from '../../shared/model/category';
@@ -43,7 +42,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   deleteCategory(id: number, name: string) {
-    let dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {
+    const dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {
       data: name,
     });
 
