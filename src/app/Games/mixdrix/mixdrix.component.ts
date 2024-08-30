@@ -26,7 +26,7 @@ import { TranslatedWord } from '../../../shared/model/translated-word';
 export class MixdrixComponent implements OnInit { 
   @Input()
   id!:string
-  y?:number
+  yid?:number
   selectedCategory?:Category
   cateWords:TranslatedWord[] = []
   randomCateWords : TranslatedWord[] = []
@@ -40,11 +40,9 @@ export class MixdrixComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.y = +this.id
-    this.selectedCategory = this.CategoryService.get(this.y)
-    console.log(this.selectedCategory) // to delete
+    this.yid = +this.id
+    this.selectedCategory = this.CategoryService.get(this.yid)
     this.cateWords = this.selectedCategory? [...this.selectedCategory.words]:[]
-    console.log(this.cateWords)
     this.randomCateWords = [...this.cateWords]
     this.randomService.ordeRandom(this.randomCateWords)
   }

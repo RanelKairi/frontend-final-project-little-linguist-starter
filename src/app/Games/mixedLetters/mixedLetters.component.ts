@@ -89,7 +89,7 @@ export class MixedLettersComponent implements OnInit {
       console.log("shuffffffff",this.shuff)
       this.shuff2 = [...this.shuff];
       (this.shuff2.toLocaleString())
-      this.shuff2 = this.randomService.shuffleArray9(this.shuff2)
+     
       console.log("shuff2After9",this.shuff2)
 
 
@@ -106,7 +106,7 @@ export class MixedLettersComponent implements OnInit {
       this.nonShuffledArray = this.word2arr
       console.log("word2arr",this.word2arr)
       console.log("nonShuffle",this.nonShuffledArray)
-      this.shuffledArray = this.randomService.shuffleArrayGem(this.nonShuffledArray)
+     
       // this.word2arr = this.randomService.shuffleArray3(this.word2arr)
       console.log("shuffleArray",this.shuffledArray)
       this.word3 = this.word2arr.join('')
@@ -118,7 +118,7 @@ export class MixedLettersComponent implements OnInit {
     
       
       // console.log('this.word2LOWERCASE!!!'+this.word2)
-      // const wordlord = (this.word1.toLocaleLowerCase())
+      const wordlord = (this.word1.toLocaleLowerCase())
       // console.log('selectCategory'+JSON.stringify(this.selectedCategory?.words)) // return Category[]
       // console.log('sortCateWords'+JSON.stringify(this.sortCateWords))
       // console.log('sortCateWordsDupli'+JSON.stringify(this.sortCateWordsDupli))
