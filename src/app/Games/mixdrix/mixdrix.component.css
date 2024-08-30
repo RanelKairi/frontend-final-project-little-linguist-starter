@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.game-content {
+  text-align: center;
+}
+
+/* סגנונות נוספים להתאמה אישית */

@@ -25,7 +25,10 @@ export class GameDataService {
       'In this game you will get a single word in English or Hebrew and you need to choose the correct translated word on the other language  ',
       'Games/PairOfWords'
     ),
-    new GameProfile(3, '3mixed', 'fixmix3', 'mixed3'),
+    new GameProfile(3,
+       'mixdrix',
+        'thisgame is dangoururs',
+         'Games/mix-drix'),
   ];
   constructor(private CategoryService : CategoriesService) {}
 

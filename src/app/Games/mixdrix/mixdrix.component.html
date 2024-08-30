@@ -1,0 +1,36 @@
+<div class="game-container">
+    <!-- <mat-toolbar color="primary">
+      <span>Little Linguist</span>
+      <span class="spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>יציאה</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar> -->
+  
+    <div class="game-content">
+      <h2>Mixed Letters - {{selectedCategory?.name}}</h2>
+      <p>תפוח</p>
+      <p>PELAP</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Guess:</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <button mat-raised-button color="primary">Submit</button>
+      <button mat-raised-button color="accent">Reset</button>
+  
+      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      <span>4/10</span>
+  
+      <!-- <div class="dialog-container" *ngIf="showDialog">
+        </div>
+    </div>
+  
+    <div class="summary-container" *ngIf="showSummary">
+      </div>
+  </div> -->

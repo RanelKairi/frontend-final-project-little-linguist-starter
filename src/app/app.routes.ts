@@ -9,6 +9,7 @@ import { MixedLettersComponent } from './Games/mixedLetters/mixedLetters.compone
 import { PairOfWordsComponent } from './Games/PairOfWords/PairOfWords.component';
 import { SelectGameCategoryDialogComponent } from './select-game-category-dialog/select-game-category-dialog.component';
 import { NgModule } from '@angular/core';
+import { MixdrixComponent } from './Games/mixdrix/mixdrix.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'help', component: HelpComponent },
   { path: 'Games/mixedLetters/:id', component: MixedLettersComponent },
   { path: 'Games/PairOfWords/:id', component: PairOfWordsComponent },
+  { path: 'Games/mix-drix/:id', component:MixdrixComponent },
   {path : 'select-game-category-dialog', component: SelectGameCategoryDialogComponent}
   
 ];

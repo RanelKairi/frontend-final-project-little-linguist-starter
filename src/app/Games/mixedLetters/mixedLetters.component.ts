@@ -50,16 +50,18 @@ export class MixedLettersComponent implements OnInit {
   selectedCategory?: Category;
   selectedGame?: GameProfile;
   allGames: GameProfile[] = [];
-  sortCateWordsDupli: TranslatedWord[] = [];
+  // sortCateWordsDupli: TranslatedWord[] = [];
   sortCateWords : TranslatedWord [] = [];
+  shuff : TranslatedWord [] = [];
+  shuff2 : TranslatedWord [] = [];
   sortCateWordsmix : TranslatedWord [] = [];
   shuffledArray : string[] = [];
   word1 = ''
-  word2 = ''
-  word2arr= ['']
+  word2 = '' // lion
+  word2arr= [''] // n,l,i,o
 
   nonShuffledArray:string[] = [];
-  word3 = ''
+  word3 = '' // lion => //nilo
   
   wordlord : any;
 
@@ -81,9 +83,21 @@ export class MixedLettersComponent implements OnInit {
       this.categoryId = +params.get('id')!;
       this.selectedCategory = this.CategoryService.get(this.categoryId)
       console.log("selectedCategory",this.selectedCategory)
-      console.log("selectedCategory",JSON.stringify(this.selectedCategory?.words))
+      // console.log("selectedCategory",JSON.stringify(this.selectedCategory?.words))
       this.sortCateWords = this.selectedCategory? [...this.selectedCategory?.words] : [];// return Translated[]
-      this.randomService.shuffleArray2(this.sortCateWords)
+      this.shuff = [...this.sortCateWords]
+      console.log("shuffffffff",this.shuff)
+      this.shuff2 = [...this.shuff];
+      (this.shuff2.toLocaleString())
+      this.shuff2 = this.randomService.shuffleArray9(this.shuff2)
+      console.log("shuff2After9",this.shuff2)
+
+
+
+
+
+
+      // this.randomService.shuffleArray2(this.sortCateWords)
       this.word1 = this.sortCateWords[0].origin
       this.word2 = this.sortCateWords[0].origin
       this.word2 = this.word2.toLocaleLowerCase()
@@ -93,7 +107,7 @@ export class MixedLettersComponent implements OnInit {
       console.log("word2arr",this.word2arr)
       console.log("nonShuffle",this.nonShuffledArray)
       this.shuffledArray = this.randomService.shuffleArrayGem(this.nonShuffledArray)
-      this.word2arr = this.randomService.shuffleArray3(this.word2arr)
+      // this.word2arr = this.randomService.shuffleArray3(this.word2arr)
       console.log("shuffleArray",this.shuffledArray)
       this.word3 = this.word2arr.join('')
 
@@ -102,7 +116,7 @@ export class MixedLettersComponent implements OnInit {
       //   this.word2 = this.word2arr.join(''); //Don't forget to replace to word3
       // }
     
-
+      
       // console.log('this.word2LOWERCASE!!!'+this.word2)
       // const wordlord = (this.word1.toLocaleLowerCase())
       // console.log('selectCategory'+JSON.stringify(this.selectedCategory?.words)) // return Category[]
@@ -110,9 +124,10 @@ export class MixedLettersComponent implements OnInit {
       // console.log('sortCateWordsDupli'+JSON.stringify(this.sortCateWordsDupli))
       // console.log('mixMIX:'+JSON.stringify(this.sortCateWordsmix))
     });
+    
   }
 
-
+  fetching(){}
 
 
   // shuffleArray(array: TranslatedWord[]): TranslatedWord[] {

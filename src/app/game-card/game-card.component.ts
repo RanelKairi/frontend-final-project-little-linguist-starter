@@ -30,8 +30,6 @@ import { CategoriesService } from '../services/categories.service';
 })
 export class GameCardComponent implements OnInit {
   @Input() currentGame? :GameProfile;
-  // currentGame?: GameProfile;
-  // currentCate? : Category;
   @Input() currentCate? : Category;
   allCate: Category[] = [];
   allgames: GameProfile[] = [];

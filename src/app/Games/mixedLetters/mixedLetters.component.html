@@ -17,34 +17,8 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="target-word">תפוח - Target {{selectedCategory.words[0].target}}
-         <br> <br>
-         Checks 
-         <mat-card-content>
-          array[0]origin : {{selectedCategory.words[0].origin}}
-          <br>
-          array[0]mixed : {{sortCateWords[0].origin}}
-          <br>
-          originMix
-         </mat-card-content>
-          <br><br>
-          <mat-card-content>
-            this.word1 = word[0]origin : {{word1}}<br>
-            this.word2  {{word2}}<br>
-            wordlord : {{shuffledArray}} <br>
-            word2arr[0] : {{word2arr[0]}} <br>
-            word2arr : {{word2arr}} <br>
-            word3 : {{word3}}
-            
-           </mat-card-content>
-            <br><br>
-        sort 2 service  {{word2}}
-        <!-- sort 1 sortService : {{sort1}} <br>
-        sort 2 originsortDupli : {{sort2}} <br>
-        sort 3 mix . sort=>random : {{sort3}} -->
-      </div>
 
-      <div class="mixed-letters">P E L A P - origin {{selectedCategory.words[0].origin}}</div>
+      <div class="mixed-letters">Mixed Letters Word {{shuffledArray}}</div>
 
       <mat-form-field appearance="outline">
         <mat-label>Guess</mat-label>
@@ -64,5 +38,34 @@
       </div>
     </mat-card-content>
   </mat-card>
-</div>
+  <mat-card>
+    
+    <mat-card-content>
+      <div class="target-word">תפוח - Target {{selectedCategory.words[0].target}}
+         <br> <br>
+         Checks 
+         <mat-card-content>
+          array[0]origin : {{selectedCategory.words[0].origin}}
+          <br>
+          array[0]mixed : {{sortCateWords[0].origin}}
+          <br>
+          originMix
+         </mat-card-content>
+          <br><br>
+          <mat-card-content>
+            this.word1 = word[0]origin : {{word1}}<br>
+            this.word2  {{word2}}<br>
+            wordlord : {{shuffledArray}} <br>
+            word2arr[0] : {{word2arr[0]}} <br>
+            word2arr : {{word2arr}} <br>
+            word3 : {{word3}} <br>
+            shuffledArray : {{shuffledArray}}<br>
+            {{shuff2}}
+           </mat-card-content>
+            <br><br>
+        sort 2 service  {{word2}}
+        <!-- sort 1 sortService : {{sort1}} <br>
+        sort 2 originsortDupli : {{sort2}} <br>
+        sort 3 mix . sort=>random : {{sort3}} -->
+      </div>
 <app-score></app-score>
