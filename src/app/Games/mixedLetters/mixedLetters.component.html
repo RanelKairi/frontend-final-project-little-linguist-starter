@@ -6,17 +6,47 @@
           <mat-icon>logout</mat-icon>
         </button>
       </div>
-      <mat-card-title
-        ><h3>
+      <mat-card-title>
+        <h3>
           {{ selectedGame?.gameName }} - {{ selectedCategory.name }}
-        </h3></mat-card-title
-      >
+        </h3>
+      </mat-card-title>
+
+      <app-score></app-score>
+
     </mat-card-header>
 
     <mat-card-content>
-      <div class="target-word">תפוח</div>
+      <div class="target-word">תפוח - Target {{selectedCategory.words[0].target}}
+         <br> <br>
+         Checks 
+         <mat-card-content>
+          array[0]origin : {{selectedCategory.words[0].origin}}
+          <br>
+          array[0]mixed : {{sortCateWords[0].origin}}
+          <br>
+          originMix
+         </mat-card-content>
+          <br><br>
+          <mat-card-content>
+            word[0]origin : {{word1}}
+            <br>
+            word[0]mixed : {{word2}}
+            <br>
+            wordlord : {{wordlord}} <br>
+            word2arr[0] : {{word2arr[0]}} <br>
+            word2arr : {{word2arr}} <br>
+            wordlord3 : {{word3}}
+            
+           </mat-card-content>
+            <br><br>
+        sort 2 service  {{word2}}
+        <!-- sort 1 sortService : {{sort1}} <br>
+        sort 2 originsortDupli : {{sort2}} <br>
+        sort 3 mix . sort=>random : {{sort3}} -->
+      </div>
 
-      <div class="mixed-letters">P E L A P</div>
+      <div class="mixed-letters">P E L A P - origin {{selectedCategory.words[0].origin}}</div>
 
       <mat-form-field appearance="outline">
         <mat-label>Guess</mat-label>
@@ -37,29 +67,4 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<h1>Some Check Ups Don't To Delete Fooooooooooool</h1>
-<br />
-<div>Mixxed Letters</div>
-<div>{{ selectedCategory?.CateName }}</div>
-<div>{{ selectedCategory?.id }}</div>
-<div *ngIf="selectedCategory">
-  <h2>{{ selectedCategory.name }}</h2>
-  <p>Last Update: {{ selectedCategory.lastUpdateDate }}</p>
-  <p>Number of Words: {{ selectedCategory.words.length }}</p>
-  <div>{{ selectedCategory.id }}</div>
-</div>
-
-<h1>BREAK</h1>
-<div *ngIf="selectedCategoryWords">
-  <h1>now for some checks before we move on</h1>
-  <h3>selectedCategory2Str<br /></h3>
-  {{ selectedCategory2Str }}
-</div>
-<h3>selectedCategoryWords</h3>
-<br />{{ selectedCategoryWords }}
-<h3>selectedCategoryWords[i]</h3>
-<br />{{ selectedCategoryWords }}
-<h3>selectedCategory</h3>
-<br />{{ selectedCategory?.words }}
+<app-score></app-score>
