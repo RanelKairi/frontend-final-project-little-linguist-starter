@@ -53,13 +53,17 @@ export class MixedLettersComponent implements OnInit {
   sortCateWordsDupli: TranslatedWord[] = [];
   sortCateWords : TranslatedWord [] = [];
   sortCateWordsmix : TranslatedWord [] = [];
-
+  shuffledArray : string[] = [];
   word1 = ''
   word2 = ''
   word2arr= ['']
+
+  nonShuffledArray:string[] = [];
   word3 = ''
   
   wordlord : any;
+
+  // originalArray = word2arr ['']
   
   constructor(
     private route: ActivatedRoute,
@@ -76,28 +80,35 @@ export class MixedLettersComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.categoryId = +params.get('id')!;
       this.selectedCategory = this.CategoryService.get(this.categoryId)
+      console.log("selectedCategory",this.selectedCategory)
+      console.log("selectedCategory",JSON.stringify(this.selectedCategory?.words))
       this.sortCateWords = this.selectedCategory? [...this.selectedCategory?.words] : [];// return Translated[]
-      // this.sortCateWordsmix.sort(() => Math.random()-0.5)// רק 1 -- עבר לservice
       this.randomService.shuffleArray2(this.sortCateWords)
-      //
       this.word1 = this.sortCateWords[0].origin
-      // this.word2 = this.word1
       this.word2 = this.sortCateWords[0].origin
-      // console.log("jjjjjjjjj"+typeof(this.word2))
-      // console.log('this.word2!!!'+this.word2)
       this.word2 = this.word2.toLocaleLowerCase()
+      this.word1 = this.word1.toLocaleLowerCase()
       this.word2arr = this.word2.split('')
-      
-      this.wordlord = this.randomService.shuffleArray3(this.word2arr)
+      this.nonShuffledArray = this.word2arr
+      console.log("word2arr",this.word2arr)
+      console.log("nonShuffle",this.nonShuffledArray)
+      this.shuffledArray = this.randomService.shuffleArrayGem(this.nonShuffledArray)
+      this.word2arr = this.randomService.shuffleArray3(this.word2arr)
+      console.log("shuffleArray",this.shuffledArray)
       this.word3 = this.word2arr.join('')
-      
+
+      // if(this.word3 === this.word1){
+      //   this.word2arr = this.randomService.shuffleArray3(this.word2arr)
+      //   this.word2 = this.word2arr.join(''); //Don't forget to replace to word3
+      // }
+    
 
       // console.log('this.word2LOWERCASE!!!'+this.word2)
       // const wordlord = (this.word1.toLocaleLowerCase())
-      console.log('selectCategory'+JSON.stringify(this.selectedCategory?.words)) // return Category[]
-      console.log('sortCateWords'+JSON.stringify(this.sortCateWords))
-      console.log('sortCateWordsDupli'+JSON.stringify(this.sortCateWordsDupli))
-      console.log('mixMIX:'+JSON.stringify(this.sortCateWordsmix))
+      // console.log('selectCategory'+JSON.stringify(this.selectedCategory?.words)) // return Category[]
+      // console.log('sortCateWords'+JSON.stringify(this.sortCateWords))
+      // console.log('sortCateWordsDupli'+JSON.stringify(this.sortCateWordsDupli))
+      // console.log('mixMIX:'+JSON.stringify(this.sortCateWordsmix))
     });
   }
 
