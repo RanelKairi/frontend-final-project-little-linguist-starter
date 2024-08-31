@@ -52,24 +52,13 @@ export class SelectGameCategoryDialogComponent implements OnInit {
 
   }
 
-  // getGameURL(_currentGame:GameProfile,_currentCate:Category): string {
-  //   if (this.currentCate && this.currentGame) {
-  //     _currentCate = this.currentCate;
-  //     _currentGame = this.currentGame;
-  //     return this.GameDataService.getGameURL(
-  //       this.currentGame.id,
-  //       this.currentCate.id
-  //     );
-  //   }
-  //   return '';
-  // }
   currentGameCate(selectedCate:Category,selectedGame:GameProfile){
     if(this.currentCate && this.currentGame){
       selectedCate = this.currentCate;
       selectedGame = this.currentGame;
     
     return this.GameDataService.Cate2Game(this.currentCate,
-      // this.currentGame
+  
     );
 
     

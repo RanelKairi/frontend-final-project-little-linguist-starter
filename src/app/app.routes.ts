@@ -8,8 +8,9 @@ import { HelpComponent } from './help/help.component';
 import { MixedLettersComponent } from './Games/mixedLetters/mixedLetters.component';
 import { PairOfWordsComponent } from './Games/PairOfWords/PairOfWords.component';
 import { SelectGameCategoryDialogComponent } from './select-game-category-dialog/select-game-category-dialog.component';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { MixdrixComponent } from './Games/mixdrix/mixdrix.component';
+import { Mix3TryComponent } from './Games/mix-3-try/mix-3-try.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -21,13 +22,14 @@ export const routes: Routes = [
   { path: 'help', component: HelpComponent },
   { path: 'Games/mixedLetters/:id', component: MixedLettersComponent },
   { path: 'Games/PairOfWords/:id', component: PairOfWordsComponent },
-  { path: 'Games/mix-drix/:id', component:MixdrixComponent },
-  {path : 'select-game-category-dialog', component: SelectGameCategoryDialogComponent}
-  
+  { path: 'Games/mix-drix/:id', component: MixdrixComponent },
+  { path: 'Games/mix-3-try/:id', component: Mix3TryComponent },
+  { path: 'select-game-category-dialog', component: SelectGameCategoryDialogComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

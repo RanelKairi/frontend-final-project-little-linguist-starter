@@ -1,0 +1,76 @@
+<div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!endGame && words && !isLoading">
+    <mat-icon class ="exit" (click)="exit()">exit_to_app</mat-icon>
+    <form #mixGameForm = "ngForm" (ngSubmit)="submit()">
+        <div class = "timer-container">
+            <mat-icon>alarm</mat-icon>
+            <mat-icon>paid</mat-icon>
+            <p>{{this.grade}}</p>
+            
+        <!-- <app-timer [duration] = 'gameDuration'
+            (timeUp)="handleTimeUp()"
+            (reportTimeLeft)="handleTimeLeftReport($event)">
+        </app-timer> -->
+        </div>
+        <div>
+            <div class="r">
+                <h1>Mixxed Letters - {{selectedCategory?.name}}</h1>
+                <div class ="mix-game">
+                    <span>{{words[index].target}}</span>
+                    <span> {{mixWord}}</span>
+                    <mat-form-field>
+                        <mat-label>Guess:</mat-label>
+                        <input 
+                        matInput
+                        [(ngModel)]="words[index].guess"
+                        name="guess"
+                        #guessField="ngModel"
+                        required
+                        />
+                    </mat-form-field>
+                    <div class="button-row">
+                        <button type="button" mat-raised-button color="primary" (click)="reset()">Reset</button>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="mixGameForm.invalid || mixGameForm.pristine">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="progress-container">
+        <div class="progress-bar">
+            <mat-progress-bar mode="determinate" [value]="calculateProgress()"></mat-progress-bar>
+            <div class ="progress-text">{{calculateProgress() | number : "1.0-0" }} %</div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="game-container">
+    <div class="game-content">
+        <button mat-icon-button class="exit-button" (click)="exit()"></button>
+      <h2>Mixed Letters - {{selectedCategory?.name}}</h2>
+      <span><p>{{randomCateWords[0].target}}</p></span>
+      <p>{{randomCateWords[0].origin}}</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Guess:</mat-label>
+        <input matInput >
+      
+      <button mat-raised-button color="primary">Submit</button>
+      <button mat-raised-button color="accent">Reset</button>
+    </mat-form-field>
+  
+      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      <span>4/10</span> -->
+     

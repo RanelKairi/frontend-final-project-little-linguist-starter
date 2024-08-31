@@ -29,6 +29,11 @@ export class GameDataService {
        'mixdrix',
         'thisgame is dangoururs',
          'Games/mix-drix'),
+
+         new GameProfile(4,
+          'mix-3-try',
+           'thisgame is dangoururs',
+            'Games/mix-3-try'),
   ];
   constructor(private CategoryService : CategoriesService) {}
 

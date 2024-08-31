@@ -2,13 +2,26 @@ import { Injectable } from '@angular/core';
 import { GameProfile } from '../../shared/model/GameProfile';
 import { TranslatedWord } from '../../shared/model/translated-word';
 import { Category } from '../../shared/model/category';
+import { GamePlayed } from '../../shared/model/game-played.';
 @Injectable({
   providedIn: 'root'
 })
 export class GameRandomService {
 
-  currentWord:TranslatedWord[] = []
+  gamesPlayed : GamePlayed[] = []
   
+  addGamePlayed(gamePlayed:GamePlayed): any{
+    
+    this.gamesPlayed.push(gamePlayed)
+    console.log('from gamesservice',this.gamesPlayed)
+    
+  }
+
+  currentWord:TranslatedWord[] = []
+      setOriginal(array: TranslatedWord[]):TranslatedWord[]{
+        const originalArray =[...array]
+        return array
+      }
       ordeRandom(array:TranslatedWord[]):TranslatedWord[]{  //מבלגן הכל בקטע טוב
         const arrayCheck = [...array]
         array.sort(()=>Math.random()-0.5);
@@ -27,7 +40,11 @@ export class GameRandomService {
           console.log(array)
             };return array;  
         };
+
+        getGameDuration(){ // check about it 
+
+        }
     
-  
+        
 
       }
