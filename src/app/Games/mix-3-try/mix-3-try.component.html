@@ -1,3 +1,14 @@
+<div *ngIf="endGame">
+    <div *ngIf="_currentGame">
+    <table>
+        <table mat-table []>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </table>
+</div>
+</div>
 <div *ngIf="isLoading">
     <mat-spinner></mat-spinner>
 </div>
@@ -33,6 +44,7 @@
                     <div class="button-row">
                         <button type="button" mat-raised-button color="primary" (click)="reset()">Reset</button>
                         <button type="submit" mat-raised-button color="primary" [disabled]="mixGameForm.invalid || mixGameForm.pristine">Submit</button>
+                        
                     </div>
                 </div>
             </div>

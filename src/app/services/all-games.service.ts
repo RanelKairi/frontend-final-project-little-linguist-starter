@@ -8,6 +8,15 @@ export class AllGamesService {
 
   private readonly GAMES_KEY = 'games';
   private readonly NEXT_ID_KEY = 'nextId';
+
+  gamesPlayed : GamePlayed[] = []
+  
+  addGamePlayed(gamePlayed:GamePlayed): any {
+    
+    this.gamesPlayed.push(gamePlayed)
+    console.log('from allGamesService',this.gamesPlayed)
+    
+  }
   
   private getGamesPlayed() : Map<number, GamePlayed>{
     const gamesString = localStorage.getItem(this.GAMES_KEY);
@@ -50,17 +59,18 @@ export class AllGamesService {
   update(game : GamePlayed) : void {
     const gamesMap = this.getGamesPlayed();
 
-    game.secondsLeftInGame =+ //new Date();
-    gamesMap.set(game.idCategory,game);
+    game.date = new Date(); //new Date();
+    gamesMap.set(game.gamePlayedId,game);
 
     this.setGamesPlayed(gamesMap);
 }
 add(game : GamePlayed) : void {
-  game.idCategory = this.getNextId();
+  game.gamePlayedId = this.getNextId();
+  game.date = new Date();
   // category.lastUpdateDate = new Date();
 
   const gamesMap = this.getGamesPlayed();
-  gamesMap.set(game.idCategory, game);
+  gamesMap.set(game.gamePlayedId, game);
 
   this.setGamesPlayed(gamesMap);
   this.setNextId(++game.gamePlayedId);

@@ -5,11 +5,15 @@ export class GamePlayed {
   words : TranslatedWord[] = [];
     date = new Date();
   constructor(
-    public idCategory : number ,
-    public numOfPoints : number ,
-    public secondsLeftInGame : number ,
-    public secondsPlayed : number ,
+    public categoryId : number ,
+    public categoryIdStr: string,
+    public grade : number ,
     public gamePlayedId : number , 
-  ) { }
+
+  ) {
+    this.words = [];
+   }
 
 }
+ // public secondsLeftInGame : number ,
+    // public secondsPlayed : number ,

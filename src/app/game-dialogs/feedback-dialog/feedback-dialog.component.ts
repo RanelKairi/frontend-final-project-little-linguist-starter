@@ -4,6 +4,7 @@ import { GamePlayed } from '../../../shared/model/game-played.';
 import { GameDataService } from '../../services/GameData.service';
 import { AllGamesService } from '../../services/all-games.service';
 import { MatDialogActions, MatDialogContent, MatDialogModule ,MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-feedback-dialog',
@@ -13,7 +14,8 @@ import { MatDialogActions, MatDialogContent, MatDialogModule ,MAT_DIALOG_DATA } 
     MatDialogModule,
     MatDialogContent,
     MatDialogActions,
-    NgIf
+    NgIf,
+    RouterModule
 
   ],
   templateUrl: './feedback-dialog.component.html',

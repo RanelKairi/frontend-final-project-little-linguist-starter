@@ -13,7 +13,7 @@ export class GameRandomService {
   addGamePlayed(gamePlayed:GamePlayed): any{
     
     this.gamesPlayed.push(gamePlayed)
-    console.log('from gamesservice',this.gamesPlayed)
+    console.log('from gameRandomService',this.gamesPlayed)
     
   }
 

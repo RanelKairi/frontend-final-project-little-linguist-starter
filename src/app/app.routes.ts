@@ -11,6 +11,7 @@ import { SelectGameCategoryDialogComponent } from './select-game-category-dialog
 import { Component, NgModule } from '@angular/core';
 import { MixdrixComponent } from './Games/mixdrix/mixdrix.component';
 import { Mix3TryComponent } from './Games/mix-3-try/mix-3-try.component';
+import { ScoreComponent } from './score/score.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'Games/mix-3-try/:id', component: Mix3TryComponent },
   { path: 'select-game-category-dialog', component: SelectGameCategoryDialogComponent,
   },
+  {path: 'score/:id/:y', component:ScoreComponent}
 ];
 
 @NgModule({
