@@ -5,6 +5,7 @@ import { GameDataService } from '../../services/GameData.service';
 import { AllGamesService } from '../../services/all-games.service';
 import { MatDialogActions, MatDialogContent, MatDialogModule ,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-feedback-dialog',
@@ -15,30 +16,24 @@ import { RouterModule } from '@angular/router';
     MatDialogContent,
     MatDialogActions,
     NgIf,
-    RouterModule
+    RouterModule,
+    MatButtonModule
 
   ],
   templateUrl: './feedback-dialog.component.html',
   styleUrl: './feedback-dialog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FeedbackDialogComponent implements OnInit{
+export class FeedbackDialogComponent{
   currentPlayed?:[]
   currentGamesPlayed? :GamePlayed;
   allGamesPlayed : GamePlayed[] = [];
-  trueCase=`<div class = "true">`;
-  falseCase=``
+  trueCase: any;
+  falseCase:any;
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public isSucces : boolean,
     private allGameService : AllGamesService
   ){}
   
-  
-  ngOnInit(): void {
-    console.log(this.isSucces)
-    if(this.isSucces!){
-      
-    }
-  }
 }

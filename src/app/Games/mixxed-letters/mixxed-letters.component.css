@@ -1,8 +1,9 @@
 :host {
   display: block;
 }
-
-
+:host {
+  display: block;
+}
 
 .body-frame {
   margin: 20px;

@@ -9,7 +9,7 @@ export class Category {
         public name : string,
         public origin : Language,
         public target : Language) {
-    }
+        }
 
     CateName(): string {
     return this.name;

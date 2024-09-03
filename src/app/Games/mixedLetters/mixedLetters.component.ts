@@ -21,7 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ExitGameDialogComponent } from '../../game-dialogs/exit-game-dialog/exit-game-dialog.component';
 import { ScoreComponent } from '../../score/score.component';
-import { FeedbackDialogComponent } from '../../game-dialogs/feedback-dialog/feedback-dialog.component';
+import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { GameRandomService } from '../../services/game-random.service';
 @Component({
   selector: 'app-mixed-letters',
@@ -51,84 +51,78 @@ export class MixedLettersComponent implements OnInit {
   selectedGame?: GameProfile;
   allGames: GameProfile[] = [];
   // sortCateWordsDupli: TranslatedWord[] = [];
-  sortCateWords : TranslatedWord [] = [];
-  shuff : TranslatedWord [] = [];
-  shuff2 : TranslatedWord [] = [];
-  sortCateWordsmix : TranslatedWord [] = [];
-  shuffledArray : string[] = [];
-  word1 = ''
-  word2 = '' // lion
-  word2arr= [''] // n,l,i,o
+  sortCateWords: TranslatedWord[] = [];
+  shuff: TranslatedWord[] = [];
+  shuff2: TranslatedWord[] = [];
+  sortCateWordsmix: TranslatedWord[] = [];
+  shuffledArray: string[] = [];
+  word1 = '';
+  word2 = ''; // lion
+  word2arr = ['']; // n,l,i,o
 
-  nonShuffledArray:string[] = [];
-  word3 = '' // lion => //nilo
-  
-  wordlord : any;
+  nonShuffledArray: string[] = [];
+  word3 = ''; // lion => //nilo
+
+  wordlord: any;
 
   // originalArray = word2arr ['']
-  
+
   constructor(
     private route: ActivatedRoute,
     private CategoryService: CategoriesService,
     private GameDataService: GameDataService,
     public dialogService: MatDialog,
-    private randomService : GameRandomService
+    private randomService: GameRandomService
   ) {}
 
   ngOnInit(): void {
-    this.allGames = this.GameDataService.list()
-    this.selectedGame = this.allGames[0]
+    this.allGames = this.GameDataService.list();
+    this.selectedGame = this.allGames[0];
 
     this.route.paramMap.subscribe((params) => {
       this.categoryId = +params.get('id')!;
-      this.selectedCategory = this.CategoryService.get(this.categoryId)
-      console.log("selectedCategory",this.selectedCategory)
+      this.selectedCategory = this.CategoryService.get(this.categoryId);
+      console.log('selectedCategory', this.selectedCategory);
       // console.log("selectedCategory",JSON.stringify(this.selectedCategory?.words))
-      this.sortCateWords = this.selectedCategory? [...this.selectedCategory?.words] : [];// return Translated[]
-      this.shuff = [...this.sortCateWords]
-      console.log("shuffffffff",this.shuff)
+      this.sortCateWords = this.selectedCategory
+        ? [...this.selectedCategory?.words]
+        : []; // return Translated[]
+      this.shuff = [...this.sortCateWords];
+      console.log('shuffffffff', this.shuff);
       this.shuff2 = [...this.shuff];
-      (this.shuff2.toLocaleString())
-     
-      console.log("shuff2After9",this.shuff2)
+      this.shuff2.toLocaleString();
 
-
-
-
-
+      console.log('shuff2After9', this.shuff2);
 
       // this.randomService.shuffleArray2(this.sortCateWords)
-      this.word1 = this.sortCateWords[0].origin
-      this.word2 = this.sortCateWords[0].origin
-      this.word2 = this.word2.toLocaleLowerCase()
-      this.word1 = this.word1.toLocaleLowerCase()
-      this.word2arr = this.word2.split('')
-      this.nonShuffledArray = this.word2arr
-      console.log("word2arr",this.word2arr)
-      console.log("nonShuffle",this.nonShuffledArray)
-     
+      this.word1 = this.sortCateWords[0].origin;
+      this.word2 = this.sortCateWords[0].origin;
+      this.word2 = this.word2.toLocaleLowerCase();
+      this.word1 = this.word1.toLocaleLowerCase();
+      this.word2arr = this.word2.split('');
+      this.nonShuffledArray = this.word2arr;
+      console.log('word2arr', this.word2arr);
+      console.log('nonShuffle', this.nonShuffledArray);
+
       // this.word2arr = this.randomService.shuffleArray3(this.word2arr)
-      console.log("shuffleArray",this.shuffledArray)
-      this.word3 = this.word2arr.join('')
+      console.log('shuffleArray', this.shuffledArray);
+      this.word3 = this.word2arr.join('');
 
       // if(this.word3 === this.word1){
       //   this.word2arr = this.randomService.shuffleArray3(this.word2arr)
       //   this.word2 = this.word2arr.join(''); //Don't forget to replace to word3
       // }
-    
-      
+
       // console.log('this.word2LOWERCASE!!!'+this.word2)
-      const wordlord = (this.word1.toLocaleLowerCase())
+      const wordlord = this.word1.toLocaleLowerCase();
       // console.log('selectCategory'+JSON.stringify(this.selectedCategory?.words)) // return Category[]
       // console.log('sortCateWords'+JSON.stringify(this.sortCateWords))
       // console.log('sortCateWordsDupli'+JSON.stringify(this.sortCateWordsDupli))
       // console.log('mixMIX:'+JSON.stringify(this.sortCateWordsmix))
     });
-    
   }
 
-  fetching(){}
-
+  fetching() {}
 
   // shuffleArray(array: TranslatedWord[]): TranslatedWord[] {
   //   for (let i = array.length - 1; i > 0; i--) {
@@ -138,29 +132,16 @@ export class MixedLettersComponent implements OnInit {
   //   return array;
   // }
 
-
-
   exitDialog() {
     this.dialogService.open(ExitGameDialogComponent);
   }
 }
 
+// fetchCategoryDetails(): void {
+//   this.allGames = this.GameDataService.list();
+//   this.selectedGame = this.allGames[0];
 
+//   this.selectedCategory = this.CategoryService.get(this.categoryId);
+//   this.selectedCategoryWords = this.selectedCategory? [...this.selectedCategory?.words] : [];
 
-
-
-
-  // fetchCategoryDetails(): void {
-  //   this.allGames = this.GameDataService.list();
-  //   this.selectedGame = this.allGames[0];
-
-  //   this.selectedCategory = this.CategoryService.get(this.categoryId);
-  //   this.selectedCategoryWords = this.selectedCategory? [...this.selectedCategory?.words] : [];
-   
-   
-    
-    
-   
-  // }
-
-  
+// }

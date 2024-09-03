@@ -6,6 +6,7 @@ import { GameScoreData } from '../../shared/model/game-score-data.';
 })
 export class ScoreService {
   private lastGameScore ?:GameScoreData
+  
   setScore(data:GameScoreData):void{
 
     this.lastGameScore = data;

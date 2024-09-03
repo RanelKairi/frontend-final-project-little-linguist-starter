@@ -50,6 +50,7 @@ export class CategoriesListComponent implements OnInit {
       if (result) {
         this.categoriesService.delete(id);
         this.dataSource = this.categoriesService.list();
+        console.log(this.dataSource)
       }
     });
   }
