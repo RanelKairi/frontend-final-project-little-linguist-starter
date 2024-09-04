@@ -97,6 +97,7 @@ span {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #beb7b4;
 }
 
 .exit-button {
@@ -111,7 +112,7 @@ span {
 
 table.mat-table {
   width: 100%;
-  background-color: #ff8a65;
+  background-color: #beb7b4;
   color: #ff8a65;
   border-collapse: collapse;
 }
@@ -119,7 +120,7 @@ table.mat-table {
 th, td {
   padding: 10px;
   text-align: center;
-  border-bottom: 1px solid #ff8a65 ;
+  border-bottom: 1px solid #beb7b4 ;
 }
 
 th {
