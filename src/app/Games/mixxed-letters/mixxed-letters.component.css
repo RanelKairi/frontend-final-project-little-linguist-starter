@@ -1,57 +1,161 @@
-:host {
-  display: block;
-}
-:host {
-  display: block;
-}
-
+/* General body frame styling */
 .body-frame {
   margin: 20px;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color:primary; /* Light background for a clean look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Header styling */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Align exit button to the left and game points to the right */
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1; /* Light background for the header */
   border-radius: 8px;
-  background-color: #ccc;
 }
 
 .exit-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  flex-grow: 1; /* Keep exit button on the left side */
 }
 
+.game-points {
+  display: flex;
+  align-items: center; /* Aligns the icon and the grade vertically */
+  justify-content: flex-end; /* Aligns game points to the right side */
+  background-color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50; /* Green color for positive score */
+}
+
+/* Score Icon */
 .score-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  color: #ffb300; /* Gold color for the "paid" icon */
+  font-size: 24px;
+  margin-right: 8px; /* Space between the icon and grade */
+}
+
+.grade {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+/* Form styling */
+form {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between form fields */
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  width: 45%;
+}
+
+/* Progress bar styling */
+.progress-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: auto;
-  height: auto;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.target-word {
+.current-progress,
+.total-progress {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+}
+
+mat-progress-bar {
+  flex-grow: 1;
+  margin: 0 10px;
+  height: 24px;
+  background-color: #e0e0e0;
+}
+
+.r {
+  text-align: center;
+}
+
+/* Target and Mixed Word Styling */
+h3 {
   font-size: 24px;
-  text-align: center;
+  color: #333;
   margin-bottom: 10px;
-  
 }
 
-.mixed-letters {
-  font-size: 32px;
-  letter-spacing: 10px;
-  text-align: center;
-  margin-bottom: 20px;
+/* Guess input field */
+input[matInput] {
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.button-group {
-  display: flex;
-  justify-content: space-between;
+.button-row button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Table styles */
+table {
+  width: 100%;
   margin-top: 20px;
+  border-collapse: collapse;
 }
 
-.scoring {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-size: 18px;
+}
+
+td {
+  font-size: 16px;
+}
+
+mat-icon {
+  font-size: 20px;
+  color: green;
+}
+
+mat-icon.fail {
+  color: red;
+}
+
+button[mat-raised-button] {
+  background-color: #4caf50; /* Green buttons for actions */
+  color: #fff;
+  font-weight: bold;
+}
+
+button[mat-raised-button]:disabled {
+  background-color: #ccc; /* Disabled button style */
+  color: #888;
 }

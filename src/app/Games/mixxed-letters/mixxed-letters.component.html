@@ -37,7 +37,7 @@
               <mat-icon>check</mat-icon>
             </div>
             <div *ngIf="!words.answer">
-              <mat-icon>fail</mat-icon>
+              <mat-icon>close</mat-icon>
             </div>
             {{ words.answer }}
           </td>
@@ -55,6 +55,14 @@
       >
         Play Again
       </button>
+
+      <button
+        mat-raised-button
+        (click)="playAgain()"
+        [routerLink]="['mixxed-letters', id]"
+      >
+        Play Again
+      </button>
     </div>
   </div>
 </div>
@@ -63,12 +71,17 @@
   <mat-card class="body-frame">
     <mat-card-header>
       <div mat-card-avatar class="header-icon">
-        <app-exit-button> </app-exit-button>
-      </div>
-      <div mat-card-avatar class="">
-        <p>{{ this.grade }}</p>
+        <div class="header-container">
+          <div class="exit-button">
+            <app-exit-button></app-exit-button>
+          </div>
+          <div class="game-points">
+            <app-game-points [grade]="grade"></app-game-points>
+          </div>
+        </div>
       </div>
     </mat-card-header>
+    
     <div *ngIf="selectedCate && !endGame && !isLoading">
       <mat-card-content>
         <form #mixGameForm="ngForm" (ngSubmit)="submit()">
@@ -115,12 +128,14 @@
             </div>
           </div>
         </form>
-      </mat-card-content>
-    </div>
+        <div class="progress-container">
+          <span class="current-progress">{{ index }}</span>
+          <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
 
-    <div class="progress-container">
-      <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
-      <!-- לא שלכוח למלא את התגית הראשונה לראות דוגמא מ CHOOSEGAMECOMP.HTTML -->
+          <span class="total-progress">{{ words.length }}</span>
+        </div>
+      </mat-card-content>
     </div>
   </mat-card>
 </div>
+

@@ -1,3 +1,6 @@
 :host {
   display: block;
 }
+.exit-button {
+  margin-right: auto; /* Forces the exit button to stay on the left */
+}
