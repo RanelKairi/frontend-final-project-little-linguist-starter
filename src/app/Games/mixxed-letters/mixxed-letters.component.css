@@ -1,45 +1,45 @@
-/* General body frame styling */
+
 .body-frame {
   margin: 20px;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 12px;
-  background-color:primary; /* Light background for a clean look */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color:primary;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styling */
+
 .header-container {
   display: flex;
-  justify-content: space-between; /* Align exit button to the left and game points to the right */
+  justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #f1f1f1; /* Light background for the header */
+  background-color: #f1f1f1; 
   border-radius: 8px;
 }
 
 .exit-button {
-  flex-grow: 1; /* Keep exit button on the left side */
+  flex-grow: 1; 
 }
 
 .game-points {
   display: flex;
-  align-items: center; /* Aligns the icon and the grade vertically */
-  justify-content: flex-end; /* Aligns game points to the right side */
+  align-items: center; 
+  justify-content: flex-end;
   background-color: #ffffff;
   padding: 8px 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   font-size: 18px;
   font-weight: bold;
-  color: #4caf50; /* Green color for positive score */
+  color: #4caf50;
 }
 
-/* Score Icon */
+
 .score-icon {
-  color: #ffb300; /* Gold color for the "paid" icon */
+  color: #ffb300;
   font-size: 24px;
-  margin-right: 8px; /* Space between the icon and grade */
+  margin-right: 8px;
 }
 
 .grade {
@@ -48,12 +48,12 @@
   color: #4caf50;
 }
 
-/* Form styling */
+
 form {
   margin: 20px 0;
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between form fields */
+  gap: 15px;
 }
 
 .mat-form-field {
@@ -69,7 +69,6 @@ button {
   width: 45%;
 }
 
-/* Progress bar styling */
 .progress-container {
   display: flex;
   align-items: center;
@@ -96,14 +95,12 @@ mat-progress-bar {
   text-align: center;
 }
 
-/* Target and Mixed Word Styling */
 h3 {
   font-size: 24px;
   color: #333;
   margin-bottom: 10px;
 }
 
-/* Guess input field */
 input[matInput] {
   font-size: 18px;
   padding: 10px;
@@ -117,7 +114,6 @@ input[matInput] {
   font-weight: bold;
 }
 
-/* Table styles */
 table {
   width: 100%;
   margin-top: 20px;
@@ -150,12 +146,11 @@ mat-icon.fail {
 }
 
 button[mat-raised-button] {
-  background-color: #4caf50; /* Green buttons for actions */
-  color: #fff;
+  background-color: #4caf50;
   font-weight: bold;
 }
 
 button[mat-raised-button]:disabled {
-  background-color: #ccc; /* Disabled button style */
+  background-color: #ccc;
   color: #888;
 }

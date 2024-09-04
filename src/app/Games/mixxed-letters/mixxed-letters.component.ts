@@ -86,7 +86,7 @@ export class MixxedLettersComponent implements OnInit {
         .join('')
         .toLocaleLowerCase();
       if (
-        this.mixedWord.toLocaleLowerCase() === this.words[this.index].origin
+        this.mixedWord.toLocaleLowerCase() === this.words[this.index].origin.toLocaleLowerCase()
       ) {
         console.log('sorted to same word case handled');
         this.index--;
@@ -130,7 +130,7 @@ export class MixxedLettersComponent implements OnInit {
       
     }else{ 
      
-      alert(this.prig);
+      
       this.nextWord();
       this.reset()
     }

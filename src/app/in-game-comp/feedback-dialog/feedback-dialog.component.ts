@@ -2,7 +2,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject,NgModule, OnInit } from '@angular/core';
 import { GamePlayed } from '../../../shared/model/game-played.';
 import { GameDataService } from '../../services/GameData.service';
-import { AllGamesService } from '../../services/all-games.service';
+
 import { MatDialogActions, MatDialogContent, MatDialogModule ,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -33,7 +33,7 @@ export class FeedbackDialogComponent{
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public isSucces : boolean,
-    private allGameService : AllGamesService
+   
   ){}
   
 }
