@@ -1,7 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject,NgModule, OnInit } from '@angular/core';
-import { GamePlayed } from '../../../shared/model/game-played.';
-import { GameDataService } from '../../services/GameData.service';
 
 import { MatDialogActions, MatDialogContent, MatDialogModule ,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
@@ -26,8 +24,6 @@ import { MatButton, MatButtonModule } from '@angular/material/button';
 })
 export class FeedbackDialogComponent{
   currentPlayed?:[]
-  currentGamesPlayed? :GamePlayed;
-  allGamesPlayed : GamePlayed[] = [];
   trueCase: any;
   falseCase:any;
   

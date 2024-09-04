@@ -1,0 +1,55 @@
+<div *ngIf="!endGame">
+    <mat-card class="body-frame">
+        <mat-card-header>
+            <div mat-card-avatar class="header-icon">
+              <div class="header-container">
+                <div class="exit-button">
+                  <app-exit-button></app-exit-button>
+                </div>
+                <div class="game-points">
+                  <app-game-points [grade]="grade"></app-game-points>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+      <mat-card-content>
+        <h3>Is this word part of the current category: {{ selectedCate?.name }}?</h3>
+        <h2>{{ currentWord }}</h2>
+  
+        <div class="button-row">
+          <button mat-raised-button color="primary" (click)="guess(true)">Yes</button>
+          <button mat-raised-button color="warn" (click)="guess(false)">No</button>
+        </div>
+  
+       
+        <div class="progress-container">
+          <span>{{ index + 1 }}</span>
+          <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
+          
+          <span>{{ words.length }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div *ngIf="endGame">
+    <h1>Game Over - Your Grade {{grade}} Points Out Of 100</h1>
+    <table mat-table [dataSource]="words">
+      <ng-container matColumnDef="origin">
+        <th mat-header-cell *matHeaderCellDef>Word</th>
+        <td mat-cell *matCellDef="let word">{{ word.origin }}</td>
+      </ng-container>
+      <ng-container matColumnDef="answer">
+        <th mat-header-cell *matHeaderCellDef>Correct?</th>
+        <td mat-cell *matCellDef="let word">
+          <mat-icon *ngIf="word.answer">check_circle</mat-icon>
+          <mat-icon *ngIf="!word.answer">cancel</mat-icon>
+        </td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="['origin', 'answer']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['origin', 'answer']"></tr>
+    </table>
+    <button mat-raised-button (click)="playAgain()">Play Again</button>
+  </div>
+  

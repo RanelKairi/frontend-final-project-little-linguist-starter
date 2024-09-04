@@ -7,6 +7,7 @@ import { TwoGamesComponent } from './two-games/two-games.component';
 import { HelpComponent } from './help/help.component';
 import { Component, NgModule } from '@angular/core';
 import { MixxedLettersComponent } from './Games/mixxed-letters/mixxed-letters.component';
+import { WordSortingComponent } from './Games/word-sorting/word-sorting.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'two-game', component: TwoGamesComponent },
   { path: 'help', component: HelpComponent },
   { path: 'Games/mixxed-letters/:id', component: MixxedLettersComponent },
+  { path: 'Games/word-sorting/:id', component:WordSortingComponent},
   
 ];
 

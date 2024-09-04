@@ -16,6 +16,12 @@ export class GameDataService {
       'In this game you should fix the order of the letters to the correct order of the word ',
       'Games/mixxed-letters'
     ),
+    new GameProfile(
+      2,
+      'Word Sorting',
+      'In this game you need to match a word to a category',
+      'Games/word-sorting'
+    ),
   ];
 
   constructor(private CategoryService: CategoriesService) {}
@@ -26,12 +32,7 @@ export class GameDataService {
   // currentCate? : Category;
   // currentGame? : GameProfile;
 
-  Cate2Game(
-    currentCate: Category
-    
-  ) {
-  }
+  Cate2Game(currentCate: Category) {}
 
   getCate(CateID: number) {}
- 
 }

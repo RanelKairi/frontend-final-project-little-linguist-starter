@@ -5,7 +5,7 @@
 </div> -->
 
 <div *ngIf="endGame">
-  <h2></h2>
+  <h1>Game Over - Your Grade {{grade}} Points Out Of 100</h1>
   <div *ngIf="words">
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="origin">

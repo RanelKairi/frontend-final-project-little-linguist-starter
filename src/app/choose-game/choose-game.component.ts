@@ -13,7 +13,7 @@ import { Category } from '../../shared/model/category';
 import { MatCardModule } from '@angular/material/card';
 import { GameCardComponent } from '../game-card/game-card.component';
 import { GameProfile } from '../../shared/model/GameProfile';
-import { GameDataService } from '../services/GameData.service';
+import { GameDataService } from '../services/game-data.service';
 import { SelectGameCategoryDialogComponent } from '../select-game-category-dialog/select-game-category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 

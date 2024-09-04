@@ -1,0 +1,144 @@
+:host {
+  display: block;
+}
+.body {
+  background-color: #1c1c1e;
+  color: #e5e5e5; 
+}
+.body-frame{
+
+  background-color: #3a3a3c;
+}
+.mat-card {
+  background-color:  rgba(0, 0, 0, 0.5); 
+  color: #e5e5e5; 
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin: 20px auto;
+  max-width: 600px;  
+  text-align: center;
+}
+
+
+h3, h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #e5e5e5;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 32px;
+  color: #ffb300;  
+  font-weight: bold;
+  text-transform: uppercase;  
+  
+}
+
+button.mat-raised-button {
+  font-family: 'Roboto', sans-serif;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button[color="primary"] {
+  background-color: #9c27b0; 
+  color: #fff;
+}
+
+button[color="primary"]:hover {
+  background-color: #ba68c8;
+}
+
+button[color="warn"] {
+  background-color: #ff5722;  
+  color: #fff;
+}
+
+button[color="warn"]:hover {
+  background-color: #ff8a65;
+}
+
+
+.button-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #2c2c2e;
+  border-radius: 8px;
+}
+
+mat-progress-bar {
+  background-color: #505052;
+}
+
+mat-progress-bar .mat-progress-bar-fill {
+  background-color: #4caf50; 
+}
+
+span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e5e5e5;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exit-button {
+  flex-grow: 1;
+}
+
+.game-points {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+table.mat-table {
+  width: 100%;
+  background-color: #ff8a65;
+  color: #ff8a65;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ff8a65 ;
+}
+
+th {
+  background-color: #ff8a65;
+}
+
+td {
+  background-color:#ff8a65;
+}
+
+button.play-again {
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+button.play-again:hover {
+  background-color: #66bb6a;
+}

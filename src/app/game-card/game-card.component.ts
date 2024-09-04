@@ -9,10 +9,9 @@ import { MatCardModule } from '@angular/material/card';
 import { GameProfile } from '../../shared/model/GameProfile';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { SelectGameCategoryDialogComponent }
- from '../select-game-category-dialog/select-game-category-dialog.component';
+import { SelectGameCategoryDialogComponent } from '../select-game-category-dialog/select-game-category-dialog.component';
 import { Category } from '../../shared/model/category';
-import { GameDataService } from '../services/GameData.service';
+import { GameDataService } from '../services/game-data.service';
 import { CategoriesService } from '../services/categories.service';
 
 @Component({
@@ -29,35 +28,29 @@ import { CategoriesService } from '../services/categories.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameCardComponent implements OnInit {
-  @Input() currentGame? :GameProfile;
-  @Input() currentCate? : Category;
+  @Input() currentGame?: GameProfile;
+  @Input() currentCate?: Category;
   allCate: Category[] = [];
   allgames: GameProfile[] = [];
   GamePicked = [];
   constructor(
     public dialogService: MatDialog,
     private GameDataService: GameDataService,
-    private CategoriesService: CategoriesService,
-    // private dialogRef : MatDialogRef<GameCardComponent>,
-  )
+    private CategoriesService: CategoriesService
+  ) // private dialogRef : MatDialogRef<GameCardComponent>,
   {}
-  
+
   ngOnInit(): void {
     this.allCate = this.CategoriesService.list();
     this.allgames = this.GameDataService.list();
   }
 
   openDialog(currentGame: GameProfile) {
-    const dialogRef = this.dialogService.open(SelectGameCategoryDialogComponent, {
-      data: currentGame,
-    });
-    
-
-
-    
-
-    }
-
-    
+    const dialogRef = this.dialogService.open(
+      SelectGameCategoryDialogComponent,
+      {
+        data: currentGame,
+      }
+    );
   }
-
+}
