@@ -63,7 +63,7 @@ export class MixxedLettersComponent implements OnInit {
   ngOnInit(): void {     
     if (this.id) {
       
-      const cateId = parseInt(this.id);
+      const cateId = this.id;
       this.selectedCate = this.categoryService.get(cateId);
       if (this.selectedCate) {
         this.words = [...this.selectedCate.words];

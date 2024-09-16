@@ -38,10 +38,10 @@ export class CategoriesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataSource = this.categoriesService.list();
+    this.dataSource = this.categoriesService.list(); // .then להוסיף
   }
 
-  deleteCategory(id: number, name: string) {
+  deleteCategory(id: string, name: string) {
     const dialogRef = this.dialogService.open(DeleteCategoryDialogComponent, {
       data: name,
     });
