@@ -23,7 +23,7 @@ export const cateConverter = {
       
       lastUpdateDate: Timestamp.fromDate(cateToSave.lastUpdateDate), // Convert Date to Timestamp
     };
-    console.log("cateToSave After conversion",cateToSave)
+   
   },
   fromFirestore: (
     snapshot: QueryDocumentSnapshot,
@@ -51,6 +51,6 @@ export const cateConverter = {
     );
 
     return category;
-    console.log("category",category)
+    
   },
 };

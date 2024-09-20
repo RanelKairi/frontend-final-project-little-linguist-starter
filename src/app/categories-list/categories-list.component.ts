@@ -35,7 +35,7 @@ export class CategoriesListComponent implements OnInit {
   categories: Category[] = [];
 
   constructor(
-    private categoryService: CategoriesService,
+    // private categoryService: CategoriesService,
     private dialogService: MatDialog,
     private cateService: CatesService
   ) {}
@@ -58,13 +58,11 @@ export class CategoriesListComponent implements OnInit {
       data: name,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        this.categoryService.delete(id);
-        this.categoryService
-          .list()
-          .then((result: Category[]) => (this.dataSource = result));
-        console.log(this.dataSource);
+        await this.cateService.delete(id);
+        
+        this.dataSource = await this.cateService.list();
       }
     });
   }

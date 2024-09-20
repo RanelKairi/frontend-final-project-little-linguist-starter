@@ -57,24 +57,18 @@ export class CatesService {
       this.firestore,
       'categories'
     ).withConverter(cateConverter);
+    console.log(categoryCollection)
+    if (category.id){
+      
+      const categoryDocRef = doc(this.firestore,'categories',category.id).withConverter(cateConverter)
+      console.log(categoryDocRef)
+      const data = cateConverter.toFirestore(category)
+      await updateDoc(categoryDocRef,data)
+    }else{
     await addDoc(categoryCollection, category);
-    console.log('afteraddDoc- categoryCol', categoryCollection);
-    console.log('afteraddDoc- category', category);
-    console.log('afteraddDoc- this.firestore', this.firestore);
+    console.log('New category added to Firestore',category);
   }
-
-  // Update a category ready to check
-  async update(category: Category): Promise<void> {
-    const categoryDocRef = doc(this.firestore, `categories/${category.id}`);
-    await updateDoc(categoryDocRef, {
-      name: category.name,
-      origin: category.origin,
-      target: category.target,
-      words: category.words,
-      lastUpdateDate: category.lastUpdateDate,
-    });
   }
-  // ready to check
   async delete(id: string): Promise<void> {
     const categoryDocRef = doc(this.firestore, `categories/${id}`);
     await deleteDoc(categoryDocRef);

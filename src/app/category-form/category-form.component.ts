@@ -11,78 +11,72 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslatedWord } from '../../shared/model/translated-word';
-// import { CatesServiceService } from '../services/cates.service';
+
 import { CatesService } from '../services/cates.service';
 
 @Component({
   selector: 'app-category-form',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatButtonModule, 
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
   ],
   templateUrl: './category-form.component.html',
   styleUrl: './category-form.component.css',
 })
-export class CategoryFormComponent implements OnInit { 
-  currentCategory = new Category('','', Language.English, Language.Hebrew);
-  displayedColumns: string[] = ["Origin", "Target", "Actions"];
+export class CategoryFormComponent implements OnInit {
+  currentCategory = new Category('', '', Language.English, Language.Hebrew);
+  displayedColumns: string[] = ['Origin', 'Target', 'Actions'];
 
   @Input()
-  id? : string;
-  @ViewChild('wordsGroup') wordsGroup? : NgModelGroup;
+  id?: string;
+  @ViewChild('wordsGroup') wordsGroup?: NgModelGroup;
 
-  constructor(private categoryService : CategoriesService,// might delete later
-    private router : Router,
-  private cateService : CatesService){}
+  constructor(private router: Router, private cateService: CatesService) {}
 
   ngOnInit(): void {
     if (this.id) {
       this.loadCategory();
-    
     }
   }
 
-  async loadCategory(){
-      const categoryData = await this.cateService.get(this.id!); 
-        if (categoryData) {
-        this.currentCategory = categoryData;
-      }
+  async loadCategory() {
+    const categoryData = await this.cateService.get(this.id!);
+    if (categoryData) {
+      this.currentCategory = categoryData;
+    }
   }
 
   addWord() {
-    this.currentCategory.words = 
-      [...this.currentCategory.words, 
-        new TranslatedWord("", "")];
- }
+    this.currentCategory.words = [
+      ...this.currentCategory.words,
+      new TranslatedWord('', ''),
+    ];
+  }
 
-  deleteWord(index : number) {
+  deleteWord(index: number) {
     const extendedWordsList = Array.from(this.currentCategory.words);
-    extendedWordsList.splice(index, 1)
+    extendedWordsList.splice(index, 1);
     this.currentCategory.words = extendedWordsList;
     this.wordsGroup!.control.markAsDirty();
   }
 
-  saveCategory() {
-    console.log("Cate Being Saved",this.currentCategory)
-    if (this.id) {
-      this.cateService.update(this.currentCategory);
-    } else {
-      this.cateService.add(this.currentCategory).then(() => {
-        this.router.navigate(['']);    
-      });
-    }
-
-    
+  async saveCategory() {
+    try{
+    await this.cateService.add(this.currentCategory)
+    this.router.navigate(['']);
+  } catch(error) {
+    console.error('Error saving category:', error)
+  }
   }
 
-  async deleteCategory(){
-    if (this.id){
+  async deleteCategory() {
+    if (this.id) {
       await this.cateService.delete(this.id);
       this.router.navigate(['']);
     }
