@@ -6,8 +6,6 @@ import { HeaderComponent } from './header/header.component';
 import { ChooseGameComponent } from './choose-game/choose-game.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpComponent } from './help/help.component';
-import { TwoGamesComponent } from './two-games/two-games.component';
-
 
 @Component({
   selector: 'app-root',
@@ -20,7 +18,6 @@ import { TwoGamesComponent } from './two-games/two-games.component';
     ChooseGameComponent,
     DashboardComponent,
     HelpComponent,
-    TwoGamesComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

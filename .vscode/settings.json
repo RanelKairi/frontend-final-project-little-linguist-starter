@@ -1,7 +1,7 @@
 {
-    "angular-schematics.schematicsDefaultOptions": {
-        "angular-*": {
-            "externalTemplate": true
-        }
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-*": {
+      "externalTemplate": true
     }
+  }
 }

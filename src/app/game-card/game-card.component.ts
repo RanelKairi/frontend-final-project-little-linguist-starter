@@ -35,14 +35,14 @@ export class GameCardComponent implements OnInit {
   GamePicked = [];
   constructor(
     public dialogService: MatDialog,
-    private GameDataService: GameDataService,
-    private CategoriesService: CategoriesService
+    private gameDataService: GameDataService,
+    private categoryService: CategoriesService
   ) // private dialogRef : MatDialogRef<GameCardComponent>,
   {}
 
   ngOnInit(): void {
-    this.allCate = this.CategoriesService.list();
-    this.allgames = this.GameDataService.list();
+    this.categoryService.list().then((result:Category[]) => (this.allCate = result));
+    this.allgames = this.gameDataService.list();
   }
 
   openDialog(currentGame: GameProfile) {

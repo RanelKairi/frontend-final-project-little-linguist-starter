@@ -33,12 +33,14 @@ export class CategoriesListComponent implements OnInit {
   dataSource: Category[] = [];
 
   constructor(
-    private categoriesService: CategoriesService,
+    private categoryService: CategoriesService,
     private dialogService: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.dataSource = this.categoriesService.list(); // .then להוסיף
+    // this.dataSource = this.categoryService.list();
+     // .then להוסיף
+    this.categoryService.list().then((result:Category[]) => (this.dataSource = result));
   }
 
   deleteCategory(id: string, name: string) {
@@ -48,8 +50,8 @@ export class CategoriesListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.categoriesService.delete(id);
-        this.dataSource = this.categoriesService.list();
+        this.categoryService.delete(id);
+        this.categoryService.list().then((result:Category[]) => (this.dataSource = result));
         console.log(this.dataSource)
       }
     });

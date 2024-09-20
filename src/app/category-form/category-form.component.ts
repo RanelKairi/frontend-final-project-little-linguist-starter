@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslatedWord } from '../../shared/model/translated-word';
+// import { CatesServiceService } from '../services/cates.service';
+import { CatesServiceService } from '../services/cates.service';
 
 @Component({
   selector: 'app-category-form',
@@ -28,7 +30,7 @@ import { TranslatedWord } from '../../shared/model/translated-word';
   styleUrl: './category-form.component.css',
 })
 export class CategoryFormComponent implements OnInit { 
-  currentCategory = new Category('',"", Language.English, Language.Hebrew);
+  currentCategory = new Category('','', Language.English, Language.Hebrew);
   displayedColumns: string[] = ["Origin", "Target", "Actions"];
 
   @Input()
@@ -36,12 +38,13 @@ export class CategoryFormComponent implements OnInit {
 
   @ViewChild('wordsGroup') wordsGroup? : NgModelGroup;
 
-  constructor(private categoriesService : CategoriesService,
-    private router : Router){}
+  constructor(private categoryService : CategoriesService,
+    private router : Router,
+  private cateService : CatesServiceService){}
 
   ngOnInit(): void {
     if (this.id) {
-      const categoryData = this.categoriesService.get(this.id); 
+      const categoryData = this.cateService.get(this.id); 
 
       if (categoryData) {
         this.currentCategory = categoryData;
@@ -63,12 +66,15 @@ export class CategoryFormComponent implements OnInit {
   }
 
   saveCategory() {
+    console.log("Cate Being Saved",this.currentCategory)
     if (this.id) {
-      this.categoriesService.update(this.currentCategory);
+      this.cateService.update(this.currentCategory);
     } else {
-      this.categoriesService.add(this.currentCategory);
+      this.cateService.add(this.currentCategory).then(() => {
+        this.router.navigate(['']);    
+      });
     }
 
-    this.router.navigate(['']);
+    
   }
 }

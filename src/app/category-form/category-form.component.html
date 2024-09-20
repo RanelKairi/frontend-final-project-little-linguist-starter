@@ -30,7 +30,7 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div *ngIf="currentCategory.words.length == 0">
+            <div *ngIf="currentCategory.words.length === 0">
                 A category must have at least one word
             </div>
             <div *ngIf="currentCategory.words.length > 0" ngModelGroup="words" #wordsGroup="ngModelGroup">
@@ -91,7 +91,7 @@
             type="submit"
             mat-raised-button
             color="primary"
-            [disabled]="currentCategory.words.length == 0 || 
+            [disabled]="currentCategory.words.length === 0 || 
                 categoryForm.invalid ||
                 categoryForm.pristine">
         Save Category

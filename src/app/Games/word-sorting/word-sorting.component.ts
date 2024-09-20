@@ -64,12 +64,12 @@ export class WordSortingComponent {
       }
     }
   }
-
+  // list async ahoosha
   initializeGame() {
     this.words = [...this.selectedCate!.words]
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
-    this.allCates = this.categoryService.list();
+    this.categoryService.list().then((result:Category[]) => this.allCates = result);
     this.randomCategory = this.allCates
       .filter((c) => c.id !== this.selectedCate!.id)
       .sort(() => Math.random() - 0.5)[0];

@@ -35,18 +35,17 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ChooseGameComponent implements OnInit {
   allGames: GameProfile[] = [];
-  allCates: Category[] = [];
+  allCate: Category[] = [];
 
   constructor(
     private gameService: GameDataService,
-    private CategoriesService: CategoriesService,
+    private categoryService: CategoriesService,
     public dialogService: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.allGames = this.gameService.list();
-    this.allCates = this.CategoriesService.list();
-  }
+    this.categoryService.list().then((result:Category[]) => (this.allCate = result));  }
   openDialog(): void {
     this.dialogService.open(SelectGameCategoryDialogComponent);
   }

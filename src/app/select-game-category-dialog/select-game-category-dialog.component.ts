@@ -50,12 +50,12 @@ export class SelectGameCategoryDialogComponent implements OnInit {
   GamePicked = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public currentGame: GameProfile,
-    private CategoryService: CategoriesService,
-    private GameDataService: GameDataService
+    private categoryService: CategoriesService,
+    private gameDataService: GameDataService
   ) {}
 
   ngOnInit(): void {
-    this.allCate = this.CategoryService.list();
+     this.categoryService.list().then((result:Category[]) => (this.allCate = result));
   }
 
   CateMove() {}
@@ -65,7 +65,7 @@ export class SelectGameCategoryDialogComponent implements OnInit {
       selectedCate = this.currentCate;
       selectedGame = this.currentGame;
 
-      return this.GameDataService.Cate2Game(this.currentCate);
+      return this.gameDataService.Cate2Game(this.currentCate);
     }
   }
 }
