@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslatedWord } from '../../shared/model/translated-word';
 // import { CatesServiceService } from '../services/cates.service';
-import { CatesServiceService } from '../services/cates.service';
+import { CatesService } from '../services/cates.service';
 
 @Component({
   selector: 'app-category-form',
@@ -35,21 +35,24 @@ export class CategoryFormComponent implements OnInit {
 
   @Input()
   id? : string;
-
   @ViewChild('wordsGroup') wordsGroup? : NgModelGroup;
 
-  constructor(private categoryService : CategoriesService,
+  constructor(private categoryService : CategoriesService,// might delete later
     private router : Router,
-  private cateService : CatesServiceService){}
+  private cateService : CatesService){}
 
   ngOnInit(): void {
     if (this.id) {
-      const categoryData = this.cateService.get(this.id); 
+      this.loadCategory();
+    
+    }
+  }
 
-      if (categoryData) {
+  async loadCategory(){
+      const categoryData = await this.cateService.get(this.id!); 
+        if (categoryData) {
         this.currentCategory = categoryData;
       }
-    }
   }
 
   addWord() {
@@ -76,5 +79,12 @@ export class CategoryFormComponent implements OnInit {
     }
 
     
+  }
+
+  async deleteCategory(){
+    if (this.id){
+      await this.cateService.delete(this.id);
+      this.router.navigate(['']);
+    }
   }
 }

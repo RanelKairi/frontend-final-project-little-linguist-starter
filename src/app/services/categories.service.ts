@@ -30,6 +30,35 @@ export class CategoriesService {
     const querySnapshot: QuerySnapshot<Category> = await getDocs(
       categoryCollection
     );
+    // FROM CATE SERVICE!!!!!!!!!!!!!!
+    // const categoryCollection = collection(
+    //   this.firestore,
+    //   'categories'
+    // ).withConverter(cateConverter);
+    // const querySnapshot: QuerySnapshot<Category> = await getDocs(
+    //   categoryCollection
+    // );
+
+    // return querySnapshot.docs.map((docSnap: DocumentSnapshot<Category>) =>
+    //   docSnap.data()
+    // );
+    //END FROM CATE SERVICE!!!!!!!!!!!!!
+
+    //FROM CATE SERVICCE I MADE IN CASE TO HANLDE ERROR POP
+    // async list(): Promise<Category[]> {
+    //   const cate :Category[] = []
+    //   const categoryCollection = collection(this.firestore,'categories').withConverter(cateConverter);
+    //   const querySnapshot:QuerySnapshot<Category> = await getDocs(categoryCollection);
+    //   if(querySnapshot){
+    //   return querySnapshot.docs.map((docSnap:DocumentSnapshot<Category>) => {docSnap.data()})
+    // }else{
+    //   return cate
+    // }
+    // }
+    //END OF MY TRY
+
+
+
 
     const result: Category[] = [];
 

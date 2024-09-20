@@ -47,7 +47,7 @@ export const cateConverter = {
     // Convert Firestore words array back into TranslatedWord instances
     const words = data['words'] || [];
     category.words = words.map(
-      (word: any) => new TranslatedWord(word.origin, word.target)
+      (word:any) => new TranslatedWord(word.origin, word.target) //might change any to TranslatedWord 
     );
 
     return category;

@@ -7,50 +7,76 @@ import {
   Firestore,
   getDocs,
   QuerySnapshot,
+  updateDoc,
+  doc,
+  getDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { cateConverter } from './converter/cates-converter';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CatesServiceService {
+export class CatesService {
   constructor(private firestore: Firestore) {}
 
+  // a ! added after doc.snap.data() ask about it
   async list(): Promise<Category[]> {
-    // const categoryCollection = collection(
-    //   this.firestore,
-    //   'categories'
-    // ).withConverter(cateConverter);
-    // const querySnapshot: QuerySnapshot<Category> = await getDocs(
-    //   categoryCollection
-    // );
+    // maybe adding options?
+    const categoryCollection = collection(
+      this.firestore,
+      'categories'
+    ).withConverter(cateConverter);
+    const querySnapshot: QuerySnapshot<Category> = await getDocs(
+      categoryCollection
+    );
 
-    // return querySnapshot.docs.map((docSnap: DocumentSnapshot<Category>) =>
-    //   docSnap.data()
-    // );
-    return []; // return empty array for now
+    return querySnapshot.docs.map(
+      (docSnap: DocumentSnapshot<Category>) => docSnap.data()!
+    );
   }
-  
-    // Get a single category (handle later)
-  get(id: string): Category | undefined {
-    return undefined; // You can implement this later
+
+  //ask for an explanation on exists
+  async get(id: string): Promise<Category | undefined> {
+    const categoryDocRef = doc(
+      this.firestore,
+      `categories/${id}`
+    ).withConverter(cateConverter);
+    const docSnap = await getDoc(categoryDocRef);
+
+    // exists?
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return undefined;
+    }
   }
-  // Add a new category to Firestore
+  // Add a new category to Firestore // already checked and worked
   async add(category: Category): Promise<void> {
-    const categoryCollection = collection(this.firestore, 'categories').withConverter(cateConverter);
+    const categoryCollection = collection(
+      this.firestore,
+      'categories'
+    ).withConverter(cateConverter);
     await addDoc(categoryCollection, category);
-    console.log("afteraddDoc- categoryCol",categoryCollection)
-    console.log("afteraddDoc- category",category)
-    console.log("afteraddDoc- this.firestore",this.firestore)
+    console.log('afteraddDoc- categoryCol', categoryCollection);
+    console.log('afteraddDoc- category', category);
+    console.log('afteraddDoc- this.firestore', this.firestore);
   }
 
-  // Update a category (to be implemented later)
-  update(category: Category): void {
-    // Implement Firestore update logic
+  // Update a category ready to check
+  async update(category: Category): Promise<void> {
+    const categoryDocRef = doc(this.firestore, `categories/${category.id}`);
+    await updateDoc(categoryDocRef, {
+      name: category.name,
+      origin: category.origin,
+      target: category.target,
+      words: category.words,
+      lastUpdateDate: category.lastUpdateDate,
+    });
   }
-   // Delete a category (to be implemented later)
-   delete(id: string): void {
-    // Implement Firestore delete logic
+  // ready to check
+  async delete(id: string): Promise<void> {
+    const categoryDocRef = doc(this.firestore, `categories/${id}`);
+    await deleteDoc(categoryDocRef);
   }
-
 }
