@@ -1,0 +1,13 @@
+<div class="dashboard-container">
+    <mat-card *ngFor="let result of gameResults" class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Game in {{ result.categoryId }}</mat-card-title>
+        <mat-card-subtitle>{{ result.date | date: 'short' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Points Scored: {{ result.points }}</p>
+        <p>Game ID: {{ result.gameId }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

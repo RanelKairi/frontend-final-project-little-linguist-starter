@@ -13,6 +13,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CatesService } from '../../services/cates.service';
+import { ActivatedRoute } from '@angular/router';
+import { GameResult } from '../../../shared/model/game-result.';
+import { GameResultsService } from '../../services/game-results.service';
 
 @Component({
   selector: 'app-word-sorting',
@@ -26,19 +30,19 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './word-sorting.component.html',
   styleUrl: './word-sorting.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WordSortingComponent {
   displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
   dataSource: TranslatedWord[] = [];
   isLoading = true;
-  @Input() id?: string;
+  // @Input() id?: string;
   selectedCate?: Category;
-  randomCategory?: Category;
+
   words: TranslatedWord[] = [];
   allCates: Category[] = [];
   currentWord: string = '';
@@ -47,42 +51,67 @@ export class WordSortingComponent {
   gamePoints = 0;
   numSuccess = 0;
   grade = 0;
+  gameId = 2;
+
   endGame = false;
-  gameRandomWords?:any
+  gameRandomWords?: any;
+  randomCategory?: Category;
 
   constructor(
     public dialogService: MatDialog,
-    private categoryService: CategoriesService
+    private categoryService: CategoriesService, // might delete later
+    private cateService: CatesService,
+    private route: ActivatedRoute,
+    private gameResultsService:GameResultsService
   ) {}
 
-  ngOnInit(): void {
-    if (this.id) {
-      const cateId = this.id;
-      this.selectedCate = this.categoryService.get(cateId);
-      if (this.selectedCate) {
-        this.initializeGame();
+  async ngOnInit(): Promise<void> {
+    this.route.paramMap.subscribe(async (params) => {
+      const cateId = params.get('id');
+      console.log('Category ID from route:', cateId); // Log selected category ID
+
+      if (cateId) {
+        this.selectedCate = await this.cateService.get(cateId);
+        console.log('Fetched category from Firestore:', this.selectedCate); // Log fetched category
+        if (this.selectedCate) {
+          this.initializeGame();
+        }
       }
-    }
+    });
   }
-  // list async ahoosha
-  initializeGame() {
-    this.words = [...this.selectedCate!.words]
+  async initializeGame(): Promise<void> {
+    console.log('Initializing game with category:', this.selectedCate); // Log selected category
+
+    const selectedWords = [...this.selectedCate!.words]
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
-    this.categoryService.list().then((result:Category[]) => this.allCates = result);
+    console.log(
+      'Randomly shuffled words from selected category:',
+      selectedWords
+    );
+
+    // this.words = [...this.selectedCate!.words]
+    //   .sort(() => Math.random() - 0.5)
+    //   .slice(0, 3);                         ////////////////////////////REPLACED
+    // console.log('Randomly shuffled words from selected category:', this.words);
+
+    this.allCates = await this.cateService.list();
+    console.log('All categories fetched from Firestore:', this.allCates); // Log all categories
+
     this.randomCategory = this.allCates
-      .filter((c) => c.id !== this.selectedCate!.id)
+      .filter((c) => c.id !== this.selectedCate!.id) // Exclude the selected category
       .sort(() => Math.random() - 0.5)[0];
-    const randomWords = [...this.randomCategory!.words]
+    console.log('Random non-selected category:', this.randomCategory); // Log the random category
+
+    this.gameRandomWords = [...this.randomCategory!.words]
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
 
-    this.words = [...this.words, ...randomWords].sort(
+    this.words = [...this.words, ...this.gameRandomWords].sort(
       () => Math.random() - 0.5
     );
-    
+    console.log('Final word list for the game:', this.words); // Log final word list
 
-    this.gamePoints = 100 / this.words.length;
     this.startGame();
   }
 
@@ -99,6 +128,7 @@ export class WordSortingComponent {
       this.currentWord = this.words[this.index].origin.toLocaleUpperCase();
     } else {
       this.endGame = true;
+      this.endGameSaveResults();
     }
   }
 
@@ -129,4 +159,15 @@ export class WordSortingComponent {
   playAgain() {
     window.location.reload();
   }
+  async endGameSaveResults() {
+    const gameResult = new GameResult(
+      this.selectedCate!.id,
+      this.gameId,  // Generate a unique game ID (could be a random string)
+      new Date(),  // Current date
+      this.grade  // The player's final score
+    );
+
+    await this.gameResultsService.addGameResult(gameResult)
+
+}
 }

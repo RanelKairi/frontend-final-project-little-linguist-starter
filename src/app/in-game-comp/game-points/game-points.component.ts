@@ -15,5 +15,5 @@ import { MatIconModule } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamePointsComponent { 
-  @Input() grade:number = 0
+  @Input() grade?:number;
 }

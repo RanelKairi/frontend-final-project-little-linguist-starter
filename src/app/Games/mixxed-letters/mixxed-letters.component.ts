@@ -1,5 +1,10 @@
-import { CommonModule} from '@angular/common';
-import {  ChangeDetectionStrategy,  Component,  Input,  OnInit,} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../../shared/model/category';
@@ -7,86 +12,112 @@ import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.
 import { MatCardModule } from '@angular/material/card';
 import { TranslatedWord } from '../../../shared/model/translated-word';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule, } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { GameProfile } from '../../../shared/model/GameProfile';
-import { ProgressBarComponent } from "../../in-game-comp/progress-bar/progress-bar.component";
-import { GamePointsComponent } from "../../in-game-comp/game-points/game-points.component";
+import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
+import { GamePointsComponent } from '../../in-game-comp/game-points/game-points.component';
+import { CatesService } from '../../services/cates.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GameResultsService } from '../../services/game-results.service';
+import { GameResult } from '../../../shared/model/game-result.';
 
-
+// fix the grade calculation
 @Component({
   selector: 'app-mixxed-letters',
   standalone: true,
-  imports: [CommonModule, MatInputModule, ExitButtonComponent, MatCardModule,
-    FormsModule, MatTableModule, MatButtonModule, MatIconModule, RouterModule, ProgressBarComponent, GamePointsComponent],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    ExitButtonComponent,
+    MatCardModule,
+    FormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    ProgressBarComponent,
+    GamePointsComponent,
+  ],
   templateUrl: './mixxed-letters.component.html',
   styleUrl: './mixxed-letters.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MixxedLettersComponent implements OnInit {
-  displayedColumns : string []= [
-    'origin',
-    'target' ,
-    'guess',
-     'answer',
-     
-    ];
-    gameUrl='./mixxed-letters';
+  displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
+  gameUrl = './mixxed-letters';
   dataSource: TranslatedWord[] = [];
   isLoading = true;
   @Input()
   id?: string;
   selectedCate?: Category;
-  selectedGame? : GameProfile;
+  selectedGame?: GameProfile;
   words: TranslatedWord[] = [];
-  
+
   mixedWord: string = '';
   index = -1;
   triesCount = 0;
   gamePoints = 0;
   numSuccess = 0;
-  grade = 0;
-  
+  grade?: number;
+
   endGame = false;
-    prig=0;
-    
+  prig = 0;
+  gameId= 1;
+
   constructor(
-    public dialogService : MatDialog,
+    public dialogService: MatDialog,
     private categoryService: CategoriesService,
-    
+    private cateService: CatesService,
+    private gameResultsService:GameResultsService
   ) {}
 
-  ngOnInit(): void {     
+  async ngOnInit(): Promise<void> {
     if (this.id) {
-      
+      console.log(this.id); ///////////////////////////////////////
       const cateId = this.id;
-      this.selectedCate = this.categoryService.get(cateId);
+
+      this.selectedCate = await this.cateService.get(cateId);
+      console.log(this.selectedCate);
       if (this.selectedCate) {
         this.words = [...this.selectedCate.words];
-        this.words = this.words.sort(()=>Math.random()-0.5);
+        console.log(this.words);
+        this.words = this.words.sort(() => Math.random() - 0.5);
+        console.log('this.words after', this.words);
         this.gamePoints = 100 / this.words.length;
-        
       }
     }
+    // if (this.id) {
+
+    //   const cateId = this.id;
+    //   this.selectedCate = this.categoryService.get(cateId);
+    //   if (this.selectedCate) {
+    //     this.words = [...this.selectedCate.words];
+    //     this.words = this.words.sort(()=>Math.random()-0.5);
+    //     this.gamePoints = 100 / this.words.length;
+
+    //   }
+    // }
     this.startNewGame();
   }
 
   nextWord() {
-    console.log("nextWord()!")
+    console.log('nextWord()!');
     if (this.words && this.index < this.words.length - 1) {
-      console.log("origin word mix success!")
+      console.log('origin word mix success!');
       this.index++;
-      this.grade = Math.floor(this.gamePoints*this.numSuccess);
+      this.grade = Math.floor(this.gamePoints * this.numSuccess);
       this.mixedWord = [...this.words[this.index].origin]
         .sort(() => Math.random() - 0.5)
         .join('')
         .toLocaleLowerCase();
       if (
-        this.mixedWord.toLocaleLowerCase() === this.words[this.index].origin.toLocaleLowerCase()
+        this.mixedWord.toLocaleLowerCase() ===
+        this.words[this.index].origin.toLocaleLowerCase()
       ) {
         console.log('sorted to same word case handled');
         this.index--;
@@ -99,41 +130,54 @@ export class MixxedLettersComponent implements OnInit {
     if (this.words) this.words[this.index].guess = '';
   }
 
-  submit() {
-
+  async submit() {
     this.triesCount++;
     const currentWord = this.words && this.words[this.index];
-    
+
     const isSuccess =
       currentWord?.guess.toLocaleLowerCase() ===
       currentWord?.origin.toLocaleLowerCase();
-      
-      const isEndOfGame = this.index + 1 === this.words?.length;
-      if(!isEndOfGame)
-        this.dialogService.open(FeedbackDialogComponent,{
-      data:isSuccess,
-    });
 
-    if(isSuccess){
+    const isEndOfGame = this.index + 1 === this.words?.length;
+    if (isSuccess) {
       this.numSuccess++;
       this.words[this.index].answer = true;
-      
-    }else{
+    } else {
       this.words[this.index].answer = false;
-      
     }
-    if(isEndOfGame&&this.id&&this.selectedCate){
 
-      this.dataSource = [...this.words]
+    if (isEndOfGame && this.id && this.selectedCate) {
+      this.dataSource = [...this.words];
       this.endGame = true;
-
       
-    }else{ 
-     
-      
+      // Save the game result to Firestore
+      await this.endGameSaveResults();
+    } else {
       this.nextWord();
-      this.reset()
+      this.reset();
     }
+
+    if (!isEndOfGame)
+      this.dialogService.open(FeedbackDialogComponent, {
+        data: isSuccess,
+      });
+  }
+  async endGameSaveResults() {
+    const gameResult = new GameResult(
+      this.selectedCate!.id,  // Category ID
+      this.gameId,  // Unique Game ID
+      new Date(),  // Current date
+      this.calculatePoints()  // Points (grade)
+    );
+
+    
+
+    await this.gameResultsService.addGameResult(gameResult);
+    console.log('Game result saved:', gameResult);
+  }
+
+  calculatePoints(): number {
+    return Math.floor((this.numSuccess * this.gamePoints));  // Simple percentage calculation
   }
 
   calculateProgress() {
@@ -141,9 +185,7 @@ export class MixxedLettersComponent implements OnInit {
     const guessedWordsRatio = this.numSuccess / totalWords;
     const categoryProgressRatio = this.index / totalWords;
     const progress = Math.max(guessedWordsRatio, categoryProgressRatio) * 100;
-    console.log(progress)
-    return progress; 
-    
+    return progress;
   }
 
   startNewGame() {
@@ -152,11 +194,9 @@ export class MixxedLettersComponent implements OnInit {
     this.nextWord();
   }
 
-  playAgain(){
-    window.location.reload()
+  playAgain() {
+    window.location.reload();
   }
 
-  anotherCate(){
-    
-  }
+  anotherCate() {}
 }

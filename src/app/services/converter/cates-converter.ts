@@ -21,7 +21,7 @@ export const cateConverter = {
         categoryId: word.categoryId,
       })),
       
-      lastUpdateDate: Timestamp.fromDate(cateToSave.lastUpdateDate), // Convert Date to Timestamp
+      lastUpdateDate: Timestamp.fromDate(cateToSave.lastUpdateDate),
     };
    
   },

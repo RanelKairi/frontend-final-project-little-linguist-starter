@@ -1,4 +1,7 @@
-<div *ngIf="!endGame">
+<div *ngIf="isLoading">
+  <h2>Loading category...</h2>  <!-- Show loading state -->
+</div>
+<div *ngIf="!isLoading&&!endGame">
     <mat-card class="body-frame">
         <mat-card-header>
             <div mat-card-avatar class="header-icon">
