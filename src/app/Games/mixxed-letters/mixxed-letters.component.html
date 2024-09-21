@@ -1,5 +1,11 @@
-<div *ngIf="isLoading">
-  <h1>Game Is Loading..........</h1>
+<div *ngIf="isLoading" class="loading-container">
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="primary"
+    diameter="100"
+    strokeWidth="5">
+  </mat-progress-spinner>
+  <h1>Game is Loading...</h1>
 </div>
 
 <div *ngIf="endGame">

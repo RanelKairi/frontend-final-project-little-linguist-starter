@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
     this.gameResults = await this.gameResultsService.list();
+    console.log(this.gameResults)
   
     // Calculate stats for dashboard
     this.calculateStats();

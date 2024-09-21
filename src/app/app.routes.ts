@@ -7,6 +7,7 @@ import { HelpComponent } from './help/help.component';
 import { Component, NgModule } from '@angular/core';
 import { MixxedLettersComponent } from './Games/mixxed-letters/mixxed-letters.component';
 import { WordSortingComponent } from './Games/word-sorting/word-sorting.component';
+import { MessyWordComponent } from './Games/messy-word/messy-word.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'help', component: HelpComponent },
   { path: 'Games/mixxed-letters/:id', component: MixxedLettersComponent },
   { path: 'Games/word-sorting/:id', component:WordSortingComponent},
+  { path: 'Games/messy-words/:id', component:MessyWordComponent},
   
 ];
 

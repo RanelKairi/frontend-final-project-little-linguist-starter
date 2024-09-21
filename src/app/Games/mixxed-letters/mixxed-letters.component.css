@@ -154,3 +154,16 @@ button[mat-raised-button]:disabled {
   background-color: #ccc;
   color: #888;
 }
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+}
+
+.loading-container h1 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #3f51b5; /* Angular Material primary color */
+}

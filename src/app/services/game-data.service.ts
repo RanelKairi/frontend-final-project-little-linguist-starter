@@ -22,6 +22,12 @@ export class GameDataService {
       'In this game you need to match a word to a category',
       'Games/word-sorting'
     ),
+    new GameProfile(
+      3,
+      'messy-words',
+      'In this game you should fix the order of the letters to the correct order of the word',
+      'Games/messy-words'
+    ),
   ];
 
   constructor(private CategoryService: CategoriesService) {}
