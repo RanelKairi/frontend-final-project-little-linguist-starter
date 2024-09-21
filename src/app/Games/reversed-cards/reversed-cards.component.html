@@ -1,0 +1,24 @@
+<div class="game-board">
+    <div *ngFor="let card of cards" class="card" (click)="onCardClick(card)">
+      <div *ngIf="!card.revealed && !card.matched" class="card-back">?</div>
+      <div *ngIf="card.revealed || card.matched" class="card-front">
+        <!-- Display the word or meaning based on whether it's an odd or even index -->
+        <span>{{ card.word || card.meaning }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Display score and attempts -->
+  <div class="game-info">
+    <h3>Score: {{ calculateFinalScore() }}</h3>
+    <h4>Attempts: {{ attempts }}</h4>
+  </div>
+  <div class="game-board">
+    <div *ngFor="let card of cards" class="card" (click)="onCardClick(card)" [class.matched]="card.matched">
+      <div *ngIf="!card.revealed && !card.matched" class="card-back">?</div>
+      <div *ngIf="card.revealed || card.matched" class="card-front">
+        <span>{{ card.revealed ? (card.word || card.meaning) : '' }}</span>
+      </div>
+    </div>
+  </div>
+  

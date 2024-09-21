@@ -28,6 +28,12 @@ export class GameDataService {
       'In this game you should fix the order of the letters to the correct order of the word',
       'Games/messy-words'
     ),
+    new GameProfile(
+      3,
+      'Reversed - Cards',
+      'In this game you should fix the order of the letters to the correct order of the word',
+      'Games/reversed-cards'
+    ),
   ];
 
   constructor(private CategoryService: CategoriesService) {}
