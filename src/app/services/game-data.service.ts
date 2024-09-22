@@ -8,7 +8,7 @@ import { Category } from '../../shared/model/category';
 })
 export class GameDataService {
   private readonly CATEGORIES_KEY = 'categories';
-
+  allCateGames : GameProfile[] = []
   private allgames: GameProfile[] = [
     new GameProfile(
       1,
@@ -24,13 +24,13 @@ export class GameDataService {
     ),
     new GameProfile(
       3,
-      'messy-words',
+      'Messy Words',
       'In this game you should fix the order of the letters to the correct order of the word',
       'Games/messy-words'
     ),
     new GameProfile(
-      3,
-      'Reversed - Cards',
+      4,
+      'Reversed Cards',
       'In this game you should fix the order of the letters to the correct order of the word',
       'Games/reversed-cards'
     ),
@@ -47,4 +47,12 @@ export class GameDataService {
   Cate2Game(currentCate: Category) {}
 
   getCate(CateID: number) {}
+
+  getGameById(gameId:number):GameProfile | undefined{
+    return this.allgames.find((game) => game.id === gameId)
+  }
+  getGamesByCateId():GameProfile[] {
+
+    return this.allCateGames
+  }
 }

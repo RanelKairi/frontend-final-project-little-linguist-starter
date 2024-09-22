@@ -1,4 +1,14 @@
-<div class="dashboard-container">
+<div *ngIf="isLoading" class="loading-container">
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="primary"
+    diameter="100"
+    strokeWidth="5">
+  </mat-progress-spinner>
+  <h1>Dashboard is Loading Your Stats...</h1>
+</div>
+
+<!-- <div *ngIf="!isLoading" class="dashboard-container"> -->
   <div class="stats-grid">
     <!-- Games Played -->
      <div class="gamesPlayed">
@@ -19,18 +29,35 @@
 
     <!-- Highest Average Score Game -->
     <mat-card class="dashboard-card">
-      <mat-card-title>Highest Average Score Game</mat-card-title>
+      <mat-card-title>Highest Average Score Game is</mat-card-title>
+      <!-- <div *ngIf="isLoading" class="loading-container">
+        <mat-progress-spinner
+          mode="indeterminate"
+          color="primary"
+          diameter="100"
+          strokeWidth="5">
+        </mat-progress-spinner>
+        <h5>Dashboard is Loading Your Stats...</h5>
+      </div> -->
+
+      <div *ngIf="!isLoading">
       <mat-card-content>
-        <h2>{{ highestAvgScoreGame }}</h2>
+        <h1>{{ highestAvgScoreGame?.gameName }}</h1>
+        <h3> With: <h2>{{highestAvgScore}}</h2> Points Per Game!</h3>
       </mat-card-content>
+      </div>
+
     </mat-card>
 
     <!-- Lowest Average Score Game -->
     <mat-card class="dashboard-card">
       <mat-card-title>Lowest Average Score Game</mat-card-title>
+      <div *ngIf="!isLoading">
       <mat-card-content>
-        <h2>{{ lowestAvgScoreGame }}</h2>
+        <h1>{{ lowestAvgScoreGame?.gameName }}</h1>
+        <h3> With: <h2>{{lowestAvgScore}}</h2> Points Per Game!</h3>
       </mat-card-content>
+      </div>
     </mat-card>
 
     <!-- Categories Learnt -->
@@ -72,23 +99,27 @@
         <h2>{{ categoriesStudiedPercentage }}%</h2>
       </mat-card-content>
     </mat-card>
+
+    <mat-card class="dashboard-card">
+      <mat-card-title>Monthly Challenge</mat-card-title>
+      <mat-card-content>
+        <h2>{{ gamesThisMonth }} games played</h2>
+        <p>{{ challengeMessage }}</p>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card">
+      <mat-card-title>Streak Days!</mat-card-title>
+      <mat-card-content>
+        <h2>{{ daysStreak }} days in a row</h2>
+        <p>Keep the streak going! 💪</p>
+      </mat-card-content>
+    </mat-card>
+
   </div>
   <!-- Monthly Challenge Card -->
-<mat-card class="dashboard-card">
-  <mat-card-title>Monthly Challenge</mat-card-title>
-  <mat-card-content>
-    <h2>{{ gamesThisMonth }} games played</h2>
-    <p>{{ challengeMessage }}</p>
-  </mat-card-content>
-</mat-card>
 
     <!-- Strike Days Card -->
-<mat-card class="dashboard-card">
-  <mat-card-title>Strike Days</mat-card-title>
-  <mat-card-content>
-    <h2>{{ daysStreak }} days in a row</h2>
-    <p>Keep the streak going! 💪</p>
-  </mat-card-content>
-</mat-card>
 
-</div>
+
+<!-- </div> -->

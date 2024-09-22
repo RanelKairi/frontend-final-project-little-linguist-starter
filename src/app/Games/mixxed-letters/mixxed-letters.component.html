@@ -128,12 +128,13 @@
         </form>
         <div class="progress-container">
           <span class="current-progress">{{ index }}</span>
-          <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
+          
 
           <span class="total-progress">{{ words.length }}</span>
         </div>
       </mat-card-content>
     </div>
+    <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
   </mat-card>
 </div>
 

@@ -4,16 +4,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { GameResult } from '../../shared/model/game-result.';
 import { GameResultsService } from '../services/game-results.service';
 import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
 import { Category } from '../../shared/model/category';
-import { CategoriesService } from '../services/categories.service';
 import { CatesService } from '../services/cates.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GameDataService } from '../services/game-data.service';
+import { GameProfile } from '../../shared/model/GameProfile';
 // amood habait
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule,MatIconModule,MatCardModule
+    CommonModule,MatIconModule,MatCardModule,MatProgressSpinnerModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -22,24 +23,29 @@ import { CatesService } from '../services/cates.service';
 export class DashboardComponent implements OnInit{
   gameResults: GameResult[] = [];  // Game history of the current player
   categoriesLearned: number = 0;
+  categoriesLearnedANY:any;
   categoriesNotLearned: number = 0;
-  
+  isLoading = true;
   // Stats to display in cards
   totalPoints: number = 0;
   gamesPlayed: number = 0;
-  highestAvgScoreGame: string = '';
-  lowestAvgScoreGame: string = '';
+  highestAvgScore: number = 0;
+  lowestAvgScore:number = 0 ;
+  highestAvgScoreGame?:GameProfile;
+  lowestAvgScoreGame?:GameProfile;
   perfectGamesPercentage: number = 0;
   mostPlayedCategory: string = '';
   categoriesStudiedPercentage: number = 0;
-
+  // highestAvg:number = 0;
   // New variables for the monthly challenge and strike days
   gamesThisMonth: number = 0;       // Number of games played this month
   challengeMessage: string = '';    // Message for the monthly challenge
   daysStreak: number = 0;           // Number of consecutive days the user has played
+  
   constructor(
     private gameResultsService: GameResultsService,
-    private cateService: CatesService  // Get category data
+    private cateService: CatesService,
+    private gameDataService : GameDataService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -58,6 +64,7 @@ export class DashboardComponent implements OnInit{
   
     // Calculate consecutive strike days
     this.calculateStrikeDays();
+    this.isLoading = false;
   }
 
   calculateStats(): void {
@@ -74,7 +81,7 @@ export class DashboardComponent implements OnInit{
 
     // Calculate percentage of perfect games (100 points)
     const perfectGames = this.gameResults.filter(result => result.points === 100);
-    this.perfectGamesPercentage = (perfectGames.length / this.gamesPlayed) * 100;
+    this.perfectGamesPercentage = Math.round((perfectGames.length / this.gamesPlayed) * 100);
 
     // Find the most played category
     this.mostPlayedCategory = this.calculateMostPlayedCategory();
@@ -94,25 +101,28 @@ export class DashboardComponent implements OnInit{
     return gameTypeScores;
   }
 
-  getHighestAvgScoreGame(gameTypeScores: { [gameType: string]: number[] }): string {
-    let highestAvgGame = '';
+  getHighestAvgScoreGame(gameTypeScores: { [gameType: string]: number[] }):GameProfile | undefined {
+    let highestAvgGame:GameProfile | undefined;
     let highestAvg = 0;
 
     for (const gameId in gameTypeScores) {
       const scores = gameTypeScores[gameId];
+      console.log(scores)
+      console.log(scores.length)
       const avg = scores.reduce((sum, score) => sum + score, 0) / scores.length;
 
       if (avg > highestAvg) {
         highestAvg = avg;
-        highestAvgGame = gameId;
+        this.highestAvgScore = Math.floor(avg)
+        highestAvgGame = this.gameDataService.getGameById(parseInt(gameId));
       }
     }
 
-    return highestAvgGame;
+    return highestAvgGame
   }
 
-  getLowestAvgScoreGame(gameTypeScores: { [gameType: string]: number[] }): string {
-    let lowestAvgGame = '';
+  getLowestAvgScoreGame(gameTypeScores: { [gameType: string]: number[] }): GameProfile | undefined {
+    let lowestAvgGame : GameProfile | undefined
     let lowestAvg = 100;  // Max points is 100, so start from that
 
     for (const gameId in gameTypeScores) {
@@ -121,7 +131,8 @@ export class DashboardComponent implements OnInit{
 
       if (avg < lowestAvg) {
         lowestAvg = avg;
-        lowestAvgGame = gameId;
+        this.lowestAvgScore = Math.floor(avg)
+        lowestAvgGame = this.gameDataService.getGameById(parseInt(gameId));
       }
     }
 
@@ -154,7 +165,10 @@ export class DashboardComponent implements OnInit{
   calculateCategoryStats(allCategories: Category[]): void {
     // Calculate categories learned
     this.categoriesLearned = new Set(this.gameResults.map(result => result.categoryId)).size;
-
+    // this.categoriesLearnedANY = new Set(this.gameResults.map(result => result.categoryId));
+    // console.log(this.categoriesLearnedANY)
+    
+    console.log("categoriesLearned",this.categoriesLearned)
     // Calculate categories not learned
     this.categoriesNotLearned = allCategories.length - this.categoriesLearned;
 

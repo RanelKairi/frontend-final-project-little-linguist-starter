@@ -26,7 +26,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GameResultsService } from '../../services/game-results.service';
 import { GameResult } from '../../../shared/model/game-result.';
 
-
 // fix the grade calculation
 @Component({
   selector: 'app-mixxed-letters',
@@ -43,7 +42,7 @@ import { GameResult } from '../../../shared/model/game-result.';
     RouterModule,
     ProgressBarComponent,
     GamePointsComponent,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './mixxed-letters.component.html',
   styleUrl: './mixxed-letters.component.css',
@@ -51,13 +50,20 @@ import { GameResult } from '../../../shared/model/game-result.';
 })
 export class MixxedLettersComponent implements OnInit {
   displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
-  gameUrl = './mixxed-letters';
+
   dataSource: TranslatedWord[] = [];
+
+  selectedGame = new GameProfile(
+    1,
+    'Mixed Letters',
+    'In this game you should fix the order of the letters to the correct order of the word ',
+    'Games/mixxed-letters'
+  );
   isLoading = true;
   @Input()
   id?: string;
   selectedCate?: Category;
-  selectedGame?: GameProfile;
+
   words: TranslatedWord[] = [];
 
   mixedWord: string = '';
@@ -65,44 +71,55 @@ export class MixxedLettersComponent implements OnInit {
   triesCount = 0;
   gamePoints = 0;
   numSuccess = 0;
-  grade?: number;
+  grade= 0;
 
   endGame = false;
   prig = 0;
-  gameId= 1;
+  gameId = 1;
 
   constructor(
     public dialogService: MatDialog,
     private cateService: CatesService,
-    private gameResultsService:GameResultsService
+    private gameResultsService: GameResultsService
   ) {}
 
   async ngOnInit(): Promise<void> {
     if (this.id) {
-      console.log(this.id); ///////////////////////////////////////
+      // console.log('id from input', this.id); ///////////////////////////////////////
       const cateId = this.id;
-
       this.selectedCate = await this.cateService.get(cateId);
-      console.log(this.selectedCate);
+      // console.log(this.selectedCate);
       if (this.selectedCate) {
-        this.words = [...this.selectedCate.words];
-        console.log(this.words);
-        this.words = this.words.sort(() => Math.random() - 0.5);
-        console.log('this.words after', this.words);
-        this.gamePoints = 100 / this.words.length;
+        this.initializeGame();
+        console.log();
+        // this.words = [...this.selectedCate.words];
+        // console.log(this.words);
+        // this.words = this.words.sort(() => Math.random() - 0.5);
+        // console.log('this.words after', this.words);
+        // this.gamePoints = 100 / this.words.length;
       }
     }
+  }
+  async initializeGame(): Promise<void> {
+    console.log('Initializing game with category:', this.selectedCate);
+    console.log('initializing GameProfile ', this.selectedGame);
+    this.words = [...this.selectedCate!.words];
+    // console.log("B4",this.words);
+    this.words = this.words.sort(() => Math.random() - 0.5);
+    // console.log('this.words after', this.words);
+    this.gamePoints = 100 / this.words.length;
     
+    console.log(this.gamePoints)
     this.startNewGame();
   }
 
   nextWord() {
-    this.grade = Math.floor(this.gamePoints * this.numSuccess);
+    // this.grade = this.gamePoints * this.numSuccess;
     console.log('nextWord()!');
     if (this.words && this.index < this.words.length - 1) {
       console.log('origin word mix success!');
       this.index++;
-     
+
       this.mixedWord = [...this.words[this.index].origin]
         .sort(() => Math.random() - 0.5)
         .join('')
@@ -115,7 +132,7 @@ export class MixxedLettersComponent implements OnInit {
         this.index--;
         this.nextWord();
       }
-    }else{
+    } else {
       this.endGame = true;
     }
   }
@@ -129,7 +146,8 @@ export class MixxedLettersComponent implements OnInit {
     const currentWord = this.words[this.index];
 
     const isSuccess =
-      currentWord?.guess.toLocaleLowerCase() === currentWord?.origin.toLocaleLowerCase();
+      currentWord?.guess.toLocaleLowerCase() ===
+      currentWord?.origin.toLocaleLowerCase();
 
     // Show feedback dialog for the current guess
     this.dialogService.open(FeedbackDialogComponent, {
@@ -137,7 +155,11 @@ export class MixxedLettersComponent implements OnInit {
     });
 
     if (isSuccess) {
+      // console.log("this.numSuccess",this.numSuccess)  
+      // console.log("this.grade",this.grade)  
       this.numSuccess++;
+      this.grade = Math.floor(this.gamePoints * this.numSuccess)
+      console.log("this.grade after calculation",this.grade)
       this.words[this.index].answer = true;
     } else {
       this.words[this.index].answer = false;
@@ -147,32 +169,29 @@ export class MixxedLettersComponent implements OnInit {
 
     if (isEndOfGame) {
       this.dataSource = [...this.words];
-      this.endGame = true;  // End the game after the last guess
+      this.endGameSaveResults()
+      this.endGame = true; // End the game after the last guess
     } else {
-      this.nextWord();  // Proceed to the next word
-      this.reset();  // Reset the guess input
+      this.nextWord(); // Proceed to the next word
+      this.reset(); // Reset the guess input
     }
   }
 
   // Calculate the progress for the progress bar
- 
+
   async endGameSaveResults() {
     const gameResult = new GameResult(
-      this.selectedCate!.id,  // Category ID
-      this.gameId,  // Unique Game ID
-      new Date(),  // Current date
-      this.calculatePoints()  // Points (grade)
+      this.selectedCate!.id,
+      this.selectedGame.id!,
+      new Date(),
+      this.grade,
     );
-
-    
-
+    console.log(gameResult)
     await this.gameResultsService.addGameResult(gameResult);
     console.log('Game result saved:', gameResult);
   }
 
-  calculatePoints(): number {
-    return Math.floor((this.numSuccess * this.gamePoints));  // Simple percentage calculation
-  }
+  
 
   calculateProgress() {
     const totalWords = this.words.length || 0;

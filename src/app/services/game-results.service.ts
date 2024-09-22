@@ -7,7 +7,7 @@ import { GameResult } from '../../shared/model/game-result.';
 })
 export class GameResultsService {
   constructor(private firestore: Firestore) {}
-
+  
   // Add a new game result to Firestore
   async addGameResult(gameResult: GameResult): Promise<void> {
     const gameResultsCollection = collection(this.firestore, 'gameResults');

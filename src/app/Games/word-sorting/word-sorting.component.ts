@@ -17,6 +17,7 @@ import { CatesService } from '../../services/cates.service';
 import { ActivatedRoute } from '@angular/router';
 import { GameResult } from '../../../shared/model/game-result.';
 import { GameResultsService } from '../../services/game-results.service';
+import { GameProfile } from '../../../shared/model/GameProfile';
 
 @Component({
   selector: 'app-word-sorting',
@@ -40,12 +41,19 @@ export class WordSortingComponent {
   displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
   dataSource: TranslatedWord[] = [];
   isLoading = true;
+  currentGame = new GameProfile(
+    2,
+    'Word Sorting',
+    'In this game you need to match a word to a category',
+    'Games/word-sorting'
+  );
   // @Input() id?: string;
   selectedCate?: Category;
 
   words: TranslatedWord[] = [];
   allCates: Category[] = [];
   currentWord: string = '';
+  
   index = -1;
   triesCount = 0;
   gamePoints = 0;
@@ -62,13 +70,14 @@ export class WordSortingComponent {
     private categoryService: CategoriesService, // might delete later
     private cateService: CatesService,
     private route: ActivatedRoute,
-    private gameResultsService:GameResultsService
+    private gameResultsService: GameResultsService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.route.paramMap.subscribe(async (params) => {
-      const cateId = params.get('id');
-      console.log('Category ID from route:', cateId); // Log selected category ID
+      const cateId = params.get('id');      
+      console.log('Category ID from route:', cateId);
+      console.log(this.currentGame) // Log selected category ID
 
       if (cateId) {
         this.selectedCate = await this.cateService.get(cateId);
@@ -162,12 +171,11 @@ export class WordSortingComponent {
   async endGameSaveResults() {
     const gameResult = new GameResult(
       this.selectedCate!.id,
-      this.gameId,  // Generate a unique game ID (could be a random string)
-      new Date(),  // Current date
-      this.grade  // The player's final score
+      this.gameId, // Generate a unique game ID (could be a random string)
+      new Date(), // Current date
+      this.grade // The player's final score
     );
 
-    await this.gameResultsService.addGameResult(gameResult)
-
-}
+    await this.gameResultsService.addGameResult(gameResult);
+  }
 }
