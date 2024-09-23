@@ -2,20 +2,20 @@
   <mat-spinner></mat-spinner>
   <h2>Loading Game...........</h2>
 </div>
-<div *ngIf="!endGame && category">
+<div *ngIf="!endGame && selectedCate">
   <mat-card>
     <!-- Display the timer -->
     <h3>Time left: {{ timer }} seconds</h3>
 
     <!-- Display the Hebrew word -->
-    <h3>Translate the word: {{ category.words[currentWordIndex].target }}</h3>
+    <h3>Translate the word: {{ selectedCate.words[index].target }}</h3>
     <h2>{{mixedWord}}</h2>
 
     <!-- Input field for English translation -->
-    <form (ngSubmit)="submitGuess()">
+    <form (ngSubmit)="submit()">
       <mat-form-field>
         <mat-label>Enter the English translation</mat-label>
-        <input matInput [(ngModel)]="userGuess" name="userGuess" required />
+        <input matInput [(ngModel)]="words[index].guess" name="guess" required />
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">Submit</button>
@@ -24,7 +24,7 @@
 
     <!-- Progress Bar -->
     <div class="progress-container">
-      <span>{{ currentWordIndex + 1 }}</span>
+      <span>{{ index + 1 }}</span>
       <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
       <span>{{ totalWords }}</span>
     </div>
@@ -32,7 +32,7 @@
 </div>
 
 <div *ngIf="endGame">
-  <h2>Game Over! You scored {{ points }} points</h2>
+  <h2>Game Over! You scored {{ grade }} points</h2>
   <!-- Display summary table -->
   <table mat-table [dataSource]="wordsPlayed">
     <ng-container matColumnDef="hebrewWord">

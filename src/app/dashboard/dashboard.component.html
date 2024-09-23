@@ -8,7 +8,7 @@
   <h1>Dashboard is Loading Your Stats...</h1>
 </div>
 
-<!-- <div *ngIf="!isLoading" class="dashboard-container"> -->
+<div *ngIf="!isLoading">
   <div class="stats-grid">
     <!-- Games Played -->
      <div class="gamesPlayed">
@@ -30,7 +30,16 @@
     <!-- Highest Average Score Game -->
     <mat-card class="dashboard-card">
       <mat-card-title>Highest Average Score Game is</mat-card-title>
-      <!-- <div *ngIf="isLoading" class="loading-container">
+      <!-- <div *ngIf="!isLoading"> -->
+      <mat-card-content>
+        <h1>{{ highestAvgScoreGame?.gameName }}</h1>
+        <h3> With: <h2>{{highestAvgScore}}</h2> Points Per Game!</h3>
+      </mat-card-content>
+      <!-- </div> -->
+    </mat-card>
+    <!-- <mat-card>
+      <mat-card-title></mat-card-title>
+      <div *ngIf="isLoading" class="loading-container">
         <mat-progress-spinner
           mode="indeterminate"
           color="primary"
@@ -38,16 +47,11 @@
           strokeWidth="5">
         </mat-progress-spinner>
         <h5>Dashboard is Loading Your Stats...</h5>
-      </div> -->
-
-      <div *ngIf="!isLoading">
-      <mat-card-content>
-        <h1>{{ highestAvgScoreGame?.gameName }}</h1>
-        <h3> With: <h2>{{highestAvgScore}}</h2> Points Per Game!</h3>
-      </mat-card-content>
       </div>
-
-    </mat-card>
+        <mat-card-content>
+          <h1></h1>
+        </mat-card-content>
+    </mat-card> -->
 
     <!-- Lowest Average Score Game -->
     <mat-card class="dashboard-card">
@@ -62,7 +66,7 @@
 
     <!-- Categories Learnt -->
     <mat-card class="dashboard-card">
-      <mat-card-title>Categories Learnt</mat-card-title>
+      <mat-card-title>Categories Learned</mat-card-title>
       <mat-card-content>
         <h2>{{ categoriesLearned }}</h2>
       </mat-card-content>
@@ -70,7 +74,7 @@
 
     <!-- Categories Not Learnt -->
     <mat-card class="dashboard-card">
-      <mat-card-title>Categories Not Learnt</mat-card-title>
+      <mat-card-title>Categories Not Learned</mat-card-title>
       <mat-card-content>
         <h2>{{ categoriesNotLearned }}</h2>
       </mat-card-content>
@@ -87,9 +91,15 @@
     <!-- Most Played Category -->
     <mat-card class="dashboard-card">
       <mat-card-title>Most Played Category</mat-card-title>
+      <div *ngIf="mostPlayed">
       <mat-card-content>
-        <h2>{{ mostPlayedCategory }}</h2>
-      </mat-card-content>
+        <h2>{{ mostPlayed.name }}</h2>
+        <h3>With</h3> <h2>{{maxCount}}</h2> <h3>Times Playing This Category!</h3>
+      </mat-card-content></div>
+        <div *ngIf="!mostPlayed"><h2>You Didn't Play Yet!</h2>
+        <button mat-raised-button routerLink='/choose-game'>Play Your First Game</button>
+        </div>
+      
     </mat-card>
 
     <!-- Categories Studied Percentage -->
@@ -122,4 +132,4 @@
     <!-- Strike Days Card -->
 
 
-<!-- </div> -->
+</div>

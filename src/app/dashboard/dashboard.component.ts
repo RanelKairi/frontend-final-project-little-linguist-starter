@@ -9,12 +9,14 @@ import { CatesService } from '../services/cates.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GameDataService } from '../services/game-data.service';
 import { GameProfile } from '../../shared/model/GameProfile';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 // amood habait
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule,MatIconModule,MatCardModule,MatProgressSpinnerModule
+    CommonModule,MatIconModule,MatCardModule,MatProgressSpinnerModule,MatButtonModule,RouterLink
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -35,13 +37,14 @@ export class DashboardComponent implements OnInit{
   lowestAvgScoreGame?:GameProfile;
   perfectGamesPercentage: number = 0;
   mostPlayedCategory: string = '';
+  mostPlayed:Category | undefined;
   categoriesStudiedPercentage: number = 0;
   // highestAvg:number = 0;
   // New variables for the monthly challenge and strike days
   gamesThisMonth: number = 0;       // Number of games played this month
   challengeMessage: string = '';    // Message for the monthly challenge
   daysStreak: number = 0;           // Number of consecutive days the user has played
-  
+  maxCount:number = 0
   constructor(
     private gameResultsService: GameResultsService,
     private cateService: CatesService,
@@ -64,7 +67,7 @@ export class DashboardComponent implements OnInit{
   
     // Calculate consecutive strike days
     this.calculateStrikeDays();
-    this.isLoading = false;
+    
   }
 
   calculateStats(): void {
@@ -81,10 +84,26 @@ export class DashboardComponent implements OnInit{
 
     // Calculate percentage of perfect games (100 points)
     const perfectGames = this.gameResults.filter(result => result.points === 100);
-    this.perfectGamesPercentage = Math.round((perfectGames.length / this.gamesPlayed) * 100);
-
+    if(perfectGames.length == 0){
+      console.log("user without perfect games case handled")
+      this.perfectGamesPercentage = 0;
+}else{
+  
+  this.perfectGamesPercentage = Math.round((perfectGames.length / this.gamesPlayed) * 100);
+}
     // Find the most played category
     this.mostPlayedCategory = this.calculateMostPlayedCategory();
+    if(this.mostPlayedCategory){
+      this.loadMostCategory()
+    }else{
+      this.mostPlayedCategory === 'you didnt play yet!'
+    }
+  }
+
+  async loadMostCategory():Promise<void>{
+    this.mostPlayed = await this.cateService.get(this.mostPlayedCategory)
+    console.log(this.mostPlayed)
+    
   }
 
   calculateGameTypeScores(): { [gameType: string]: number[] } {
@@ -148,23 +167,28 @@ export class DashboardComponent implements OnInit{
       }
       categoryCounts[result.categoryId]++;
     }
-
     let mostPlayedCategory = '';
     let maxCount = 0;
 
     for (const categoryId in categoryCounts) {
+      console.log(categoryCounts)
       if (categoryCounts[categoryId] > maxCount) {
         maxCount = categoryCounts[categoryId];
         mostPlayedCategory = categoryId;
       }
+      console.log("after",categoryCounts)
+      console.log(maxCount)
     }
+    console.log(maxCount)
+    this.maxCount = maxCount
 
     return mostPlayedCategory;
   }
 
   calculateCategoryStats(allCategories: Category[]): void {
     // Calculate categories learned
-    this.categoriesLearned = new Set(this.gameResults.map(result => result.categoryId)).size;
+    this.categoriesLearned = new Set(this.gameResults.map(result =>  result.categoryId)).size;
+    if(allCategories)
     // this.categoriesLearnedANY = new Set(this.gameResults.map(result => result.categoryId));
     // console.log(this.categoriesLearnedANY)
     
@@ -218,6 +242,7 @@ export class DashboardComponent implements OnInit{
     }
   
     this.daysStreak = strikeDays;
+    this.isLoading = false;  
   }
   
   

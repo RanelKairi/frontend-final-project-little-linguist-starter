@@ -75,17 +75,15 @@ button[color="warn"]:hover {
   align-items: center;
   margin-top: 20px;
   padding: 10px;
-  background-color: #2c2c2e;
+  background-color:#ff8a65;
   border-radius: 8px;
 }
 
 mat-progress-bar {
-  background-color: #505052;
+  background-color: white;
 }
 
-mat-progress-bar .mat-progress-bar-fill {
-  background-color: #4caf50; 
-}
+
 
 span {
   font-size: 18px;

@@ -12,7 +12,7 @@ export class GameDataService {
   private allgames: GameProfile[] = [
     new GameProfile(
       1,
-      'Mixed Letters',
+      'Mixed Letters - ',
       'In this game you should fix the order of the letters to the correct order of the word ',
       'Games/mixxed-letters'
     ),

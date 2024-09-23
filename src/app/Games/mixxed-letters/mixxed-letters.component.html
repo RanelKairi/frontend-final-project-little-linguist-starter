@@ -3,13 +3,14 @@
     mode="indeterminate"
     color="primary"
     diameter="100"
-    strokeWidth="5">
+    strokeWidth="5"
+  >
   </mat-progress-spinner>
   <h1>Game is Loading...</h1>
 </div>
 
 <div *ngIf="endGame">
-  <h1>Game Over - Your Grade {{grade}} Points Out Of 100</h1>
+  <h1>Game Over - Your Grade {{ grade }} Points Out Of 100</h1>
   <div *ngIf="words">
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="origin">
@@ -59,13 +60,19 @@
       >
         Play Again
       </button>
-
-  
+      <button mat-raised-button (click)="anotherCate()">
+        Select Another Category!
+      </button>
+      <button mat-raised-button routerLink="/choose-game">
+        Choose Another Game!
+      </button>
     </div>
   </div>
 </div>
 
 <div *ngIf="selectedCate && !endGame">
+  
+
   <mat-card class="body-frame">
     <mat-card-header>
       <div mat-card-avatar class="header-icon">
@@ -79,7 +86,7 @@
         </div>
       </div>
     </mat-card-header>
-    
+
     <div *ngIf="selectedCate && !endGame && !isLoading">
       <mat-card-content>
         <form #mixGameForm="ngForm" (ngSubmit)="submit()">
@@ -128,7 +135,6 @@
         </form>
         <div class="progress-container">
           <span class="current-progress">{{ index }}</span>
-          
 
           <span class="total-progress">{{ words.length }}</span>
         </div>
@@ -137,4 +143,3 @@
     <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
   </mat-card>
 </div>
-
