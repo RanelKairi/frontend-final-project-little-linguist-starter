@@ -1,0 +1,32 @@
+<div class ="game-board">
+    <div *ngFor="let word of selectedCate?.words" class="card" (click)="onCardClick(word)">
+        <div *ngIf="!word.flipped" class="card-back">?</div>
+        <div *ngIf="word.flipped" class ="card-front" disabled>{{word.origin}}</div>
+        
+        
+            </div>
+        
+        
+
+        <div *ngFor="let word of selectedCate?.words" class="card" (click)="onCardClick(word)">
+            {{word.target}}
+            <div *ngIf="selectedCate?.words">
+                <!-- <div *ngFor="let wordOrigin of words.length"> -->
+                    
+                    <!-- {{word[wordOrigin].origin}} -->
+                
+                </div>
+            </div>
+
+            <div *ngFor="let word of selectedCate?.words" class="card">
+                {{word.answer}}
+                <div *ngIf="selectedCate?.words">
+                    <!-- <div *ngFor="let wordOrigin of words.length"> -->
+                        
+                        <!-- {{word[wordOrigin].origin}} -->
+                    
+                    </div>
+                </div>
+            
+    </div>
+<!-- </div> -->

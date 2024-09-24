@@ -43,7 +43,8 @@ export class ReversedCardsComponent implements OnInit{
     if (this.selectedCate) {
       // Generate cards from origin-target pairs in the category
       this.cards = this.shuffleCards(this.selectedCate.words.map(word => 
-        new Card(word.origin, word.target)  // Use origin as word and target as meaning
+        new Card(word.origin, word.target),
+        console.log(this.cards)  // Use origin as word and target as meaning
       ));
 
       this.totalWords = this.cards.length / 2;  // Total pairs
@@ -59,14 +60,15 @@ export class ReversedCardsComponent implements OnInit{
   // Handle card clicks
   onCardClick(card: Card) {
     // Prevent flipping more than two cards or if the card is already revealed/matched
-    if (card.revealed || card.matched || this.flippedCards.length === 2) {
+    if (card.revealed || card.matched || this.flippedCards.length == 2) {
       return;
     }
-  
+    console.log(this.cards)
+
     // Reveal the clicked card
     card.revealed = true;
     this.flippedCards.push(card);
-  
+    console.log(this.flippedCards)
     // Check match only if two cards are flipped
     if (this.flippedCards.length === 2) {
       this.checkMatch();

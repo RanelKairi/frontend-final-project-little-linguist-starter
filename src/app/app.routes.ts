@@ -9,6 +9,7 @@ import { MixxedLettersComponent } from './Games/mixxed-letters/mixxed-letters.co
 import { WordSortingComponent } from './Games/word-sorting/word-sorting.component';
 import { MessyWordComponent } from './Games/messy-word/messy-word.component';
 import { ReversedCardsComponent } from './Games/reversed-cards/reversed-cards.component';
+import { CardMatchingComponent } from './Games/card-matching/card-matching.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'Games/word-sorting/:id', component:WordSortingComponent},
   { path: 'Games/messy-words/:id', component:MessyWordComponent},
   { path: 'Games/reversed-cards/:id', component:ReversedCardsComponent},
+  { path: 'Games/card-matching/:id', component:CardMatchingComponent},
   
 ];
 

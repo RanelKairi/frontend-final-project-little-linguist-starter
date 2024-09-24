@@ -34,6 +34,12 @@ export class GameDataService {
       'In this game you should fix the order of the letters to the correct order of the word',
       'Games/reversed-cards'
     ),
+    new GameProfile(
+      5,
+      'Cards-Matching',
+      'this is a memory game !',
+      'Games/card-matching'
+    ),
   ];
 
   constructor(private CategoryService: CategoriesService) {}
