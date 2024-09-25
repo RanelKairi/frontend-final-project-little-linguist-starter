@@ -1,32 +1,40 @@
-<div class ="game-board">
-    <div *ngFor="let word of selectedCate?.words" class="card" (click)="onCardClick(word)">
-        <div *ngIf="!word.flipped" class="card-back">?</div>
-        <div *ngIf="word.flipped" class ="card-front" disabled>{{word.origin}}</div>
-        
-        
-            </div>
-        
-        
+<div class="game-board">
+  <mat-card
+    *ngFor="let word of words; let i = index"
+    class="card"
+    (click)="onCardClick(i)"
+    (keydown.enter)="onCardClick(i)"
+    tabindex="0"
+    [class.flipped]="word.flipped"
+    [class.answer]="word.answer"
+  >
+<mat-card-header *ngIf="!word.flipped && !word.answer">
+  <mat-card-title>
+    <span class="ques">?
 
-        <div *ngFor="let word of selectedCate?.words" class="card" (click)="onCardClick(word)">
-            {{word.target}}
-            <div *ngIf="selectedCate?.words">
-                <!-- <div *ngFor="let wordOrigin of words.length"> -->
-                    
-                    <!-- {{word[wordOrigin].origin}} -->
-                
-                </div>
-            </div>
+    </span>
+  </mat-card-title>
+</mat-card-header>
+<mat-card-content *ngIf="word.flipped || word.answer">
+  
+</mat-card-content>
 
-            <div *ngFor="let word of selectedCate?.words" class="card">
-                {{word.answer}}
-                <div *ngIf="selectedCate?.words">
-                    <!-- <div *ngFor="let wordOrigin of words.length"> -->
-                        
-                        <!-- {{word[wordOrigin].origin}} -->
-                    
-                    </div>
-                </div>
-            
+</mat-card>
+
+
+
+
+
+  <div *ngFor="let word of words" class="card" (click)="onCardClick(word)">
+    <div *ngIf="!word.flipped && !word.answer" class="card-back">?</div>
+    <div *ngIf="word.flipped || word.answer" class="card-front">
+      {{ word.origin }}
     </div>
-<!-- </div> -->
+  </div>
+  <div *ngFor="let word of words2" class="card" (click)="onCardClick(word)">
+    <div *ngIf="!word.flipped && !word.answer" class="card-back">?</div>
+    <div *ngIf="word.flipped || word.answer" class="card-front">
+      {{ word.target }}
+    </div>
+  </div>
+</div>

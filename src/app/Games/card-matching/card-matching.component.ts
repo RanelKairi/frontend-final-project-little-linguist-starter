@@ -9,11 +9,13 @@ import { Card } from '../../../shared/model/card.';
 import { Category } from '../../../shared/model/category';
 import { TranslatedWord } from '../../../shared/model/translated-word';
 import { CatesService } from '../../services/cates.service';
+import { MatCardModule } from '@angular/material/card';
+
 
 @Component({
   selector: 'app-card-matching',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule],
   templateUrl: './card-matching.component.html',
   styleUrl: './card-matching.component.css',
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,33 +42,39 @@ export class CardMatchingComponent implements OnInit {
     if (this.id) {
       this.selectedCate = await this.cateService.get(this.id);
       if (this.selectedCate) {
-        console.log(this.selectedCate);
         this.initializeGame();
       }
     }
   }
 
   initializeGame() {
-    if (this.selectedCate) this.words = [...this.selectedCate?.words];
-    this.words2 = [...this.words];
-    console.log(this.words);
-    this.splitWordToCards();
+    if (this.selectedCate) {
+      this.words = [...this.selectedCate.words];  // Original words
+      this.words2 = [...this.selectedCate.words]; // Target words
+      this.shuffle(this.words);
+      this.shuffle(this.words2);
+    }
+  }
+  shuffle(array: TranslatedWord[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
-  splitWordToCards() {}
-
   // consider adding another boolean var to Translated word
-  onCardClick(word: TranslatedWord) {
-    console.log(word);
-    if (this.clickedWord) {
-      this.clickedWord2 = word;
-      this.clickedWord2.flipped = true;
-    } else {
+  onCardClick(word: TranslatedWord | any) {
+    if (!this.clickedWord) {
       this.clickedWord = word;
-      this.clickedWord.flipped = true;
+      // this.clickedWord.flipped = true ;
+      console.log("firstflip",this.clickedWord)
+    } else if(!this.clickedWord2) {
+      this.clickedWord2 = word;
+      // this.clickedWord2.flipped = true;
+      console.log('secondflip2', this.clickedWord2);
     }
-    console.log('firstflip', this.clickedWord);
-    console.log('secondflip2', this.clickedWord2);
+    
+    
 
     if (this.clickedWord && this.clickedWord2) {
       this.checkMatch();
@@ -76,18 +84,20 @@ export class CardMatchingComponent implements OnInit {
     if (this.clickedWord2 && this.clickedWord) {
       const firstCard = this.clickedWord;
       const secondCard = this.clickedWord2;
-      const isMatch = firstCard === secondCard;
-      if (!isMatch) {
-        console.log('you did wrong fucker!');
-        this.clickedWord.answer = false;
-        this.clickedWord = undefined;
-        this.clickedWord2.answer = false;
-        this.clickedWord2 = undefined;
+      // /const isMatch = firstCard === secondCard;
+      const isMatch = this.clickedWord.origin === this.clickedWord2.target
+      if (isMatch) {
+        this.clickedWord.answer = true;
+        this.clickedWord2.answer =true;
       } else {
-        this.clickedWord.answer = true;
-        this.clickedWord.answer = true;
-        this.clickedWord2.answer = true;
-        console.log('YouDidIT~!');
+        const clickedWordCopy = this.clickedWord;
+      const clickedWord2Copy = this.clickedWord2;
+        setTimeout(() => {
+          if(clickedWordCopy&&clickedWord2Copy)
+clickedWordCopy.flipped = false;
+clickedWord2Copy!.flipped = false;
+        },1000);
+        
       }
       this.clickedWord2 = undefined;
       this.clickedWord = undefined;

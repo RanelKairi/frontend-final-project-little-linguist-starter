@@ -1,0 +1,99 @@
+.game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color:#cfb1ef; /* Soft off-white background */
+    border: 2px solid #d3a593; /* Soft pastel brown */
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .game-board h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #ef8ac8; /* Pastel lavender */
+  }
+  
+  .game-board h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f7a8a9; /* Soft pastel pink */
+  }
+  
+  .game-board .card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    justify-items: center;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .game-board .card {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #e6f2ff; /* Soft pastel blue */
+    color: #555555; /* Dark gray for contrast */
+    border: 2px solid #d3a593; /* Soft pastel brown border */
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .game-board .card.flipped, .game-board .card.matched {
+    background-color: #fbd1a2; /* Soft pastel peach */
+    color: #e48873; /* Soft pastel coral for text */
+    transform: scale(1.09);
+  }
+  
+  .game-board .card.matched {
+    pointer-events: none;
+  }
+  
+  .game-board .won-card {
+    background-color: #b2d3c2; /* Soft pastel mint green */
+    color: #e48873; /* Coral */
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  
+  .game-board .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .game-board mat-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: lighter;
+  }
+  
+  .game-board .card[dir="rtl"] {
+    direction: rtl;
+  }
+  
+  .game-board .card:hover {
+    transform: scale(1.2);
+    background-color: #fff0f5; /* Pastel lavender (hover) */
+  }
+  
+  .game-board .card:focus {
+    outline: 2px solid #fbd1a2; /* Soft pastel peach focus */
+  }
+  

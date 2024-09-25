@@ -40,6 +40,12 @@ export class GameDataService {
       'this is a memory game !',
       'Games/card-matching'
     ),
+    new GameProfile(
+      6,
+      'Memory-Cards',
+      '!~this is a memory cards game, ~WARNING~ not a game for begginers , think you got a good memory? prove it here~! !',
+      'Games/memory-cards'
+    ),
   ];
 
   constructor(private CategoryService: CategoriesService) {}

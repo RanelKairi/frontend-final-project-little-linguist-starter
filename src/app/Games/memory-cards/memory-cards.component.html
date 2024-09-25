@@ -1,0 +1,36 @@
+<div class="game-board">
+  <h1>Memory-Cards Game</h1>
+  <h2>Your Score Is {{ score }}</h2>
+
+  <div class="card-container">
+    <mat-card
+      *ngFor="let word of cards; let i = index"
+      class="card"
+      (click)="flipCard(i)"
+      tabindex="0"
+      [class.flipped]="word.flipped"
+      [class.matched]="word.matched"
+      [attr.dir]="word.direction"
+    >
+      <mat-card-header *ngIf="!word.flipped && !word.matched">
+        <mat-card-title>
+          <span class="ques">?</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf="word.flipped || word.matched">
+        {{ word.word }}
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card *ngIf="isEndGame()" class="won-card">
+    <mat-card-content>
+      You Did IT !!!! All Cards Are Matched !
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="resetgame()">
+        Try To Beat Your Score!
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

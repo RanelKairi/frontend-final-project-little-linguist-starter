@@ -12,27 +12,27 @@ import { MatDialog } from '@angular/material/dialog';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './reversed-cards.component.html',
-  styleUrl: './reversed-cards.component.css'
+  styleUrl: './reversed-cards.component.css',
 })
-export class ReversedCardsComponent implements OnInit{
+export class ReversedCardsComponent implements OnInit {
   cards: Card[] = [];
   flippedCards: Card[] = [];
   attempts = 0;
   score = 100;
   totalWords = 0;
-  selectedCate?: Category;  // Store selected category
+  selectedCate?: Category; // Store selected category
 
   constructor(
-    private cateService: CatesService,  // Service to fetch categories
-    private route: ActivatedRoute ,
+    private cateService: CatesService, // Service to fetch categories
+    private route: ActivatedRoute,
     public dialogService: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
     const categoryId = this.route.snapshot.paramMap.get('id');
-    
+
     if (categoryId) {
-      this.selectedCate = await this.cateService.get(categoryId);  // Fetch category from Firestore
+      this.selectedCate = await this.cateService.get(categoryId); // Fetch category from Firestore
       if (this.selectedCate) {
         this.initializeGame();
       }
@@ -42,19 +42,23 @@ export class ReversedCardsComponent implements OnInit{
   initializeGame() {
     if (this.selectedCate) {
       // Generate cards from origin-target pairs in the category
-      this.cards = this.shuffleCards(this.selectedCate.words.map(word => 
-        new Card(word.origin, word.target),
-        console.log(this.cards)  // Use origin as word and target as meaning
-      ));
 
-      this.totalWords = this.cards.length / 2;  // Total pairs
+      this.cards = this.shuffleCards(
+        this.selectedCate.words.map(
+          (word) => new Card(word.origin, word.target, false, false),
+          console.log(this.cards) // Use origin as word and target as meaning
+        )
+      );
+
+      this.totalWords = this.cards.length / 2; // Total pairs
     }
   }
 
   // Shuffle the cards
   shuffleCards(cards: Card[]): Card[] {
-    return cards.concat(cards)  // Duplicate for matching pairs
-      .sort(() => Math.random() - 0.5);  // Shuffle the cards
+    return cards
+      .concat(cards) // Duplicate for matching pairs
+      .sort(() => Math.random() - 0.5); // Shuffle the cards
   }
 
   // Handle card clicks
@@ -63,33 +67,34 @@ export class ReversedCardsComponent implements OnInit{
     if (card.revealed || card.matched || this.flippedCards.length == 2) {
       return;
     }
-    console.log(this.cards)
+    console.log(this.cards);
 
     // Reveal the clicked card
     card.revealed = true;
     this.flippedCards.push(card);
-    console.log(this.flippedCards)
+    console.log(this.flippedCards);
     // Check match only if two cards are flipped
     if (this.flippedCards.length === 2) {
       this.checkMatch();
     }
   }
-  
 
   // Check if two flipped cards match
   checkMatch() {
     const [firstCard, secondCard] = this.flippedCards;
-  
+
     // Check if one card's word matches the other's meaning (origin vs. target)
-    const isMatch = (firstCard.word === secondCard.meaning) || (firstCard.meaning === secondCard.word);
-  
+    const isMatch =
+      firstCard.origin === secondCard.target &&
+      firstCard.target === secondCard.origin;
+
     if (isMatch) {
       // If the cards match, mark them as matched
       firstCard.matched = true;
       secondCard.matched = true;
-  
+
       // Provide feedback and increment points
-      this.score += 10;  // Add points for a correct match
+      this.score += 10; // Add points for a correct match
       this.showFeedback(true);
     } else {
       // If no match, flip the cards back after a short delay
@@ -97,28 +102,25 @@ export class ReversedCardsComponent implements OnInit{
         firstCard.revealed = false;
         secondCard.revealed = false;
       }, 1000);
-  
+
       // Deduct points for incorrect attempt
-      this.score -= 2;  // Subtract points for wrong match
+      this.score -= 2; // Subtract points for wrong match
       this.showFeedback(false);
     }
-  
+
     // Clear flipped cards
     this.flippedCards = [];
     this.attempts++;
   }
-  
+
   showFeedback(isSuccess: boolean) {
     this.dialogService.open(FeedbackDialogComponent, {
       data: { success: isSuccess },
     });
   }
-  
-  
 
   // Calculate final score
   calculateFinalScore() {
-    return Math.max(this.score, 0);  // Prevent score from going negative
+    return Math.max(this.score, 0); // Prevent score from going negative
   }
-  
 }

@@ -10,6 +10,7 @@ import { WordSortingComponent } from './Games/word-sorting/word-sorting.componen
 import { MessyWordComponent } from './Games/messy-word/messy-word.component';
 import { ReversedCardsComponent } from './Games/reversed-cards/reversed-cards.component';
 import { CardMatchingComponent } from './Games/card-matching/card-matching.component';
+import { MemoryCardsComponent } from './Games/memory-cards/memory-cards.component';
 
 export const routes: Routes = [
   { path: 'categories-list', component: CategoriesListComponent },
@@ -19,11 +20,11 @@ export const routes: Routes = [
   { path: 'choose-game', component: ChooseGameComponent },
   { path: 'help', component: HelpComponent },
   { path: 'Games/mixxed-letters/:id', component: MixxedLettersComponent },
-  { path: 'Games/word-sorting/:id', component:WordSortingComponent},
-  { path: 'Games/messy-words/:id', component:MessyWordComponent},
-  { path: 'Games/reversed-cards/:id', component:ReversedCardsComponent},
-  { path: 'Games/card-matching/:id', component:CardMatchingComponent},
-  
+  { path: 'Games/word-sorting/:id', component: WordSortingComponent },
+  { path: 'Games/messy-words/:id', component: MessyWordComponent },
+  { path: 'Games/reversed-cards/:id', component: ReversedCardsComponent },
+  { path: 'Games/card-matching/:id', component: CardMatchingComponent },
+  { path: 'Games/memory-cards/:id', component: MemoryCardsComponent },
 ];
 
 @NgModule({

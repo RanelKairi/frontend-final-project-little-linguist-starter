@@ -3,7 +3,7 @@
       <div *ngIf="!card.revealed && !card.matched" class="card-back">?</div>
       <div *ngIf="card.revealed || card.matched" class="card-front">
         <!-- Display the word or meaning based on whether it's an odd or even index -->
-        <span>{{ card.word || card.meaning }}</span>
+        <span>{{ card.origin || card.target }}</span>
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
     <div *ngFor="let card of cards" class="card" (click)="onCardClick(card)" [class.matched]="card.matched">
       <div *ngIf="!card.revealed && !card.matched" class="card-back">?</div>
       <div *ngIf="card.revealed || card.matched" class="card-front">
-        <span>{{ card.revealed ? (card.word || card.meaning) : '' }}</span>
+        <span>{{ card.revealed ? (card.origin || card.target) : '' }}</span>
       </div>
     </div>
   </div>
