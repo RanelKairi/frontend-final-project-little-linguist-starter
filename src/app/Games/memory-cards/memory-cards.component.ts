@@ -54,7 +54,8 @@ export class MemoryCardsComponent implements OnInit {
       this.selectedCate = await this.cateService.get(cateId);
       if (this.selectedCate) {
         this.words = this.selectedCate.words;
-        this.cards = this.shuffleCards([...this.words, ...this.words]);
+        // this.cards = this.shuffleCards([...this.words, ...this.words]);
+        this.cards = this.shuffleCards([...this.words]);
         console.log("this.cards",this.cards)
       } else {
         console.error('category not found');
@@ -64,23 +65,28 @@ export class MemoryCardsComponent implements OnInit {
     }
   }
   shuffleCards(words: TranslatedWord[]): MemoryGameCard[] {
+    console.log("words before shuffle ",words)
     const shuffled = words
       .map((word) => ({
-        word: word.origin || word.target,
+        word: word.origin,
         flipped: false,
         matched: false,
-        direction: this.getTextDirection(word.origin || word.target), // shokel levater al ze
+        direction:word.origin  // this.getTextDirection(word.origin || word.target), // shokel levater al ze
       }))
       .concat(
         words.map((word) => ({
           word: word.target,
           flipped: false,
           matched: false,
-          direction: this.getTextDirection(word.target),
+          direction: word.target//this.getTextDirection(word.target),
         }))
-      )
-      .sort(() => Math.random() - 0.5);
+      ).sort()
+
+      // .sort(() => Math.random() - 0.5); // לא לשכוח להחזיר את זה!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       console.log("shuffled",shuffled)
+      if(shuffled){
+
+      }
     return shuffled;
   }
 
@@ -125,9 +131,9 @@ export class MemoryCardsComponent implements OnInit {
     this.frstCardIndex = null;
     this.scndCardIndex = null;
   }
-  getTextDirection(word: string): string {
-    return word;
-  }
+  // getTextDirection(word: string): string {
+  //   return word;
+  // }
 
   isEndGame(): boolean {
     return this.cards.every((card) => card.matched);

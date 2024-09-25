@@ -85,7 +85,7 @@ export class ReversedCardsComponent implements OnInit {
 
     // Check if one card's word matches the other's meaning (origin vs. target)
     const isMatch =
-      firstCard.origin === secondCard.target &&
+      firstCard.origin === secondCard.target 
       firstCard.target === secondCard.origin;
 
     if (isMatch) {
