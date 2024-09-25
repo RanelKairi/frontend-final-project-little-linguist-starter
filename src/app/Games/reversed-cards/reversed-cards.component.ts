@@ -1,126 +1,141 @@
-import { Component, OnInit } from '@angular/core';
-import { Card } from '../../../shared/model/card.';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { Category } from '../../../shared/model/category';
+import { TranslatedWord } from '../../../shared/model/translated-word';
 import { CatesService } from '../../services/cates.service';
+import { GameResultsService } from '../../services/game-results.service';
+import { GameResult } from '../../../shared/model/game-result.';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reversed-cards',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule, 
+    MatCardModule, 
+  ],
   templateUrl: './reversed-cards.component.html',
-  styleUrl: './reversed-cards.component.css',
+  styleUrls: ['./reversed-cards.component.css'],
 })
 export class ReversedCardsComponent implements OnInit {
-  cards: Card[] = [];
-  flippedCards: Card[] = [];
-  attempts = 0;
+  @Input() id?: string; 
+  selectedCate?: Category;
+  cards: { word: string; isOrigin: boolean; flipped: boolean; matched: boolean }[] = [];
+  flippedCards: any[] = [];
   score = 100;
   totalWords = 0;
-  selectedCate?: Category; // Store selected category
+  attempts = 0;
+  gameId = 4;
 
   constructor(
-    private cateService: CatesService, // Service to fetch categories
-    private route: ActivatedRoute,
+    private cateService: CatesService,
+    private gameResultsService: GameResultsService,
     public dialogService: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const categoryId = this.route.snapshot.paramMap.get('id');
-
-    if (categoryId) {
-      this.selectedCate = await this.cateService.get(categoryId); // Fetch category from Firestore
+    if (this.id) {
+      this.selectedCate = await this.cateService.get(this.id);
       if (this.selectedCate) {
-        this.initializeGame();
+        this.initializeGame(); 
       }
     }
   }
 
-  initializeGame() {
-    if (this.selectedCate) {
-      // Generate cards from origin-target pairs in the category
+  async initializeGame(): Promise<void> {
+    if (!this.selectedCate) return;
 
-      this.cards = this.shuffleCards(
-        this.selectedCate.words.map(
-          (word) => new Card(word.origin, word.target, false, false),
-          console.log(this.cards) // Use origin as word and target as meaning
-        )
-      );
-
-      this.totalWords = this.cards.length / 2; // Total pairs
-    }
+    // Generate cards from origin-target pairs and shuffle them
+    this.cards = this.shuffleCards(this.selectedCate.words);
+    this.totalWords = this.selectedCate.words.length; // Track total pairs of words
   }
 
-  // Shuffle the cards
-  shuffleCards(cards: Card[]): Card[] {
-    return cards
-      .concat(cards) // Duplicate for matching pairs
-      .sort(() => Math.random() - 0.5); // Shuffle the cards
+  // Shuffle the words array and map each word into a card pair (origin & target)
+  shuffleCards(words: TranslatedWord[]) {
+    const cardArray = words.flatMap((word) => [
+      { word: word.origin, isOrigin: true, flipped: false, matched: false },
+      { word: word.target, isOrigin: false, flipped: false, matched: false },
+    ]);
+
+    // Shuffle the cards array
+    return cardArray.sort(() => Math.random() - 0.5);
   }
 
-  // Handle card clicks
-  onCardClick(card: Card) {
-    // Prevent flipping more than two cards or if the card is already revealed/matched
-    if (card.revealed || card.matched || this.flippedCards.length == 2) {
-      return;
-    }
-    console.log(this.cards);
+  // Handle card click
+  onCardClick(card: any) {
+    if (card.flipped || card.matched || this.flippedCards.length === 2) return;
 
-    // Reveal the clicked card
-    card.revealed = true;
+    // Flip the clicked card
+    card.flipped = true;
     this.flippedCards.push(card);
-    console.log(this.flippedCards);
-    // Check match only if two cards are flipped
+
     if (this.flippedCards.length === 2) {
       this.checkMatch();
     }
   }
 
-  // Check if two flipped cards match
+  // Check if the flipped cards are a match (origin-target pair)
   checkMatch() {
     const [firstCard, secondCard] = this.flippedCards;
 
-    // Check if one card's word matches the other's meaning (origin vs. target)
-    const isMatch =
-      firstCard.origin === secondCard.target 
-      firstCard.target === secondCard.origin;
-
-    if (isMatch) {
-      // If the cards match, mark them as matched
+    if (this.isMatch(firstCard, secondCard)) {
       firstCard.matched = true;
       secondCard.matched = true;
-
-      // Provide feedback and increment points
-      this.score += 10; // Add points for a correct match
-      this.showFeedback(true);
+      this.dialogService.open(FeedbackDialogComponent,{
+        data:{isSucces:true}}
+      )
     } else {
-      // If no match, flip the cards back after a short delay
+      this.score -= 2; // Deduct score for mismatch
       setTimeout(() => {
-        firstCard.revealed = false;
-        secondCard.revealed = false;
+        firstCard.flipped = false;
+        secondCard.flipped = false;
       }, 1000);
-
-      // Deduct points for incorrect attempt
-      this.score -= 2; // Subtract points for wrong match
-      this.showFeedback(false);
+      this.dialogService.open(FeedbackDialogComponent,{
+        data:{isSucces :false}
+      })
     }
 
-    // Clear flipped cards
-    this.flippedCards = [];
+    this.flippedCards = []; // Reset flipped cards
     this.attempts++;
+
+    // End game when all cards are matched or score is 0
+    if (this.cards.every((card) => card.matched) || this.score <= 0) {
+      this.endGame();
+    }
   }
 
-  showFeedback(isSuccess: boolean) {
-    this.dialogService.open(FeedbackDialogComponent, {
-      data: { success: isSuccess },
-    });
+  // Determine if two cards are a match (one origin, one target)
+  isMatch(firstCard: any, secondCard: any) {
+    const firstWord = this.selectedCate?.words.find((w) =>
+      w.origin === firstCard.word || w.target === firstCard.word
+    );
+    return (
+      firstWord && 
+      ((firstCard.isOrigin && firstWord.target === secondCard.word) || 
+      (!firstCard.isOrigin && firstWord.origin === secondCard.word))
+    );
   }
 
-  // Calculate final score
-  calculateFinalScore() {
-    return Math.max(this.score, 0); // Prevent score from going negative
+  // End game and save result to Firestore
+  async endGame() {
+    const gameResult = new GameResult(
+      this.selectedCate?.id || 'unknown',
+      this.gameId,
+      new Date(),
+      this.score
+    );
+    await this.gameResultsService.addGameResult(gameResult);
+    console.log('Game result saved:', gameResult);
+  }
+
+  // Reset button to clear input and retry
+  reset() {
+    this.flippedCards = [];
   }
 }

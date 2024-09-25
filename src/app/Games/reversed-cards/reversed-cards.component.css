@@ -1,42 +1,68 @@
+/* General container styling */
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.score-container {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Cards grid */
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 20px;
-  }
-  
-  .card {
-    width: 100px;
-    height: 140px;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .card-back {
-    background-color: #007bff;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .card-front {
-    background-color: white;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .game-info {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .matched {
-    visibility: hidden;  /* Hide matched cards */
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));  /* Responsive grid for mat-cards */
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Individual card styles using mat-card */
+.card {
+  width: 150px;
+  height: 200px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-back, .card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Face-down card styling */
+.card-back {
+  background-color: #3f51b5; /* Card back color */
+  color: white;
+}
+
+.card-back mat-icon {
+  font-size: 48px;
+}
+
+/* Face-up card styling */
+.card-front {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+/* Reset button styling */
+.reset-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button[mat-raised-button] {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+}

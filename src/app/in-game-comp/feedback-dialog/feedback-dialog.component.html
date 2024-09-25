@@ -1,19 +1,19 @@
 <div *ngIf="isSucces; else failureCase" class="true-case">
     <div mat-dialog-header class="correct-dialog">Correct!</div>
-    <div mat-dialog-title>Good Job!</div>
-    <mat-dialog-content>You got the word right!</mat-dialog-content>
+    <div mat-dialog-title>🎉 Correct Match! 🎉</div>
+    <mat-dialog-content>😎You got the word right!😎</mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-raised-button mat-dialog-close>Next Word</button>
+      <button mat-raised-button mat-dialog-close>Next Word👾</button>
     </mat-dialog-actions>
   </div>
   
   <ng-template #failureCase>
     <div class="false-case">
-      <div mat-dialog-header class="incorrect-dialog">Incorrect</div>
-      <div mat-dialog-title>Try Again!</div>
-      <mat-dialog-content>That wasn't correct. Give it another shot!</mat-dialog-content>
+      <div mat-dialog-header class="incorrect-dialog">🤬💩☠️Incorrect☠️💩🤬</div>
+      <div mat-dialog-title>😭🤬😵‍💫Try Again!😵‍💫🤬😭</div>
+      <mat-dialog-content>That wasn't correct💩. Give it another shot!🤣</mat-dialog-content>
       <mat-dialog-actions>
-        <button mat-raised-button mat-dialog-close>Try Again</button>
+        <button mat-raised-button mat-dialog-close>Try Again👾</button>
       </mat-dialog-actions>
     </div>
   </ng-template>
