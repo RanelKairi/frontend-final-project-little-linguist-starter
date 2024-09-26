@@ -6,7 +6,7 @@ import {
   NgModule,
   OnInit,
 } from '@angular/core';
-import { GameProfile } from '../../shared/model/GameProfile';
+import { GameProfile } from '../../shared/model/game-profile';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -55,7 +55,9 @@ export class SelectGameCategoryDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-     this.categoryService.list().then((result:Category[]) => (this.allCate = result));
+    this.categoryService
+      .list()
+      .then((result: Category[]) => (this.allCate = result));
   }
 
   CateMove() {}

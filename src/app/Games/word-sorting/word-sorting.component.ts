@@ -17,7 +17,7 @@ import { CatesService } from '../../services/cates.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { GameResult } from '../../../shared/model/game-result.';
 import { GameResultsService } from '../../services/game-results.service';
-import { GameProfile } from '../../../shared/model/GameProfile';
+import { GameProfile } from '../../../shared/model/game-profile';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
 
 @Component({

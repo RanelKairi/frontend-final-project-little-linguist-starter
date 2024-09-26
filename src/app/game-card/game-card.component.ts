@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { GameProfile } from '../../shared/model/GameProfile';
+import { GameProfile } from '../../shared/model/game-profile';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { SelectGameCategoryDialogComponent } from '../select-game-category-dialog/select-game-category-dialog.component';
@@ -36,12 +36,13 @@ export class GameCardComponent implements OnInit {
   constructor(
     public dialogService: MatDialog,
     private gameDataService: GameDataService,
-    private categoryService: CategoriesService
-  ) // private dialogRef : MatDialogRef<GameCardComponent>,
-  {}
+    private categoryService: CategoriesService // private dialogRef : MatDialogRef<GameCardComponent>,
+  ) {}
 
   ngOnInit(): void {
-    this.categoryService.list().then((result:Category[]) => (this.allCate = result));
+    this.categoryService
+      .list()
+      .then((result: Category[]) => (this.allCate = result));
     this.allgames = this.gameDataService.list();
   }
 

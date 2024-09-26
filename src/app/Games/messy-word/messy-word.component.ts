@@ -17,7 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
 import { GamePointsComponent } from '../../in-game-comp/game-points/game-points.component';
-import { GameProfile } from '../../../shared/model/GameProfile';
+import { GameProfile } from '../../../shared/model/game-profile';
 import { TranslatedWord } from '../../../shared/model/translated-word';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
 
@@ -82,11 +82,6 @@ export class MessyWordComponent implements OnInit {
       if (this.selectedCate) {
         this.initializeGame();
       }
-
-    
-
-    
-    
     }
   }
   async initializeGame() {
@@ -96,7 +91,7 @@ export class MessyWordComponent implements OnInit {
     this.words = this.words.sort(() => Math.random() - 0.5);
     this.gamePoints = 100 / this.words.length;
     this.startNewGame();
-    
+
     this.nextWord();
   }
 
@@ -106,17 +101,16 @@ export class MessyWordComponent implements OnInit {
         this.timer--;
       } else {
         this.timeIsUp();
-
       }
     }, 500); // Update timer every second
   }
 
   nextWord() {
-    console.log("next Word()!")
+    console.log('next Word()!');
     if (this.words && this.index < this.words.length - 1) {
       this.index++;
       const word = this.selectedCate?.words[this.index].origin;
-      console.log(word)
+      console.log(word);
       this.mixedWord = this.shuffleWord(word!);
     } else {
       // Math.floor(this.points);
@@ -139,9 +133,8 @@ export class MessyWordComponent implements OnInit {
     return shuffledWord;
   }
 
-   timeIsUp(){
-    this.endGameSaveResults()
-    
+  timeIsUp() {
+    this.endGameSaveResults();
   }
 
   submit() {
@@ -153,10 +146,10 @@ export class MessyWordComponent implements OnInit {
 
     if (isSuccess) {
       this.numSuccess++;
-      this.grade = Math.floor(this.numSuccess * this.gamePoints)
-      this.words[this.index].answer=true;
-    }else{
-      this.words[this.index].answer=false;
+      this.grade = Math.floor(this.numSuccess * this.gamePoints);
+      this.words[this.index].answer = true;
+    } else {
+      this.words[this.index].answer = false;
     }
 
     // Save the result for the summary screen
@@ -168,9 +161,8 @@ export class MessyWordComponent implements OnInit {
 
     const isEndOfGame = this.index + 1 === this.words.length;
 
-    if (isEndOfGame || this.endGame ==true) {
+    if (isEndOfGame || this.endGame == true) {
       this.endGameSaveResults(); // End the game when all words are guessed
-
     } else {
       this.nextWord(); // Move to the next word
       this.reset();
@@ -183,15 +175,14 @@ export class MessyWordComponent implements OnInit {
       new Date(),
       this.grade
     );
-    await this.gameResultService.addGameResult(gameResult)
+    await this.gameResultService.addGameResult(gameResult);
 
     clearInterval(this.interval); // Stop the timer
     // Save game result here, like in the previous game
-    
   }
 
   reset() {
-    if (this.words) this.words[this.index].guess=''; // Clear the input field
+    if (this.words) this.words[this.index].guess = ''; // Clear the input field
   }
 
   showSummary() {
@@ -211,28 +202,31 @@ export class MessyWordComponent implements OnInit {
   // }
 
   calculateProgress() {
-    return (this.index /this.words.length) * 100;
+    return (this.index / this.words.length) * 100;
   }
 
-  async startNewGame(){
+  async startNewGame() {
     this.isLoading = false;
-    console.log("Game Started!")
-    this.nextWord()
-    this.startTimer()
+    console.log('Game Started!');
+    this.nextWord();
+    this.startTimer();
   }
 
   playAgain() {
     window.location.reload();
   }
   anotherCate() {
-    const dialogRef = this.dialogService.open(SelectGameCategoryDialogComponent,{
-      data: this.currentGame
-    });
+    const dialogRef = this.dialogService.open(
+      SelectGameCategoryDialogComponent,
+      {
+        data: this.currentGame,
+      }
+    );
     dialogRef.afterClosed().subscribe(async (result) => {
-      if(result){
-        console.log(result)
+      if (result) {
+        console.log(result);
         window.location.reload();
       }
-    })
+    });
   }
 }

@@ -12,7 +12,7 @@ import { CategoriesService } from '../services/categories.service';
 import { Category } from '../../shared/model/category';
 import { MatCardModule } from '@angular/material/card';
 import { GameCardComponent } from '../game-card/game-card.component';
-import { GameProfile } from '../../shared/model/GameProfile';
+import { GameProfile } from '../../shared/model/game-profile';
 import { GameDataService } from '../services/game-data.service';
 import { SelectGameCategoryDialogComponent } from '../select-game-category-dialog/select-game-category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -45,7 +45,10 @@ export class ChooseGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.allGames = this.gameService.list();
-    this.categoryService.list().then((result:Category[]) => (this.allCate = result));  }
+    this.categoryService
+      .list()
+      .then((result: Category[]) => (this.allCate = result));
+  }
   openDialog(): void {
     this.dialogService.open(SelectGameCategoryDialogComponent);
   }

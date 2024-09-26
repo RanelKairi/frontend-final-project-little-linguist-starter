@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameProfile } from '../../shared/model/GameProfile';
+import { GameProfile } from '../../shared/model/game-profile';
 import { CategoriesService } from './categories.service';
 import { Category } from '../../shared/model/category';
 
@@ -8,7 +8,7 @@ import { Category } from '../../shared/model/category';
 })
 export class GameDataService {
   private readonly CATEGORIES_KEY = 'categories';
-  allCateGames : GameProfile[] = []
+  allCateGames: GameProfile[] = [];
   private allgames: GameProfile[] = [
     new GameProfile(
       1,
@@ -60,11 +60,10 @@ export class GameDataService {
 
   getCate(CateID: number) {}
 
-  getGameById(gameId:number):GameProfile | undefined{
-    return this.allgames.find((game) => game.id === gameId)
+  getGameById(gameId: number): GameProfile | undefined {
+    return this.allgames.find((game) => game.id === gameId);
   }
-  getGamesByCateId():GameProfile[] {
-
-    return this.allCateGames
+  getGamesByCateId(): GameProfile[] {
+    return this.allCateGames;
   }
 }

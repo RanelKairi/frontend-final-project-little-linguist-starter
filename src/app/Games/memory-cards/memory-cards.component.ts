@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Card } from '../../../shared/model/card.';
 import { CatesService } from '../../services/cates.service';
-import { GameProfile } from '../../../shared/model/GameProfile';
+import { GameProfile } from '../../../shared/model/game-profile';
 import { Category } from '../../../shared/model/category';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatedWord } from '../../../shared/model/translated-word';
@@ -72,7 +72,7 @@ export class MemoryCardsComponent implements OnInit {
         flipped: false,
         matched: false,
         direction: word.origin,
-        translation: word.target // this.getTextDirection(word.origin || word.target), // shokel levater al ze
+        translation: word.target, // this.getTextDirection(word.origin || word.target), // shokel levater al ze
       }))
       .concat(
         words.map((word) => ({
@@ -80,7 +80,7 @@ export class MemoryCardsComponent implements OnInit {
           flipped: false,
           matched: false,
           direction: word.target, //this.getTextDirection(word.target),
-          translation:word.origin
+          translation: word.origin,
         }))
       )
       .sort();

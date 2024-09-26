@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { Category } from '../../../shared/model/category';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
@@ -16,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { GameProfile } from '../../../shared/model/GameProfile';
+import { GameProfile } from '../../../shared/model/game-profile';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
 import { GamePointsComponent } from '../../in-game-comp/game-points/game-points.component';
 import { CatesService } from '../../services/cates.service';
@@ -44,7 +40,6 @@ import { SelectGameCategoryDialogComponent } from '../../select-game-category-di
   ],
   templateUrl: './mixxed-letters.component.html',
   styleUrl: './mixxed-letters.component.css',
-  
 })
 export class MixxedLettersComponent implements OnInit {
   displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
@@ -191,14 +186,17 @@ export class MixxedLettersComponent implements OnInit {
   }
   // GOLD
   anotherCate() {
-    const dialogRef = this.dialogService.open(SelectGameCategoryDialogComponent,{
-      data: this.currentGame
-    });
+    const dialogRef = this.dialogService.open(
+      SelectGameCategoryDialogComponent,
+      {
+        data: this.currentGame,
+      }
+    );
     dialogRef.afterClosed().subscribe(async (result) => {
-      if(result){
-        console.log(result)
+      if (result) {
+        console.log(result);
         window.location.reload();
       }
-    })
+    });
   }
 }
