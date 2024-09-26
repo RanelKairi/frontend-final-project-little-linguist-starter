@@ -1,17 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import {ChangeDetectionStrategy,Component,Inject,OnInit,} from '@angular/core';
 import { GameProfile } from '../../shared/model/game-profile';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { Category } from '../../shared/model/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,9 +16,6 @@ import { CatesService } from '../services/cates.service';
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatDialogContent,
-    MatDialogClose,
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -36,6 +23,7 @@ import { CatesService } from '../services/cates.service';
     RouterModule,
     RouterLink,
     RouterOutlet,
+    MatDialogModule
   ],
   templateUrl: './select-game-category-dialog.component.html',
   styleUrl: './select-game-category-dialog.component.css',

@@ -34,8 +34,8 @@ export const cateConverter = {
     const category = new Category(
       snapshot.id,
       data['name'],
-      data['origin'], // String back to enum (Language)
-      data['target'] // String back to enum
+      data['origin'],
+      data['target']
     );
 
     // Convert Firestore's Timestamp back to Date
