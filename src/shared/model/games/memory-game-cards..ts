@@ -1,4 +1,4 @@
-import { TranslatedWord } from './translated-word';
+import { TranslatedWord } from '../categories/translated-word';
 
 export class MemoryGameCard {
   // words: TranslatedWord[] = [];

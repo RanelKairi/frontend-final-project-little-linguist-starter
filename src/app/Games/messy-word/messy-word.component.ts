@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CatesService } from '../../services/cates.service';
-import { Category } from '../../../shared/model/category';
-import { GameResult } from '../../../shared/model/game-result.';
+import { CatesService } from '../../services/category-services/category.service';
+import { Category } from '../../../shared/model/categories/category';
+import { GameResult } from '../../../shared/model/games/game-result.';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
-import { GameResultsService } from '../../services/game-results.service';
+import { GameResultsService } from '../../services/game-services/game-results.service';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,8 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
 import { GamePointsComponent } from '../../in-game-comp/game-points/game-points.component';
-import { GameProfile } from '../../../shared/model/game-profile';
-import { TranslatedWord } from '../../../shared/model/translated-word';
+import { GameProfile } from '../../../shared/model/games/game-profile';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
 
 @Component({
@@ -98,7 +98,7 @@ export class MessyWordComponent implements OnInit {
 
   startTimer() {
     // this.interval = setInterval(() => {
-      this.interval = setInterval(() => {
+    this.interval = setInterval(() => {
       if (this.timer > 0) {
         this.timer--;
       } else {
@@ -191,7 +191,7 @@ export class MessyWordComponent implements OnInit {
     // Navigate to the summary screen or show it within this component
     // this.saveGameResult();
   }
-   // should fix an error before return this addDoc from Service
+  // should fix an error before return this addDoc from Service
   // saveGameResult() {
   //   const gameResult: GameResult = {
   //     categoryId: this.id!,

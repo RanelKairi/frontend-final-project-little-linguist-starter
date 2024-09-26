@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Category } from '../../../shared/model/category';
-import { TranslatedWord } from '../../../shared/model/translated-word';
+import { Category } from '../../../shared/model/categories/category';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
 import { FormsModule } from '@angular/forms';
@@ -12,11 +12,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CatesService } from '../../services/cates.service';
+import { CatesService } from '../../services/category-services/category.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { GameResult } from '../../../shared/model/game-result.';
-import { GameResultsService } from '../../services/game-results.service';
-import { GameProfile } from '../../../shared/model/game-profile';
+import { GameResult } from '../../../shared/model/games/game-result.';
+import { GameResultsService } from '../../services/game-services/game-results.service';
+import { GameProfile } from '../../../shared/model/games/game-profile';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
 
 @Component({
@@ -75,19 +75,17 @@ export class WordSortingComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    if(this.id){
-      const cateId = this.id
+    if (this.id) {
+      const cateId = this.id;
 
-      this.selectedCate = await this.cateService.get(cateId)
-      const cateChose = this.selectedCate
-      if(cateChose){
-        this.initializeGame()
+      this.selectedCate = await this.cateService.get(cateId);
+      const cateChose = this.selectedCate;
+      if (cateChose) {
+        this.initializeGame();
       }
-    }}
+    }
+  }
 
-      
-  
-  
   async initializeGame(): Promise<void> {
     this.allCates = await this.cateService.list();
     this.selectedWords = [...this.selectedCate!.words]

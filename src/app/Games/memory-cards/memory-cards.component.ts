@@ -3,13 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Card } from '../../../shared/model/card.';
-import { CatesService } from '../../services/cates.service';
-import { GameProfile } from '../../../shared/model/game-profile';
-import { Category } from '../../../shared/model/category';
+import { Card } from '../../../shared/model/games/card.'; // should get deleted anyway
+import { CatesService } from '../../services/category-services/category.service';
+import { GameProfile } from '../../../shared/model/games/game-profile';
+import { Category } from '../../../shared/model/categories/category';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslatedWord } from '../../../shared/model/translated-word';
-import { MemoryGameCard } from '../../../shared/model/memory-game-cards.';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
+import { MemoryGameCard } from '../../../shared/model/games/memory-game-cards.';
 
 @Component({
   selector: 'app-memory-cards',
@@ -131,7 +131,6 @@ export class MemoryCardsComponent implements OnInit {
     this.frstCardIndex = null;
     this.scndCardIndex = null;
   }
-  
 
   isEndGame(): boolean {
     return this.cards.every((card) => card.matched);

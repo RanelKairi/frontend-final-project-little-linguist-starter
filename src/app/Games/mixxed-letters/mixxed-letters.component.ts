@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { Category } from '../../../shared/model/category';
+import { Category } from '../../../shared/model/categories/category';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
 import { MatCardModule } from '@angular/material/card';
-import { TranslatedWord } from '../../../shared/model/translated-word';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -12,13 +12,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { GameProfile } from '../../../shared/model/game-profile';
+import { GameProfile } from '../../../shared/model/games/game-profile';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
 import { GamePointsComponent } from '../../in-game-comp/game-points/game-points.component';
-import { CatesService } from '../../services/cates.service';
+import { CatesService } from '../../services/category-services/category.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { GameResultsService } from '../../services/game-results.service';
-import { GameResult } from '../../../shared/model/game-result.';
+import { GameResultsService } from '../../services/game-services/game-results.service';
+import { GameResult } from '../../../shared/model/games/game-result.';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
 
 @Component({

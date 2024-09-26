@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {ChangeDetectionStrategy,Component,Inject,OnInit,} from '@angular/core';
-import { GameProfile } from '../../shared/model/game-profile';
-import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import { Category } from '../../shared/model/category';
+import { Component, Inject, OnInit } from '@angular/core';
+import { GameProfile } from '../../shared/model/games/game-profile';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Category } from '../../shared/model/categories/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { CatesService } from '../services/cates.service';
+import { CatesService } from '../services/category-services/category.service';
 
 @Component({
   selector: 'app-select-game-category-dialog',
@@ -23,11 +23,10 @@ import { CatesService } from '../services/cates.service';
     RouterModule,
     RouterLink,
     RouterOutlet,
-    MatDialogModule
+    MatDialogModule,
   ],
   templateUrl: './select-game-category-dialog.component.html',
   styleUrl: './select-game-category-dialog.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectGameCategoryDialogComponent implements OnInit {
   currentCate?: Category;
@@ -38,7 +37,7 @@ export class SelectGameCategoryDialogComponent implements OnInit {
     private categoryService: CatesService
   ) {}
 
- async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.categoryService
       .list()
       .then((result: Category[]) => (this.allCate = result));

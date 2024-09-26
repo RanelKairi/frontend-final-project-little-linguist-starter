@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { GameResult } from '../../shared/model/game-result.';
-import { GameResultsService } from '../services/game-results.service';
+import { GameResult } from '../../shared/model/games/game-result.';
+import { GameResultsService } from '../services/game-services/game-results.service';
 import { MatCardModule } from '@angular/material/card';
-import { Category } from '../../shared/model/category';
-import { CatesService } from '../services/cates.service';
+import { Category } from '../../shared/model/categories/category';
+import { CatesService } from '../services/category-services/category.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { GameDataService } from '../services/game-data.service';
-import { GameProfile } from '../../shared/model/game-profile';
+import { GameDataService } from '../services/game-services/game-data.service';
+import { GameProfile } from '../../shared/model/games/game-profile';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 
@@ -25,31 +25,30 @@ import { RouterLink } from '@angular/router';
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
-
 })
 export class DashboardComponent implements OnInit {
-  gameResults: GameResult[] = []; 
-  isLoading = true; 
-  
+  gameResults: GameResult[] = [];
+  isLoading = true;
+
   // Stats to display in cards
-  categoriesNotLearned: number = 0; 
-  categoriesLearned: number = 0; 
-  totalPoints: number = 0; 
-  gamesPlayed: number = 0; 
+  categoriesNotLearned: number = 0;
+  categoriesLearned: number = 0;
+  totalPoints: number = 0;
+  gamesPlayed: number = 0;
   highestAvgScore: number = 0;
-  lowestAvgScore: number = 0; 
-  highestAvgScoreGame?: GameProfile; 
-  lowestAvgScoreGame?: GameProfile; 
-  perfectGamesPercentage: number = 0; 
-  mostPlayedCategory: string = ''; 
-  mostPlayed?: Category; 
-  categoriesStudiedPercentage: number = 0; 
-  
+  lowestAvgScore: number = 0;
+  highestAvgScoreGame?: GameProfile;
+  lowestAvgScoreGame?: GameProfile;
+  perfectGamesPercentage: number = 0;
+  mostPlayedCategory: string = '';
+  mostPlayed?: Category;
+  categoriesStudiedPercentage: number = 0;
+
   // monthly and streak vars:
-  gamesThisMonth: number = 0; 
-  challengeMessage: string = ''; 
-  daysStreak: number = 0; 
-  maxCount: number = 0; 
+  gamesThisMonth: number = 0;
+  challengeMessage: string = '';
+  daysStreak: number = 0;
+  maxCount: number = 0;
 
   constructor(
     private gameResultsService: GameResultsService,
@@ -204,11 +203,7 @@ export class DashboardComponent implements OnInit {
     this.categoriesLearned = new Set(
       this.gameResults.map((result) => result.categoryId)
     ).size;
-    if (allCategories)
-      
-      
-
-      console.log('categoriesLearned', this.categoriesLearned);
+    if (allCategories) console.log('categoriesLearned', this.categoriesLearned);
     // Calculate categories not learned
     this.categoriesNotLearned = allCategories.length - this.categoriesLearned;
 

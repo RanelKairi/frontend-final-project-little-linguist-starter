@@ -1,5 +1,5 @@
-import { Category } from '../../../shared/model/category';
-import { TranslatedWord } from '../../../shared/model/translated-word';
+import { Category } from '../../../shared/model/categories/category';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
 import {
   QueryDocumentSnapshot,
   Timestamp,
@@ -19,10 +19,9 @@ export const cateConverter = {
         answer: word.answer,
         categoryId: word.categoryId,
       })),
-      
+
       lastUpdateDate: Timestamp.fromDate(cateToSave.lastUpdateDate),
     };
-   
   },
   fromFirestore: (
     snapshot: QueryDocumentSnapshot,
@@ -46,10 +45,9 @@ export const cateConverter = {
     // Convert Firestore words array back into TranslatedWord instances
     const words = data['words'] || [];
     category.words = words.map(
-      (word:TranslatedWord) => new TranslatedWord(word.origin, word.target)
+      (word: TranslatedWord) => new TranslatedWord(word.origin, word.target)
     );
 
     return category;
-    
   },
 };

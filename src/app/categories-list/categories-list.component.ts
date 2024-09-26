@@ -4,10 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { Category } from '../../shared/model/category';
+import { Category } from '../../shared/model/categories/category';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-category-dialog.component';
-import { CatesService } from '../services/cates.service';
+import { CatesService } from '../services/category-services/category.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -51,7 +51,7 @@ export class CategoriesListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         await this.cateService.delete(id);
-        
+
         this.dataSource = await this.cateService.list();
       }
     });

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Category } from '../../shared/model/category';
+import { Category } from '../../shared/model/categories/category';
 import { GameCardComponent } from '../game-card/game-card.component';
-import { GameProfile } from '../../shared/model/game-profile';
-import { GameDataService } from '../services/game-data.service';
+import { GameProfile } from '../../shared/model/games/game-profile';
+import { GameDataService } from '../services/game-services/game-data.service';
 
 @Component({
   selector: 'app-choose-game',

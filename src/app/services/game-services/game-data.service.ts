@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameProfile } from '../../shared/model/game-profile';
+import { GameProfile } from '../../../shared/model/games/game-profile';
 
 @Injectable({
   providedIn: 'root',

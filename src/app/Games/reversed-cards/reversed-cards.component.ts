@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { Category } from '../../../shared/model/category';
-import { TranslatedWord } from '../../../shared/model/translated-word';
-import { CatesService } from '../../services/cates.service';
-import { GameResultsService } from '../../services/game-results.service';
-import { GameResult } from '../../../shared/model/game-result.';
+import { Category } from '../../../shared/model/categories/category';
+import { TranslatedWord } from '../../../shared/model/categories/translated-word';
+import { CatesService } from '../../services/category-services/category.service';
+import { GameResultsService } from '../../services/game-services/game-results.service';
+import { GameResult } from '../../../shared/model/games/game-result.';
 // import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component'; // will be use in a moments
 import { MatDialog } from '@angular/material/dialog';
-import { MemoryGameCard } from '../../../shared/model/memory-game-cards.';
+import { MemoryGameCard } from '../../../shared/model/games/memory-game-cards.';
 
 @Component({
   selector: 'app-reversed-cards',
@@ -166,6 +166,7 @@ export class ReversedCardsComponent implements OnInit {
   }
 
   // Determine if two cards are a match (one origin, one target)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   isMatch(firstCard: any, secondCard: any) {
     const firstWord = this.selectedCate?.words.find(
       (w) => w.origin === firstCard.word || w.target === firstCard.word
