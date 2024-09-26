@@ -8,7 +8,6 @@ import {
 
 export const cateConverter = {
   toFirestore: (cateToSave: Category) => {
-    console.log('Category before Firestore conversion:', cateToSave)
     return {
       name: cateToSave.name,
       origin: cateToSave.origin,
@@ -47,7 +46,7 @@ export const cateConverter = {
     // Convert Firestore words array back into TranslatedWord instances
     const words = data['words'] || [];
     category.words = words.map(
-      (word:any) => new TranslatedWord(word.origin, word.target) //might change any to TranslatedWord 
+      (word:TranslatedWord) => new TranslatedWord(word.origin, word.target)
     );
 
     return category;

@@ -12,7 +12,6 @@ import {
   MatDialogContent,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { CategoriesService } from '../services/categories.service';
 import { Category } from '../../shared/model/category';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { CatesService } from '../services/cates.service';
 
 @Component({
   selector: 'app-select-game-category-dialog',
@@ -47,10 +47,10 @@ export class SelectGameCategoryDialogComponent implements OnInit {
   GamePicked = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public currentGame: GameProfile,
-    private categoryService: CategoriesService
+    private categoryService: CatesService
   ) {}
 
-  ngOnInit(): void {
+ async ngOnInit(): Promise<void> {
     this.categoryService
       .list()
       .then((result: Category[]) => (this.allCate = result));
