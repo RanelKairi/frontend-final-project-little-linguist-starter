@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CatesService } from '../../services/cates.service';
 import { Category } from '../../../shared/model/category';
@@ -7,7 +7,7 @@ import { GameResult } from '../../../shared/model/game-result.';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { GameResultsService } from '../../services/game-results.service';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -64,8 +64,9 @@ export class MessyWordComponent implements OnInit {
   numSuccess = 0;
   grade = 0;
   endGame = false;
-  timer = 60; // Timer set to 60 seconds
-  interval?: any; // Holds the interval reference
+  timer = 60; // Timer set to 60 seconds // maybewill be replaced
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  interval?: any; // type of NodeJS.Timeout , not available in all environment
 
   wordsPlayed: { word: string; guess: string; correct: boolean }[] = [];
   userGuess = '';
@@ -96,7 +97,8 @@ export class MessyWordComponent implements OnInit {
   }
 
   startTimer() {
-    this.interval = setInterval(() => {
+    // this.interval = setInterval(() => {
+      this.interval = setInterval(() => {
       if (this.timer > 0) {
         this.timer--;
       } else {
@@ -189,7 +191,7 @@ export class MessyWordComponent implements OnInit {
     // Navigate to the summary screen or show it within this component
     // this.saveGameResult();
   }
-
+   // should fix an error before return this addDoc from Service
   // saveGameResult() {
   //   const gameResult: GameResult = {
   //     categoryId: this.id!,

@@ -8,9 +8,8 @@ import { TranslatedWord } from '../../../shared/model/translated-word';
 import { CatesService } from '../../services/cates.service';
 import { GameResultsService } from '../../services/game-results.service';
 import { GameResult } from '../../../shared/model/game-result.';
-import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
+// import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component'; // will be use in a moments
 import { MatDialog } from '@angular/material/dialog';
-import { Card } from '../../../shared/model/card.';
 import { MemoryGameCard } from '../../../shared/model/memory-game-cards.';
 
 @Component({
@@ -29,7 +28,7 @@ export class ReversedCardsComponent implements OnInit {
   firstCard?: MemoryGameCard;
   secondCard?: MemoryGameCard;
   // pairOfCards:MemoryGameCard[]= []
-  flippedCards: any[] = [];
+  flippedCards:MemoryGameCard[] = [];
   words: TranslatedWord[] = [];
   score = 100;
   totalWords = 0;
@@ -91,7 +90,7 @@ export class ReversedCardsComponent implements OnInit {
 
   // Handle card click
   onCardClick(card: MemoryGameCard, cards:MemoryGameCard[]) {
-    let i :number;
+    console.log(cards);
 
     if (!this.firstCard && !this.secondCard) {
       card.flipped = true;

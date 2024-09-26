@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { GameProfile } from '../../shared/model/game-profile';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { SelectGameCategoryDialogComponent } from '../select-game-category-dialog/select-game-category-dialog.component';
 import { Category } from '../../shared/model/category';
@@ -47,7 +47,7 @@ export class GameCardComponent implements OnInit {
   }
 
   openDialog(currentGame: GameProfile) {
-    const dialogRef = this.dialogService.open(
+    this.dialogService.open(
       SelectGameCategoryDialogComponent,
       {
         data: currentGame,

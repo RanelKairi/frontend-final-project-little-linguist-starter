@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FeedbackDialogComponent } from '../../in-game-comp/feedback-dialog/feedback-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Category } from '../../../shared/model/category';
 import { TranslatedWord } from '../../../shared/model/translated-word';
-import { CategoriesService } from '../../services/categories.service';
 import { ProgressBarComponent } from '../../in-game-comp/progress-bar/progress-bar.component';
 import { ExitButtonComponent } from '../../in-game-comp/exit-button/exit-button.component';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +38,7 @@ import { SelectGameCategoryDialogComponent } from '../../select-game-category-di
   styleUrl: './word-sorting.component.css',
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WordSortingComponent {
+export class WordSortingComponent implements OnInit {
   displayedColumns: string[] = ['origin', 'target', 'guess', 'answer'];
   dataSource: TranslatedWord[] = [];
   isLoading = true;
@@ -65,7 +64,7 @@ export class WordSortingComponent {
   gameId = 2;
 
   endGame = false;
-  gameRandomWords?: any;
+  gameRandomWords?: TranslatedWord[] = [];
   randomCategory?: Category;
 
   constructor(
@@ -76,18 +75,19 @@ export class WordSortingComponent {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.route.paramMap.subscribe(async (params) => {
-      const cateId = params.get('id');
+    if(this.id){
+      const cateId = this.id
 
-      if (cateId) {
-        this.selectedCate = await this.cateService.get(cateId);
-
-        if (this.selectedCate) {
-          this.initializeGame();
-        }
+      this.selectedCate = await this.cateService.get(cateId)
+      const cateChose = this.selectedCate
+      if(cateChose){
+        this.initializeGame()
       }
-    });
-  }
+    }}
+
+      
+  
+  
   async initializeGame(): Promise<void> {
     this.allCates = await this.cateService.list();
     this.selectedWords = [...this.selectedCate!.words]

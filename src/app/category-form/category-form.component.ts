@@ -1,4 +1,3 @@
-import { CategoriesService } from './../services/categories.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Language } from '../../shared/model/language';
@@ -67,12 +66,12 @@ export class CategoryFormComponent implements OnInit {
   }
 
   async saveCategory() {
-    try{
-    await this.cateService.add(this.currentCategory)
-    this.router.navigate(['']);
-  } catch(error) {
-    console.error('Error saving category:', error)
-  }
+    try {
+      await this.cateService.add(this.currentCategory);
+      this.router.navigate(['']);
+    } catch (error) {
+      console.error('Error saving category:', error);
+    }
   }
 
   async deleteCategory() {

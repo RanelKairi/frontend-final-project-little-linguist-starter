@@ -5,7 +5,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Category } from '../../shared/model/category';
-import { CategoriesService } from '../services/categories.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-category-dialog.component';
 import { CatesService } from '../services/cates.service';
@@ -42,15 +41,6 @@ export class CategoriesListComponent implements OnInit {
 
   async ngOnInit() {
     this.dataSource = await this.cateService.list();
-    //בוצע
-    // this.dataSource = this.categoryService.list();
-    // .then להוסיף
-    //בוצע
-    // נוכחי עובד משנה למשהו אסתטי יותר .. עדכון , זו הייתה פונקציה מהסרוויס הקודם
-    // this.categoryService
-    //   .list()
-    //   .then((result: Category[]) => (this.dataSource = result));
-    // סוף נוכחי - עובד!
   }
 
   deleteCategory(id: string, name: string) {

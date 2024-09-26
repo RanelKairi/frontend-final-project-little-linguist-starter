@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
-  NgModule,
   OnInit,
 } from '@angular/core';
 import { GameProfile } from '../../shared/model/game-profile';
@@ -21,8 +20,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { GameDataService } from '../services/game-data.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-game-category-dialog',
@@ -50,24 +47,12 @@ export class SelectGameCategoryDialogComponent implements OnInit {
   GamePicked = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public currentGame: GameProfile,
-    private categoryService: CategoriesService,
-    private gameDataService: GameDataService
+    private categoryService: CategoriesService
   ) {}
 
   ngOnInit(): void {
     this.categoryService
       .list()
       .then((result: Category[]) => (this.allCate = result));
-  }
-
-  CateMove() {}
-
-  currentGameCate(selectedCate: Category, selectedGame: GameProfile) {
-    if (this.currentCate && this.currentGame) {
-      selectedCate = this.currentCate;
-      selectedGame = this.currentGame;
-
-      return this.gameDataService.Cate2Game(this.currentCate);
-    }
   }
 }

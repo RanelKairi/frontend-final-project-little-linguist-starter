@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { GameResult } from '../../shared/model/game-result.';
 import { GameResultsService } from '../services/game-results.service';
@@ -11,7 +11,7 @@ import { GameDataService } from '../services/game-data.service';
 import { GameProfile } from '../../shared/model/game-profile';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-// amood habait
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -25,31 +25,32 @@ import { RouterLink } from '@angular/router';
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class DashboardComponent implements OnInit {
-  gameResults: GameResult[] = []; // Game history of the current player
-  categoriesLearned: number = 0;
-  categoriesLearnedANY: any;
-  categoriesNotLearned: number = 0;
-  isLoading = true;
+  gameResults: GameResult[] = []; 
+  isLoading = true; 
+  
   // Stats to display in cards
-  totalPoints: number = 0;
-  gamesPlayed: number = 0;
+  categoriesNotLearned: number = 0; 
+  categoriesLearned: number = 0; 
+  totalPoints: number = 0; 
+  gamesPlayed: number = 0; 
   highestAvgScore: number = 0;
-  lowestAvgScore: number = 0;
-  highestAvgScoreGame?: GameProfile;
-  lowestAvgScoreGame?: GameProfile;
-  perfectGamesPercentage: number = 0;
-  mostPlayedCategory: string = '';
-  mostPlayed: Category | undefined;
-  categoriesStudiedPercentage: number = 0;
-  // highestAvg:number = 0;
-  // New variables for the monthly challenge and strike days
-  gamesThisMonth: number = 0; // Number of games played this month
-  challengeMessage: string = ''; // Message for the monthly challenge
-  daysStreak: number = 0; // Number of consecutive days the user has played
-  maxCount: number = 0;
+  lowestAvgScore: number = 0; 
+  highestAvgScoreGame?: GameProfile; 
+  lowestAvgScoreGame?: GameProfile; 
+  perfectGamesPercentage: number = 0; 
+  mostPlayedCategory: string = ''; 
+  mostPlayed?: Category; 
+  categoriesStudiedPercentage: number = 0; 
+  
+  // monthly and streak vars:
+  gamesThisMonth: number = 0; 
+  challengeMessage: string = ''; 
+  daysStreak: number = 0; 
+  maxCount: number = 0; 
+
   constructor(
     private gameResultsService: GameResultsService,
     private cateService: CatesService,
@@ -155,7 +156,7 @@ export class DashboardComponent implements OnInit {
     [gameType: string]: number[];
   }): GameProfile | undefined {
     let lowestAvgGame: GameProfile | undefined;
-    let lowestAvg = 100; // Max points is 100, so start from that
+    let lowestAvg = 100;
 
     for (const gameId in gameTypeScores) {
       const scores = gameTypeScores[gameId];
@@ -204,8 +205,8 @@ export class DashboardComponent implements OnInit {
       this.gameResults.map((result) => result.categoryId)
     ).size;
     if (allCategories)
-      // this.categoriesLearnedANY = new Set(this.gameResults.map(result => result.categoryId));
-      // console.log(this.categoriesLearnedANY)
+      
+      
 
       console.log('categoriesLearned', this.categoriesLearned);
     // Calculate categories not learned
@@ -239,9 +240,10 @@ export class DashboardComponent implements OnInit {
 
   calculateStrikeDays(): void {
     let strikeDays = 0;
-    let currentDate = new Date();
+    const currentDate = new Date();
 
     // Loop through each previous day until no games are found
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       currentDate.setDate(currentDate.getDate() - 1); // Move to the previous day
 
