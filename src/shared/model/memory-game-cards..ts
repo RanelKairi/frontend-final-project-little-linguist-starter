@@ -9,7 +9,8 @@ export class MemoryGameCard {
     public word : string,
     public flipped : boolean,
     public matched : boolean,
-    public direction : string
+    public direction : string,
+    public translation:string
   ) {
     // this.words = [];
     // this.direction = '';

@@ -31,7 +31,7 @@ export class MemoryCardsComponent implements OnInit {
   words: TranslatedWord[] = [];
   card: Card[] = [];
   cards: MemoryGameCard[] = [];
-  cardoosh = new MemoryGameCard('', false, false, '');
+  // cardoosh = new MemoryGameCard('', false, false, '');
   frstCardIndex: number | null = null;
   scndCardIndex: number | null = null;
   attempts = 0;
@@ -56,7 +56,7 @@ export class MemoryCardsComponent implements OnInit {
         this.words = this.selectedCate.words;
         // this.cards = this.shuffleCards([...this.words, ...this.words]);
         this.cards = this.shuffleCards([...this.words]);
-        console.log("this.cards",this.cards)
+        console.log('this.cards', this.cards);
       } else {
         console.error('category not found');
       }
@@ -65,28 +65,30 @@ export class MemoryCardsComponent implements OnInit {
     }
   }
   shuffleCards(words: TranslatedWord[]): MemoryGameCard[] {
-    console.log("words before shuffle ",words)
+    console.log('words before shuffle ', words);
     const shuffled = words
       .map((word) => ({
         word: word.origin,
         flipped: false,
         matched: false,
-        direction:word.origin  // this.getTextDirection(word.origin || word.target), // shokel levater al ze
+        direction: word.origin,
+        translation: word.target // this.getTextDirection(word.origin || word.target), // shokel levater al ze
       }))
       .concat(
         words.map((word) => ({
           word: word.target,
           flipped: false,
           matched: false,
-          direction: word.target//this.getTextDirection(word.target),
+          direction: word.target, //this.getTextDirection(word.target),
+          translation:word.origin
         }))
-      ).sort()
+      )
+      .sort();
 
-      // .sort(() => Math.random() - 0.5); // לא לשכוח להחזיר את זה!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      console.log("shuffled",shuffled)
-      if(shuffled){
-
-      }
+    // .sort(() => Math.random() - 0.5); // לא לשכוח להחזיר את זה!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    console.log('shuffled', shuffled);
+    if (shuffled) {
+    }
     return shuffled;
   }
 

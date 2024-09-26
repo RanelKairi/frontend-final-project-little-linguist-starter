@@ -12,13 +12,13 @@
 
 <!-- Cards grid -->
 <div class="game-board">
-  <mat-card *ngFor="let card of cards" class="card" (click)="onCardClick(card)">
+  <mat-card *ngFor="let card of cards" class="card" (click)="onCardClick(card,cards)">
     <!-- Face-down state -->
-    <mat-card-content *ngIf="!card.flipped" class="card-back">
+    <mat-card-content *ngIf="!card.flipped && !card.matched" class="card-back">
       <mat-icon>help_outline</mat-icon> <!-- Question mark icon for face-down cards -->
     </mat-card-content>
     <!-- Face-up state -->
-    <mat-card-content *ngIf="card.flipped" class="card-front">
+    <mat-card-content *ngIf="card.flipped || card.matched" class="card-front">
       <span>{{ card.word }}</span> <!-- Display the word -->
     </mat-card-content>
   </mat-card>
