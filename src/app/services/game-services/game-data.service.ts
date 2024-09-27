@@ -21,17 +21,11 @@ export class GameDataService {
     new GameProfile(
       3,
       'Messy Words',
-      'In this game you should fix the order of the letters to the correct order of the word',
+      'In this game you should fix the order of the letters to the correct order of the word with Timer Running UP!',
       'Games/messy-words'
     ),
     new GameProfile(
       4,
-      'Reversed Cards',
-      'In this game you should fix the order of the letters to the correct order of the word',
-      'Games/reversed-cards'
-    ),
-    new GameProfile(
-      6,
       'Memory-Cards',
       '!~this is a memory cards game, ~WARNING~ not a game for begginers , think you got a good memory? prove it here~! !',
       'Games/memory-cards'

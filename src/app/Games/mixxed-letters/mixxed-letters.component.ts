@@ -138,10 +138,10 @@ export class MixxedLettersComponent implements OnInit {
     if (isEndOfGame) {
       this.dataSource = [...this.words];
       this.endGameSaveResults();
-      this.endGame = true; // End the game after the last guess
+      this.endGame = true;
     } else {
-      this.nextWord(); // Proceed to the next word
-      this.reset(); // Reset the guess input
+      this.nextWord(); 
+      this.reset();
     }
   }
 

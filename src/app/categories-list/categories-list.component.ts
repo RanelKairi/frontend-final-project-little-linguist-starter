@@ -8,6 +8,7 @@ import { Category } from '../../shared/model/categories/category';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-category-dialog.component';
 import { CatesService } from '../services/category-services/category.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-categories-list',
@@ -18,6 +19,7 @@ import { CatesService } from '../services/category-services/category.service';
     MatIconModule,
     MatButtonModule,
     RouterModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
@@ -32,6 +34,7 @@ export class CategoriesListComponent implements OnInit {
   ];
   dataSource: Category[] = [];
   categories: Category[] = [];
+  isLoading = true;
 
   constructor(
     // private categoryService: CategoriesService,
@@ -41,6 +44,9 @@ export class CategoriesListComponent implements OnInit {
 
   async ngOnInit() {
     this.dataSource = await this.cateService.list();
+    if(this.dataSource){
+      this.isLoading = false;
+    }
   }
 
   deleteCategory(id: string, name: string) {

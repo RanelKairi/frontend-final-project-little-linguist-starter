@@ -18,6 +18,7 @@ import { GameResult } from '../../../shared/model/games/game-result.';
 import { GameResultsService } from '../../services/game-services/game-results.service';
 import { GameProfile } from '../../../shared/model/games/game-profile';
 import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-word-sorting',
@@ -33,6 +34,7 @@ import { SelectGameCategoryDialogComponent } from '../../select-game-category-di
     MatButtonModule,
     MatIconModule,
     RouterModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './word-sorting.component.html',
   styleUrl: './word-sorting.component.css',
@@ -155,7 +157,7 @@ export class WordSortingComponent implements OnInit {
 
 
 
-    return ((this.index + 1) / this.words.length) * 100;
+    return progress;
   }
 
   playAgain() {

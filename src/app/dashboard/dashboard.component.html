@@ -10,8 +10,8 @@
 
 <div *ngIf="!isLoading">
   <div class="stats-grid">
-    <!-- Games Played -->
-     <div class="gamesPlayed">
+
+    <div class="gamesPlayed">
     <mat-card class="dashboard-card">
       <mat-card-title>Games Played</mat-card-title>
       <mat-card-content>
@@ -19,7 +19,7 @@
       </mat-card-content>
     </mat-card>
   </div>
-    <!-- Points -->
+
     <mat-card class="dashboard-card">
       <mat-card-title>Total Points</mat-card-title>
       <mat-card-content>
@@ -27,15 +27,14 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Highest Average Score Game -->
     <mat-card class="dashboard-card">
       <mat-card-title>Highest Average Score Game is</mat-card-title>
-      <!-- <div *ngIf="!isLoading"> -->
+
       <mat-card-content>
         <h1>{{ highestAvgScoreGame?.gameName }}</h1>
         <h3> With: <h2>{{highestAvgScore}}</h2> Points Per Game!</h3>
       </mat-card-content>
-      <!-- </div> -->
+
     </mat-card>
     <mat-card class="dashboard-card">
       <mat-card-title>Lowest Average Score Game</mat-card-title>
@@ -47,7 +46,6 @@
       </div>
     </mat-card>
 
-    <!-- Categories Learnt -->
     <mat-card class="dashboard-card">
       <mat-card-title>Categories Learned</mat-card-title>
       <mat-card-content>
@@ -55,7 +53,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Categories Not Learnt -->
     <mat-card class="dashboard-card">
       <mat-card-title>Categories Not Learned</mat-card-title>
       <mat-card-content>
@@ -63,7 +60,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Perfect Games Percentage -->
     <mat-card class="dashboard-card">
       <mat-card-title>Perfect Games</mat-card-title>
       <mat-card-content>
@@ -71,7 +67,6 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Most Played Category -->
     <mat-card class="dashboard-card">
       <mat-card-title>Most Played Category</mat-card-title>
       <div *ngIf="mostPlayed">
@@ -85,7 +80,6 @@
       
     </mat-card>
 
-    <!-- Categories Studied Percentage -->
     <mat-card class="dashboard-card">
       <mat-card-title>Categories Studied</mat-card-title>
       <mat-card-content>
@@ -110,9 +104,7 @@
     </mat-card>
 
   </div>
-  <!-- Monthly Challenge Card -->
-
-    <!-- Strike Days Card -->
+ 
 
 
 </div>

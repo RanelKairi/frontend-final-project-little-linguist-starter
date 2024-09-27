@@ -1,13 +1,77 @@
-/* Shared styles for game cards */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  grid-row: inherit;
+}
+
+.game-card {
+  display: grid;
+  
+  width: 300px;
+  margin: 10px;
+  
+}
+.game-card:hover {
+  transform: scale(1.1);
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .card-title {
-  font-size: 18px;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
-.card-description {
-  color: #666;
+.card-description, .card-id {
+  font-size: 1em;
+  margin: 10px 0;
 }
 
 .card-footer {
-  background-color: #eee;
+  margin-top: auto;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.play-button {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.play-button:hover {
+  background-color: #303f9f;
+}
+
+.game-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.mat-card-header {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 16px;
+}
+
+.mat-card-content {
+  padding: 16px;
+  align-items: center;
+}
+
+.play-button {
+  margin: 16px;
 }

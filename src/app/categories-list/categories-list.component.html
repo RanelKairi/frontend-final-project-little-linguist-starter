@@ -1,3 +1,14 @@
+<div *ngIf="isLoading">
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="primary"
+    diameter="100"
+    strokeWidth="5"
+  >
+  </mat-progress-spinner>
+  <h1>Game is Loading...</h1>
+</div>
+<div *ngIf="!isLoading">
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID</th>
@@ -38,4 +49,4 @@
   <button mat-fab color="primary" routerLink="/newcategory">
     <mat-icon>add</mat-icon>
   </button>
-</div>
+</div></div>
