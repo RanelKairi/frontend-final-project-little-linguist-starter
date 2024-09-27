@@ -1,13 +1,169 @@
+
+.body-frame {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color:primary;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1; 
+  border-radius: 8px;
+}
+
+.exit-button {
+  flex-grow: 1; 
+}
+
+.game-points {
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+  background-color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+
+.score-icon {
+  color: #ffb300;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.grade {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+
+form {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  width: 45%;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.current-progress,
+.total-progress {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+}
+
+mat-progress-bar {
+  flex-grow: 1;
+  margin: 0 10px;
+  height: 24px;
+  background-color: #e0e0e0;
+}
+
+.r {
+  text-align: center;
+}
+
+h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+input[matInput] {
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-row button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-size: 18px;
+}
+
+td {
+  font-size: 16px;
+}
+
+mat-icon {
+  font-size: 20px;
+  color: green;
+}
+
+mat-icon.fail {
+  color: red;
+}
+
+button[mat-raised-button] {
+  background-color: #4caf50;
+  font-weight: bold;
+}
+
+button[mat-raised-button]:disabled {
+  background-color: #ccc;
+  color: #888;
+}
 .loading-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .loading-container p {
-    margin-top: 10px;
-    font-size: 1.5rem;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+}
+
+.loading-container h1 {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #3f51b5; /* Angular Material primary color */
+}

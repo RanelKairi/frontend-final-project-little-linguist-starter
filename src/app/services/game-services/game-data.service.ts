@@ -31,12 +31,6 @@ export class GameDataService {
       'Games/reversed-cards'
     ),
     new GameProfile(
-      5,
-      'Cards-Matching',
-      'this is a memory game !',
-      'Games/card-matching'
-    ),
-    new GameProfile(
       6,
       'Memory-Cards',
       '!~this is a memory cards game, ~WARNING~ not a game for begginers , think you got a good memory? prove it here~! !',

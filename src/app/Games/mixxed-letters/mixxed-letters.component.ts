@@ -153,8 +153,6 @@ export class MixxedLettersComponent implements OnInit {
     }
   }
 
-  // Calculate the progress for the progress bar
-
   async endGameSaveResults() {
     const gameResult = new GameResult(
       this.selectedCate!.id,
@@ -164,7 +162,6 @@ export class MixxedLettersComponent implements OnInit {
     );
     console.log(gameResult);
     await this.gameResultsService.addGameResult(gameResult);
-    console.log('Game result saved:', gameResult);
   }
 
   calculateProgress() {

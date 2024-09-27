@@ -2,11 +2,11 @@
   <h1>Memory-Cards Game</h1>
   <h2>Your Score Is {{ score }}</h2>
 
-  <div class="card-container">
+  <div *ngIf="!isEndGame()" class="card-container">
     <mat-card
       *ngFor="let word of cards; let i = index"
       class="card"
-      (click)="flipCard(i)"
+      (click)="onCardClick(i)"
       tabindex="0"
       [class.flipped]="word.flipped"
       [class.matched]="word.matched"

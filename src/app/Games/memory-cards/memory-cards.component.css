@@ -3,8 +3,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color:#cfb1ef; /* Soft off-white background */
-    border: 2px solid #d3a593; /* Soft pastel brown */
+    background-color:#cfb1ef; 
+    border: 2px solid #d3a593;
     border-radius: 8px;
     padding: 20px;
   }
@@ -14,14 +14,14 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    color: #ef8ac8; /* Pastel lavender */
+    color: orangered; 
   }
   
   .game-board h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f7a8a9; /* Soft pastel pink */
+    color: orangered; 
   }
   
   .game-board .card-container {
@@ -44,16 +44,15 @@
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
-    background-color: #e6f2ff; /* Soft pastel blue */
-    color: #555555; /* Dark gray for contrast */
-    border: 2px solid #d3a593; /* Soft pastel brown border */
+    background-color: sandybrown;
+    color: #555555; 
+    border: 2px solid orangered;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
   .game-board .card.flipped, .game-board .card.matched {
-    background-color: #fbd1a2; /* Soft pastel peach */
-    color: #e48873; /* Soft pastel coral for text */
+    color: white;
     transform: scale(1.09);
   }
   
@@ -62,8 +61,8 @@
   }
   
   .game-board .won-card {
-    background-color: #b2d3c2; /* Soft pastel mint green */
-    color: #e48873; /* Coral */
+    background-color: orchid;
+    color: white; 
     text-align: center;
     padding: 20px;
     margin-top: 20px;
@@ -90,10 +89,10 @@
   
   .game-board .card:hover {
     transform: scale(1.2);
-    background-color: #fff0f5; /* Pastel lavender (hover) */
+    background-color: orangered;
   }
   
   .game-board .card:focus {
-    outline: 2px solid #fbd1a2; /* Soft pastel peach focus */
+    outline: 2px solid olive; /* Soft pastel peach focus */
   }
   

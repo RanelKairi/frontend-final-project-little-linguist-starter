@@ -35,6 +35,7 @@ export class MemoryCardsComponent implements OnInit {
   scndCardIndex: number | null = null;
   attempts = 0;
   score = 100;
+  isGameEnd =false;
 
   constructor(
     private cateService: CatesService,
@@ -90,8 +91,8 @@ export class MemoryCardsComponent implements OnInit {
     return shuffled;
   }
 
-  // will be onCardClick()
-  flipCard(index: number): void {
+  
+  onCardClick(index: number): void {
     if (this.frstCardIndex === null) {
       this.frstCardIndex = index;
       this.cards[index].flipped = true;
@@ -133,7 +134,9 @@ export class MemoryCardsComponent implements OnInit {
   }
 
   isEndGame(): boolean {
+    
     return this.cards.every((card) => card.matched);
+
   }
 
   resetgame(): void {

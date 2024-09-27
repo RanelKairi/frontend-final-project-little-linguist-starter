@@ -148,6 +148,13 @@ export class WordSortingComponent implements OnInit {
   }
 
   calculateProgress() {
+    const totalWords = this.words.length || 0 ;
+    const guessedWordsRatio = this.numSuccess / totalWords;
+    const categoryProgressRatio = this.index / totalWords;
+    const progress = Math.max(guessedWordsRatio, categoryProgressRatio) * 100;
+
+
+
     return ((this.index + 1) / this.words.length) * 100;
   }
 

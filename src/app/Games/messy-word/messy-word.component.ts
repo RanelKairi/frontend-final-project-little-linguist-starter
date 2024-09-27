@@ -47,10 +47,10 @@ export class MessyWordComponent implements OnInit {
   dataSource: TranslatedWord[] = [];
 
   currentGame = new GameProfile(
-    3,
-    'Messy Words',
-    'In this game you should fix the order But you limited with time! of the letters to the correct order of the word',
-    'Games/messy-words'
+    1,
+    'Mixed Letters',
+    'In this game you should fix the order of the letters to the correct order of the word ',
+    'Games/mixxed-letters'
   );
   isLoading = true;
   @Input()
@@ -59,25 +59,23 @@ export class MessyWordComponent implements OnInit {
   words: TranslatedWord[] = [];
   mixedWord: string = '';
   index = -1;
-  tryCount = 0;
+  triesCount = 0;
   gamePoints = 0;
   numSuccess = 0;
   grade = 0;
   endGame = false;
-  timer = 60; // Timer set to 60 seconds // maybewill be replaced
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  interval?: any; // type of NodeJS.Timeout , not available in all environment
+  prig = 0;
+  gameId = 1;
+  interval:any
+  timer = 60;
 
-  wordsPlayed: { word: string; guess: string; correct: boolean }[] = [];
-  userGuess = '';
-  totalWords = 0;
   constructor(
-    private cateService: CatesService,
     public dialogService: MatDialog,
-    private gameResultService: GameResultsService
+    private cateService: CatesService,
+    private gameResultsService: GameResultsService
   ) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     if (this.id) {
       this.selectedCate = await this.cateService.get(this.id);
       if (this.selectedCate) {
@@ -85,138 +83,121 @@ export class MessyWordComponent implements OnInit {
       }
     }
   }
-  async initializeGame() {
+  async initializeGame(): Promise<void> {
     console.log('Initializing game with category:', this.selectedCate);
     console.log('initializing GameProfile ', this.currentGame);
+
     this.words = [...this.selectedCate!.words];
     this.words = this.words.sort(() => Math.random() - 0.5);
     this.gamePoints = 100 / this.words.length;
+
     this.startNewGame();
-
-    this.nextWord();
-  }
-
-  startTimer() {
-    // this.interval = setInterval(() => {
-    this.interval = setInterval(() => {
-      if (this.timer > 0) {
-        this.timer--;
-      } else {
-        this.timeIsUp();
-      }
-    }, 500); // Update timer every second
   }
 
   nextWord() {
-    console.log('next Word()!');
+    console.log('nextWord()!');
     if (this.words && this.index < this.words.length - 1) {
       this.index++;
-      const word = this.selectedCate?.words[this.index].origin;
-      console.log(word);
-      this.mixedWord = this.shuffleWord(word!);
+      this.mixedWord = [...this.words[this.index].origin]
+        .sort(() => Math.random() - 0.5)
+        .join('')
+        .toLocaleLowerCase();
+      if (
+        this.mixedWord.toLocaleLowerCase() ===
+        this.words[this.index].origin.toLocaleLowerCase()
+      ) {
+        console.log('sorted to same word case handled');
+        this.index--;
+        this.nextWord();
+      }
     } else {
-      // Math.floor(this.points);
-      // console.log(this.points);
-      // this.showSummary();
+      this.endGame = true;
     }
   }
-
-  shuffleWord(word: string): string {
-    let shuffledWord = word;
-
-    // Keep shuffling until the shuffled word is different from the original word
-    while (shuffledWord === word) {
-      shuffledWord = word
-        .split('')
-        .sort(() => Math.random() - 0.5)
-        .join('');
+  startTimer() {
+      this.interval = setInterval(() => {
+        if (this.timer > 0) {
+          this.timer--;
+        } else {
+          this.timeIsUp();
+        }
+      },1000); // Update timer every second
     }
 
-    return shuffledWord;
+  reset() {
+    if (this.words) this.words[this.index].guess = '';
   }
 
   timeIsUp() {
-    this.endGameSaveResults();
-  }
+  this.endGameSaveResults();
+}
 
   submit() {
-    this.tryCount++;
-    const currentWord = this.selectedCate?.words[this.index].origin;
+    this.triesCount++;
+    const currentWord = this.words[this.index];
+
     const isSuccess =
-      this.words[this.index].guess.toLowerCase() === currentWord?.toLowerCase();
-    this.dialogService.open(FeedbackDialogComponent, { data: isSuccess });
+      currentWord?.guess.toLocaleLowerCase() ===
+      currentWord?.origin.toLocaleLowerCase();
+
+    // Show feedback dialog for the current guess
+    this.dialogService.open(FeedbackDialogComponent, {
+      data: isSuccess,
+    });
 
     if (isSuccess) {
       this.numSuccess++;
-      this.grade = Math.floor(this.numSuccess * this.gamePoints);
+      this.grade = Math.floor(this.gamePoints * this.numSuccess);
+      console.log('this.grade after calculation', this.grade);
       this.words[this.index].answer = true;
     } else {
       this.words[this.index].answer = false;
     }
 
-    // Save the result for the summary screen
-    this.wordsPlayed.push({
-      word: currentWord || '',
-      guess: this.userGuess,
-      correct: isSuccess,
-    });
-
     const isEndOfGame = this.index + 1 === this.words.length;
 
-    if (isEndOfGame || this.endGame == true) {
-      this.endGameSaveResults(); // End the game when all words are guessed
+    if (isEndOfGame) {
+      this.dataSource = [...this.words];
+      this.endGameSaveResults();
+      this.endGame = true;
     } else {
-      this.nextWord(); // Move to the next word
+      this.nextWord();
       this.reset();
     }
   }
+
   async endGameSaveResults() {
     const gameResult = new GameResult(
-      this.id!,
-      this.currentGame.id,
+      this.selectedCate!.id,
+      this.currentGame.id!,
       new Date(),
       this.grade
     );
-    await this.gameResultService.addGameResult(gameResult);
-
-    clearInterval(this.interval); // Stop the timer
-    // Save game result here, like in the previous game
+    clearInterval(this.interval);
+    await this.gameResultsService.addGameResult(gameResult);
+    
+     
   }
-
-  reset() {
-    if (this.words) this.words[this.index].guess = ''; // Clear the input field
-  }
-
-  showSummary() {
-    // Navigate to the summary screen or show it within this component
-    // this.saveGameResult();
-  }
-  // should fix an error before return this addDoc from Service
-  // saveGameResult() {
-  //   const gameResult: GameResult = {
-  //     categoryId: this.id!,
-  //     gameId: this.currentGame.id,
-  //     date: new Date(),
-  //     points: this.points,
-  //   };
-
-  //   this.gameResultService.addGameResult(gameResult);
-  // }
 
   calculateProgress() {
-    return (this.index / this.words.length) * 100;
+    const totalWords = this.words.length || 0;
+    const guessedWordsRatio = this.numSuccess / totalWords;
+    const categoryProgressRatio = this.index / totalWords;
+    const progress = Math.max(guessedWordsRatio, categoryProgressRatio) * 100;
+    return progress;
   }
 
-  async startNewGame() {
+  startNewGame() {
+    console.log('GameStarted!');
     this.isLoading = false;
-    console.log('Game Started!');
+    this.startTimer()
     this.nextWord();
-    this.startTimer();
   }
 
   playAgain() {
     window.location.reload();
   }
+  // GOLD
   anotherCate() {
     const dialogRef = this.dialogService.open(
       SelectGameCategoryDialogComponent,

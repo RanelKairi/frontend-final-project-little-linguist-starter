@@ -1,61 +1,148 @@
 <div *ngIf="isLoading" class="loading-container">
-  <mat-spinner></mat-spinner>
-  <h2>Loading Game...........</h2>
-</div>
-<div *ngIf="!endGame && selectedCate">
-  <mat-card>
-    <!-- Display the timer -->
-    <h3>Time left: {{ timer }} seconds</h3>
-
-    <!-- Display the Hebrew word -->
-    <h3>Translate the word: {{ selectedCate.words[index].target }}</h3>
-    <h2>{{mixedWord}}</h2>
-
-    <!-- Input field for English translation -->
-    <form (ngSubmit)="submit()">
-      <mat-form-field>
-        <mat-label>Enter the English translation</mat-label>
-        <input matInput [(ngModel)]="words[index].guess" name="guess" required />
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-      <button mat-raised-button color="warn" type="button" (click)="reset()">Reset</button>
-    </form>
-
-    <!-- Progress Bar -->
-    <div class="progress-container">
-      <span>{{ index + 1 }}</span>
-      <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
-      <span>{{ totalWords }}</span>
-    </div>
-  </mat-card>
+  <mat-progress-spinner
+    mode="indeterminate"
+    color="primary"
+    diameter="100"
+    strokeWidth="5"
+  >
+  </mat-progress-spinner>
+  <h1>Game is Loading...</h1>
 </div>
 
 <div *ngIf="endGame">
-  <h2>Game Over! You scored {{ grade }} points</h2>
-  <!-- Display summary table -->
-  <table mat-table [dataSource]="wordsPlayed">
-    <ng-container matColumnDef="hebrewWord">
-      <th mat-header-cell *matHeaderCellDef>Hebrew Word</th>
-      <td mat-cell *matCellDef="let word">{{ word.word }}</td>
-    </ng-container>
+  <h1>Game Over - Your Grade {{ grade }} Points Out Of 100</h1>
+  <div *ngIf="words">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="origin">
+        <th mat-header-cell *matHeaderCellDef>Original Word:</th>
+        <div *ngFor="let word of words">
+          <td mat-cell *matCellDef="let words">{{ words.origin }}</td>
+        </div>
+      </ng-container>
 
-    <ng-container matColumnDef="englishGuess">
-      <th mat-header-cell *matHeaderCellDef>English Guess</th>
-      <td mat-cell *matCellDef="let word">{{ word.guess }}</td>
-    </ng-container>
+      <ng-container matColumnDef="target">
+        <th mat-header-cell *matHeaderCellDef>Target Word:</th>
+        <div *ngFor="let word of words">
+          <td mat-cell *matCellDef="let words">{{ words.target }}</td>
+        </div>
+      </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Correct?</th>
-      <td mat-cell *matCellDef="let word">
-        <mat-icon *ngIf="word.correct">check_circle</mat-icon>
-        <mat-icon *ngIf="!word.correct">cancel</mat-icon>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="guess">
+        <th mat-header-cell *matHeaderCellDef>Your guess:</th>
+        <div *ngFor="let word of words">
+          <td mat-cell *matCellDef="let words">{{ words.guess }}</td>
+        </div>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['hebrewWord', 'englishGuess', 'status']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['hebrewWord', 'englishGuess', 'status']"></tr>
-  </table>
+      <ng-container matColumnDef="answer">
+        <th mat-header-cell *matHeaderCellDef>answer</th>
+        <div *ngFor="let word of words">
+          <td mat-cell *matCellDef="let words">
+            <div *ngIf="words.answer">
+              <mat-icon>check</mat-icon>
+            </div>
+            <div *ngIf="!words.answer">
+              <mat-icon>close</mat-icon>
+            </div>
+            {{ words.answer }}
+          </td>
+        </div>
+      </ng-container>
 
-  <button mat-raised-button (click)="playAgain()">Play Again</button>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div *ngIf="selectedCate">
+      <button
+        mat-raised-button
+        (click)="playAgain()"
+        [routerLink]="['mixxed-letters', id]"
+      >
+        Play Again
+      </button>
+      <button mat-raised-button (click)="anotherCate()">
+        Select Another Category!
+      </button>
+      <button mat-raised-button routerLink="/choose-game">
+        Choose Another Game!
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedCate && !endGame">
+  
+
+  <mat-card class="body-frame">
+    <mat-card-header>
+      <div mat-card-avatar class="header-icon">
+        <div class="header-container">
+          <div class="exit-button">
+            <app-exit-button></app-exit-button>
+          </div>
+          <div class="game-points">
+            <app-game-points [grade]="grade"></app-game-points>
+          </div>
+        </div>
+      </div>
+    </mat-card-header>
+
+    <div *ngIf="selectedCate && !endGame && !isLoading">
+      
+      <mat-card-content>
+
+        <form #mixGameForm="ngForm" (ngSubmit)="submit()">
+          <div class="r">
+            <h1>{{timer}}</h1>
+            <h1>Mixxed Letters - {{ selectedCate.name }}</h1>
+            <div class="mix-game">
+              <br />
+              <h3>
+                Target Word : <span>{{ words[index].target }}</span>
+              </h3>
+              <br />
+              <h3>
+                Mixed Word:
+                <span> {{ mixedWord }}</span>
+              </h3>
+              <mat-form-field>
+                <mat-label>Guess:</mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="words[index].guess"
+                  name="guess"
+                  #guessField="ngModel"
+                  required
+                />
+              </mat-form-field>
+              <div class="button-row">
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="reset()"
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="mixGameForm.invalid || mixGameForm.pristine"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="progress-container">
+          <span class="current-progress">{{ index }}</span>
+
+          <span class="total-progress">{{ words.length }}</span>
+        </div>
+      </mat-card-content>
+    </div>
+    <app-progress-bar [progress]="calculateProgress()"></app-progress-bar>
+  </mat-card>
 </div>
