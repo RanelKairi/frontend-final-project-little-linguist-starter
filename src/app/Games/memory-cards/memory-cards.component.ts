@@ -84,8 +84,7 @@ export class MemoryCardsComponent implements OnInit {
         }))
       )
       .sort(() => Math.random() - 0.5);
-    if (shuffled) {
-    }
+    
     return shuffled;
   }
 

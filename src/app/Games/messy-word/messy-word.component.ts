@@ -66,7 +66,8 @@ export class MessyWordComponent implements OnInit {
   endGame = false;
   prig = 0;
   gameId = 1;
-  interval:any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  interval:any // type nodJS TIMOUT not available in all environments
   timer = 60;
 
   constructor(
