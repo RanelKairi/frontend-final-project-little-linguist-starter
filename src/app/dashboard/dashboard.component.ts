@@ -58,50 +58,39 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.gameResults = await this.gameResultsService.list();
-    console.log(this.gameResults);
 
-    // Calculate stats for dashboard
     this.calculateStats();
 
-    // Get categories data
     const allCategories = await this.cateService.list();
     this.calculateCategoryStats(allCategories);
 
-    // Calculate monthly challenge progress
     this.calculateMonthlyChallenge();
 
-    // Calculate consecutive strike days
     this.calculateStrikeDays();
   }
 
   calculateStats(): void {
     this.gamesPlayed = this.gameResults.length;
-    console.log(this.gamesPlayed);
 
-    // Calculate total points
     this.totalPoints = this.gameResults.reduce(
       (sum, result) => sum + result.points,
       0
     );
 
-    // Calculate average scores by game type
     const gameTypeScores = this.calculateGameTypeScores();
     this.highestAvgScoreGame = this.getHighestAvgScoreGame(gameTypeScores);
     this.lowestAvgScoreGame = this.getLowestAvgScoreGame(gameTypeScores);
 
-    // Calculate percentage of perfect games (100 points)
     const perfectGames = this.gameResults.filter(
       (result) => result.points === 100
     );
     if (perfectGames.length == 0) {
-      console.log('user without perfect games case handled');
       this.perfectGamesPercentage = 0;
     } else {
       this.perfectGamesPercentage = Math.round(
         (perfectGames.length / this.gamesPlayed) * 100
       );
     }
-    // Find the most played category
     this.mostPlayedCategory = this.calculateMostPlayedCategory();
     if (this.mostPlayedCategory) {
       this.loadMostCategory();
@@ -112,13 +101,11 @@ export class DashboardComponent implements OnInit {
 
   async loadMostCategory(): Promise<void> {
     this.mostPlayed = await this.cateService.get(this.mostPlayedCategory);
-    console.log(this.mostPlayed);
   }
 
   calculateGameTypeScores(): { [gameType: string]: number[] } {
     const gameTypeScores: { [gameType: string]: number[] } = {};
 
-    // Group scores by game type
     for (const result of this.gameResults) {
       if (!gameTypeScores[result.gameId]) {
         gameTypeScores[result.gameId] = [];
@@ -137,8 +124,6 @@ export class DashboardComponent implements OnInit {
 
     for (const gameId in gameTypeScores) {
       const scores = gameTypeScores[gameId];
-      console.log(scores);
-      console.log(scores.length);
       const avg = scores.reduce((sum, score) => sum + score, 0) / scores.length;
 
       if (avg > highestAvg) {
@@ -184,15 +169,11 @@ export class DashboardComponent implements OnInit {
     let maxCount = 0;
 
     for (const categoryId in categoryCounts) {
-      console.log(categoryCounts);
       if (categoryCounts[categoryId] > maxCount) {
         maxCount = categoryCounts[categoryId];
         mostPlayedCategory = categoryId;
       }
-      console.log('after', categoryCounts);
-      console.log(maxCount);
     }
-    console.log(maxCount);
     this.maxCount = maxCount;
 
     return mostPlayedCategory;
@@ -203,8 +184,7 @@ export class DashboardComponent implements OnInit {
     this.categoriesLearned = new Set(
       this.gameResults.map((result) => result.categoryId)
     ).size;
-    if (allCategories) console.log('categoriesLearned', this.categoriesLearned);
-    // Calculate categories not learned
+
     this.categoriesNotLearned = allCategories.length - this.categoriesLearned;
 
     // Calculate percentage of categories studied

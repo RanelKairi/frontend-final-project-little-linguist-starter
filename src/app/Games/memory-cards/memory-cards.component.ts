@@ -3,13 +3,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Card } from '../../../shared/model/games/card.'; // should get deleted anyway
 import { CatesService } from '../../services/category-services/category.service';
 import { GameProfile } from '../../../shared/model/games/game-profile';
 import { Category } from '../../../shared/model/categories/category';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatedWord } from '../../../shared/model/categories/translated-word';
 import { MemoryGameCard } from '../../../shared/model/games/memory-game-cards.';
+import { SelectGameCategoryDialogComponent } from '../../select-game-category-dialog/select-game-category-dialog.component';
+import { GameResultsService } from '../../services/game-services/game-results.service';
+import { GameResult } from '../../../shared/model/games/game-result.';
 
 @Component({
   selector: 'app-memory-cards',
@@ -19,27 +21,28 @@ import { MemoryGameCard } from '../../../shared/model/games/memory-game-cards.';
   styleUrl: './memory-cards.component.css',
 })
 export class MemoryCardsComponent implements OnInit {
-  selectedGame = new GameProfile(
+  currentGame = new GameProfile(
     6,
     'Memory-Cards',
-    '!~this is a memory cards game, ~WARNING~ not a game for begginers , think you got a good memory? prove it here~! !',
-    'Games/card-matching'
+    'Memory Card Game Difficulty: HARD',
+    'Games/memory-cards'
   );
 
   @Input() id?: string;
   selectedCate?: Category;
   words: TranslatedWord[] = [];
-  card: Card[] = [];
   cards: MemoryGameCard[] = [];
   frstCardIndex: number | null = null;
   scndCardIndex: number | null = null;
   attempts = 0;
   score = 100;
-  isGameEnd =false;
+  isGameEnd = false;
+  chooseAnotherCate = false;
 
   constructor(
     private cateService: CatesService,
-    public dialogService: MatDialog
+    public dialogService: MatDialog,
+    private gameResultsService : GameResultsService
   ) {}
 
   ngOnInit() {
@@ -55,7 +58,6 @@ export class MemoryCardsComponent implements OnInit {
       if (this.selectedCate) {
         this.words = this.selectedCate.words;
         this.cards = this.shuffleCards([...this.words]);
-        console.log('this.cards', this.cards);
       } else {
         console.error('category not found');
       }
@@ -64,7 +66,6 @@ export class MemoryCardsComponent implements OnInit {
     }
   }
   shuffleCards(words: TranslatedWord[]): MemoryGameCard[] {
-    console.log('words before shuffle ', words);
     const shuffled = words
       .map((word) => ({
         word: word.origin,
@@ -82,16 +83,12 @@ export class MemoryCardsComponent implements OnInit {
           translation: word.origin,
         }))
       )
-      .sort();
-    // .sort(() => Math.random() - 0.5); // לא לשכוח להחזיר את זה!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log('shuffled', shuffled);
+      .sort(() => Math.random() - 0.5);
     if (shuffled) {
-      console.log('jehri');
     }
     return shuffled;
   }
 
-  
   onCardClick(index: number): void {
     if (this.frstCardIndex === null) {
       this.frstCardIndex = index;
@@ -122,6 +119,12 @@ export class MemoryCardsComponent implements OnInit {
       secondCard.matched = true;
       firstCard.flipped = true;
       secondCard.flipped = true;
+      if (this.cards.every((card) => card.matched) == true) {
+        this.isGameEnd = true;
+        if(this.isGameEnd){
+          this.endGameSaveResults()
+        }
+      }
     } else {
       firstCard.matched = false;
       firstCard.flipped = false;
@@ -133,17 +136,34 @@ export class MemoryCardsComponent implements OnInit {
     this.scndCardIndex = null;
   }
 
-  isEndGame(): boolean {
-    
-    return this.cards.every((card) => card.matched);
-
+  async endGameSaveResults() {
+    const gameResult = new GameResult(
+      this.selectedCate!.id,
+      this.currentGame.id!,
+      new Date(),
+      this.score
+    );
+    await this.gameResultsService.addGameResult(gameResult);
   }
 
   resetgame(): void {
-    this.frstCardIndex = null;
-    this.scndCardIndex = null;
-    this.attempts = 0;
-    this.score = 100;
-    this.cards = this.shuffleCards([...this.words, ...this.words]);
+    window.location.reload();
+  }
+
+  anotherCate() {
+    this.chooseAnotherCate = true;
+    this.isGameEnd = true;
+    const dialogRef = this.dialogService.open(
+      SelectGameCategoryDialogComponent,
+      {
+        data: this.currentGame,
+      }
+    );
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+
+        window.location.reload();
+      }
+    });
   }
 }

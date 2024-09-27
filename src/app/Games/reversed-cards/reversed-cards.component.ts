@@ -55,7 +55,6 @@ export class ReversedCardsComponent implements OnInit {
     } else {
       this.words = this.selectedCate.words;
       this.cards = this.shuffleCards([...this.words]);
-      console.log('initializegame this.cards', this.cards);
       this.totalWords = this.selectedCate.words.length; // Track total pairs of words
     }
   }
@@ -87,21 +86,17 @@ export class ReversedCardsComponent implements OnInit {
 
   // Handle card click
   onCardClick(card: MemoryGameCard, cards: MemoryGameCard[]) {
-    console.log(cards);
 
     if (!this.firstCard && !this.secondCard) {
       card.flipped = true;
       this.firstCard = card;
       this.flippedCards.push(card);
-      console.log('oncard1stclick-1stCard', this.firstCard); // delete !
     } else if (this.firstCard && !this.secondCard) {
       card.flipped = true;
       this.secondCard = card;
       this.flippedCards.push(card);
-      console.log('oncard2ndclick-2ndCard', this.secondCard); // delete !
     }
     if (this.firstCard && this.secondCard && this.flippedCards.length == 2) {
-      console.log('EndOFonCardClick-Func =>flippedCards', this.flippedCards);
       this.checkMatch();
     }
   }

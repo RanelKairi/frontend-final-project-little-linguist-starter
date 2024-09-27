@@ -164,9 +164,9 @@ export class WordSortingComponent implements OnInit {
   async endGameSaveResults() {
     const gameResult = new GameResult(
       this.selectedCate!.id,
-      this.gameId, // Generate a unique game ID (could be a random string)
-      new Date(), // Current date
-      this.grade // The player's final score
+      this.gameId, 
+      new Date(),
+      this.grade
     );
 
     await this.gameResultsService.addGameResult(gameResult);

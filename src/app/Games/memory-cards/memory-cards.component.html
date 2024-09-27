@@ -1,8 +1,15 @@
 <div class="game-board">
   <h1>Memory-Cards Game</h1>
   <h2>Your Score Is {{ score }}</h2>
+  <button mat-raised-button color="primary" (click)="resetgame()">
+    Refresh And Try Again!
+  </button>
+  <br>
+  <button mat-raised-button color="primary" (click)="anotherCate()">
+    Choose Another Category!
+  </button>
 
-  <div *ngIf="!isEndGame()" class="card-container">
+  <div *ngIf=" !isGameEnd" class="card-container">
     <mat-card
       *ngFor="let word of cards; let i = index"
       class="card"
@@ -23,9 +30,9 @@
     </mat-card>
   </div>
 
-  <mat-card *ngIf="isEndGame()" class="won-card">
+  <mat-card *ngIf=" isGameEnd && !chooseAnotherCate" class="won-card">
     <mat-card-content>
-      You Did IT !!!! All Cards Are Matched !
+      Well Done! All Cards Are matched!
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="resetgame()">

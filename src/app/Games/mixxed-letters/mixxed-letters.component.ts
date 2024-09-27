@@ -82,8 +82,6 @@ export class MixxedLettersComponent implements OnInit {
     }
   }
   async initializeGame(): Promise<void> {
-    console.log('Initializing game with category:', this.selectedCate);
-    console.log('initializing GameProfile ', this.currentGame);
 
     this.words = [...this.selectedCate!.words];
     this.words = this.words.sort(() => Math.random() - 0.5);
@@ -93,7 +91,6 @@ export class MixxedLettersComponent implements OnInit {
   }
 
   nextWord() {
-    console.log('nextWord()!');
     if (this.words && this.index < this.words.length - 1) {
       this.index++;
       this.mixedWord = [...this.words[this.index].origin]
@@ -104,7 +101,6 @@ export class MixxedLettersComponent implements OnInit {
         this.mixedWord.toLocaleLowerCase() ===
         this.words[this.index].origin.toLocaleLowerCase()
       ) {
-        console.log('sorted to same word case handled');
         this.index--;
         this.nextWord();
       }
@@ -125,17 +121,13 @@ export class MixxedLettersComponent implements OnInit {
       currentWord?.guess.toLocaleLowerCase() ===
       currentWord?.origin.toLocaleLowerCase();
 
-    // Show feedback dialog for the current guess
     this.dialogService.open(FeedbackDialogComponent, {
       data: isSuccess,
     });
 
     if (isSuccess) {
-      // console.log("this.numSuccess",this.numSuccess)
-      // console.log("this.grade",this.grade)
       this.numSuccess++;
       this.grade = Math.floor(this.gamePoints * this.numSuccess);
-      console.log('this.grade after calculation', this.grade);
       this.words[this.index].answer = true;
     } else {
       this.words[this.index].answer = false;
@@ -160,7 +152,6 @@ export class MixxedLettersComponent implements OnInit {
       new Date(),
       this.grade
     );
-    console.log(gameResult);
     await this.gameResultsService.addGameResult(gameResult);
   }
 
@@ -173,7 +164,6 @@ export class MixxedLettersComponent implements OnInit {
   }
 
   startNewGame() {
-    console.log('GameStarted!');
     this.isLoading = false;
     this.nextWord();
   }
@@ -191,7 +181,6 @@ export class MixxedLettersComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        console.log(result);
         window.location.reload();
       }
     });

@@ -22,7 +22,6 @@ export const routes: Routes = [
   { path: 'Games/word-sorting/:id', component: WordSortingComponent },
   { path: 'Games/messy-words/:id', component: MessyWordComponent },
   { path: 'Games/reversed-cards/:id', component: ReversedCardsComponent },
-
   { path: 'Games/memory-cards/:id', component: MemoryCardsComponent },
 ];
 

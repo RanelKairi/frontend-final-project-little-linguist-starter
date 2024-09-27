@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslatedWord } from '../../shared/model/categories/translated-word';
-
 import { CatesService } from '../services/category-services/category.service';
 
 @Component({

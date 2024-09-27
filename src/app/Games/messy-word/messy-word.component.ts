@@ -84,8 +84,6 @@ export class MessyWordComponent implements OnInit {
     }
   }
   async initializeGame(): Promise<void> {
-    console.log('Initializing game with category:', this.selectedCate);
-    console.log('initializing GameProfile ', this.currentGame);
 
     this.words = [...this.selectedCate!.words];
     this.words = this.words.sort(() => Math.random() - 0.5);
@@ -95,7 +93,6 @@ export class MessyWordComponent implements OnInit {
   }
 
   nextWord() {
-    console.log('nextWord()!');
     if (this.words && this.index < this.words.length - 1) {
       this.index++;
       this.mixedWord = [...this.words[this.index].origin]
@@ -106,7 +103,6 @@ export class MessyWordComponent implements OnInit {
         this.mixedWord.toLocaleLowerCase() ===
         this.words[this.index].origin.toLocaleLowerCase()
       ) {
-        console.log('sorted to same word case handled');
         this.index--;
         this.nextWord();
       }
@@ -148,7 +144,6 @@ export class MessyWordComponent implements OnInit {
     if (isSuccess) {
       this.numSuccess++;
       this.grade = Math.floor(this.gamePoints * this.numSuccess);
-      console.log('this.grade after calculation', this.grade);
       this.words[this.index].answer = true;
     } else {
       this.words[this.index].answer = false;
