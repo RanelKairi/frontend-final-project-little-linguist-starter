@@ -117,7 +117,6 @@ export class WordSortingComponent implements OnInit {
   }
 
   nextWord() {
-    console.log('gameStarted!');
     if (this.index + 1 < this.words.length) {
       this.index++;
       this.currentWord = this.words[this.index].origin.toLocaleUpperCase();
